@@ -38,6 +38,23 @@
         .modal-content-scroll::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
+        /* Collapsible section styles */
+        .collapsible-content {
+            max-height: 1000px; /* Arbitrarily large value */
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+            opacity: 1;
+        }
+        .collapsible-content.collapsed {
+            max-height: 0;
+            opacity: 0;
+        }
+        .collapse-icon {
+            transition: transform 0.3s ease-out;
+        }
+        .collapse-icon.collapsed {
+            transform: rotate(-90deg);
+        }
     </style>
 </head>
 <body class="bg-stone-50 text-stone-800">
@@ -58,6 +75,9 @@
                         <p class="text-stone-600">
                             This guide is your central hub for planning and leading activities. Use the filters below to quickly find the perfect game for your next slot, whether you're on the field or need an indoor option for a rainy day. Each game card provides a full breakdown of instructions, materials, and key discussion points to connect with our camp's mission.
                         </p>
+                        <button id="view-deleted-activities-btn" class="mt-4 bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 transition-colors text-sm">
+                            View Deleted Activities (<span id="deleted-count">0</span>)
+                        </button>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
                         <h3 class="text-xl font-bold text-center text-teal-700 mb-4">Activity Overview</h3>
@@ -69,41 +89,48 @@
             </section>
 
             <section id="leader-resources" class="mb-12 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-                <h2 class="text-2xl font-bold text-teal-700 mb-4">Leader Resources & Best Practices</h2>
-                <p class="text-stone-600 mb-4">
-                    This section provides essential guidance to help you make the most of this interactive guide and ensure a successful, safe, and spiritually impactful activity time for your campers.
-                </p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <h3 class="text-xl font-bold text-teal-700 mb-2">Navigating This Guide</h3>
-                        <ul class="list-disc list-inside text-stone-700 space-y-2">
-                            <li><strong>Filtering Activities:</strong> Use the "Filter by Type," "Filter by Location," and "Filter by Materials" to quickly narrow down game options. Select "All" to see the full list again.</li>
-                            <li><strong>Viewing Details:</strong> Click on any activity card to open a detailed modal. This modal contains objectives, step-by-step instructions, a comprehensive materials list, crucial safety notes, and the "SuperCharged Application."</li>
-                            <li><strong>Material Check:</strong> Always review the "Materials Needed" section well in advance of your activity time to ensure all supplies are readily available.</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-teal-700 mb-2">Leading Activities Effectively</h3>
-                        <ul class="list-disc list-inside text-stone-700 space-y-2">
-                            <li><strong>Safety First:</strong> Prioritize the "Safety Notes" for each game. Conduct a quick safety check of the play area and equipment before starting.</li>
-                            <li><strong>Clear Instructions:</strong> Explain game rules clearly and concisely. Demonstrate if possible. Encourage questions before starting.</li>
-                            <li><strong>Adapt & Modify:</strong> Feel free to adapt games to suit your group's size, age, energy levels, or available space.</li>
-                            <li><strong>Encourage Participation:</strong> Create an inclusive environment where every camper feels comfortable participating and trying their best.</li>
-                            <li><strong>Time Management:</strong> Keep an eye on the clock to ensure you have enough time for the activity itself and, crucially, for the debriefing.</li>
-                        </ul>
-                    </div>
-                    <div class="md:col-span-2">
-                        <h3 class="text-xl font-bold text-teal-700 mb-2">Maximizing the "SuperCharged Application"</h3>
-                        <p class="text-stone-700">
-                            The "SuperCharged Application" is key to connecting our activities with the spiritual growth of our campers. This section provides prompts and ideas to help you facilitate meaningful discussions after each game.
-                        </p>
-                        <ul class="list-disc list-inside text-stone-700 space-y-2 mt-2">
-                            <li><strong>Purpose:</strong> This is where we bridge the fun of the game to life lessons and Foursquare values.</li>
-                            <li><strong>Timing:</strong> Always debrief immediately after the game, while the experience is fresh in their minds.</li>
-                            <li><strong>Open-Ended Questions:</strong> Use the suggested questions as a starting point. Encourage honest sharing and active listening among campers.</li>
-                            <li><strong>Connect to Scripture/Values:</strong> Help campers see how the game's lessons relate to Bible principles or the Foursquare values (e.g., 'Jesus the Savior, Healer, Baptizer with the Holy Spirit, and Soon-Coming King').</li>
-                            <li><strong>Personal Reflection:</strong> Encourage campers to think about how they can apply these lessons in their daily lives.</li>
-                        </ul>
+                <div class="flex justify-between items-center cursor-pointer" id="leader-resources-toggle">
+                    <h2 class="text-2xl font-bold text-teal-700 mb-4">Leader Resources & Best Practices</h2>
+                    <button class="text-stone-500 hover:text-teal-600 transition-colors">
+                        <span class="text-2xl font-bold collapse-icon">&#9660;</span> <!-- Down arrow -->
+                    </button>
+                </div>
+                <div id="leader-resources-content" class="collapsible-content">
+                    <p class="text-stone-600 mb-4">
+                        This section provides essential guidance to help you make the most of this interactive guide and ensure a successful, safe, and spiritually impactful activity time for your campers.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-bold text-teal-700 mb-2">Navigating This Guide</h3>
+                            <ul class="list-disc list-inside text-stone-700 space-y-2">
+                                <li><strong>Filtering Activities:</strong> Use the "Filter by Type," "Filter by Location," and "Filter by Materials" to quickly narrow down game options. Select "All" to see the full list again.</li>
+                                <li><strong>Viewing Details:</strong> Click on any activity card to open a detailed modal. This modal contains objectives, step-by-step instructions, a comprehensive materials list, crucial safety notes, and the "SuperCharged Application."</li>
+                                <li><strong>Material Check:</strong> Always review the "Materials Needed" section well in advance of your activity time to ensure all supplies are readily available.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-teal-700 mb-2">Leading Activities Effectively</h3>
+                            <ul class="list-disc list-inside text-stone-700 space-y-2">
+                                <li><strong>Safety First:</strong> Prioritize the "Safety Notes" for each game. Conduct a quick safety check of the play area and equipment before starting.</li>
+                                <li><strong>Clear Instructions:</strong> Explain game rules clearly and concisely. Demonstrate if possible. Encourage questions before starting.</li>
+                                <li><strong>Adapt & Modify:</strong> Feel free to adapt games to suit your group's size, age, energy levels, or available space.</li>
+                                <li><strong>Encourage Participation:</strong> Create an inclusive environment where every camper feels comfortable participating and trying their best.</li>
+                                <li><strong>Time Management:</strong> Keep an eye on the clock to ensure you have enough time for the activity itself and, crucially, for the debriefing.</li>
+                            </ul>
+                        </div>
+                        <div class="md:col-span-2">
+                            <h3 class="text-xl font-bold text-teal-700 mb-2">Maximizing the "SuperCharged Application"</h3>
+                            <p class="text-stone-700">
+                                The "SuperCharged Application" is key to connecting our activities with the spiritual growth of our campers. This section provides prompts and ideas to help you facilitate meaningful discussions after each game.
+                            </p>
+                            <ul class="list-disc list-inside text-stone-700 space-y-2 mt-2">
+                                <li><strong>Purpose:</strong> This is where we bridge the fun of the game to life lessons and Foursquare values.</li>
+                                <li><strong>Timing:</strong> Always debrief immediately after the game, while the experience is fresh in their minds.</li>
+                                <li><strong>Open-Ended Questions:</strong> Use the suggested questions as a starting point. Encourage honest sharing and active listening among campers.</li>
+                                <li><strong>Connect to Scripture/Values:</strong> Help campers see how the game's lessons relate to Bible principles or the Foursquare values (e.g., 'Jesus the Savior, Healer, Baptizer with the Holy Spirit, and Soon-Coming King').</li>
+                                <li><strong>Personal Reflection:</strong> Encourage campers to think about how they can apply these lessons in their daily lives.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -156,6 +183,11 @@
                 </button>
             </div>
             <div id="modal-content" class="p-4 sm:p-6">
+            </div>
+            <div class="p-4 sm:p-6 border-t border-stone-200 flex justify-end">
+                <button id="move-to-trash-btn" class="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 transition-colors text-sm">
+                    Move to Trash
+                </button>
             </div>
         </div>
     </div>
@@ -251,12 +283,39 @@
         </div>
     </div>
 
+    <!-- Deleted Activities Modal -->
+    <div id="deleted-activities-modal" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto modal-content-scroll">
+            <div class="sticky top-0 bg-white p-4 sm:p-6 border-b border-stone-200 flex justify-between items-center">
+                <h2 class="text-2xl sm:text-3xl font-bold text-teal-700">Deleted Activities</h2>
+                <button id="close-deleted-activities-modal" class="text-stone-500 hover:text-red-600 transition-colors">
+                    <span class="text-2xl font-bold">&times;</span>
+                </button>
+            </div>
+            <div id="deleted-activities-list" class="p-4 sm:p-6 space-y-4">
+                <!-- Deleted activities will be listed here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal (for permanent delete) -->
+    <div id="confirmation-modal" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center">
+            <h3 class="text-xl font-bold text-red-700 mb-4">Confirm Permanent Deletion</h3>
+            <p class="text-stone-700 mb-6">Are you sure you want to permanently delete this activity? This action cannot be undone.</p>
+            <div class="flex justify-center gap-4">
+                <button id="cancel-permanent-delete-btn" class="bg-stone-300 text-stone-800 font-semibold py-2 px-4 rounded-lg hover:bg-stone-400 transition-colors">Cancel</button>
+                <button id="confirm-permanent-delete-btn" class="bg-red-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-700 transition-colors">Delete Permanently</button>
+            </div>
+        </div>
+    </div>
+
 
     <script type="module">
         // Firebase Imports
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Global Firebase variables
         let app;
@@ -367,7 +426,8 @@
                 ],
                 materials: ["Balloons (3 bags)", "Plastic Cups (100)", "Rubber Bands (1 large ziploc)", "Ping Pong Balls (suggested purchase - approx. 50)", "Old Soda Can (collect prior to camp)", "Kiddie Pools (4)", "Large Buckets (4)", "Sponges (21½ bags)", "Frisbees (26)", "Popsicle Sticks (various)", "Dice (approx. 30, for Dice Balance)", "Stopwatch (1)", "Whistle (2)", "Scoreboard (1)", "Pencils", "Cardstock Paper"],
                 safety: "Ensure ample space between stations to prevent collisions. Supervise any water-related challenges closely to prevent slipping. Remind children to handle materials gently and avoid throwing items at others. Clear instructions on safe movement between stations are crucial. Emphasize no aiming rubber bands or frisbees at people. Ensure dice are clean for mouth contact.",
-                supercharged: "Minute to Win It games challenge us to use our unique skills and talents quickly and effectively. Just like God has given each of us different gifts and abilities, these games show us how we can use those gifts – whether it's speed, precision, or balance – to do our best. It also reminds us to encourage our teammates, cheering them on even when things get tough, just as we should encourage one another in our faith journey. Every moment counts, both in the game and in how we live for God."
+                supercharged: "Minute to Win It games challenge us to use our unique skills and talents quickly and effectively. Just like God has given each of us different gifts and abilities, these games show us how we can use those gifts – whether it's speed, precision, or balance – to do our best. It also reminds us to encourage our teammates, cheering them on even when things get tough, just as we should encourage one another in our faith journey. Every moment counts, both in the game and in how we live for God.",
+                deleted: false // New field for soft delete
             },
             {
                 id: 'game2',
@@ -377,7 +437,7 @@
                 description: "Teams navigate a custom-built obstacle course combining various physical challenges in a relay format, emphasizing speed, agility, and teamwork.",
                 objectives: "Enhances speed, coordination, collaborative problem-solving, and teamwork.",
                 generalInstructions: [
-                    "<strong>Setup:</strong> Design and construct an obstacle course using available equipment. Aim for 3-5 distinct segments that require different movements (e.g., crawling under pool noodles, weaving through cones, jumping over hula hoops, balancing on a line, throwing a bean bag into a bucket). Ensure the course is clearly marked and safe. Example segments:",
+                    "<strong>Overall Setup:</strong> Design and construct an obstacle course using available equipment. Aim for 3-5 distinct segments that require different movements (e.g., crawling under pool noodles, weaving through cones, jumping over hula hoops, balancing on a line, throwing a bean bag into a bucket). Ensure the course is clearly marked and safe. Example segments:",
                     "<ul>",
                     "<li><strong>Crawl Tunnel:</strong> Drape a tarp over two chairs or low obstacles to create a tunnel to crawl through.</li>",
                     "<li><strong>Cone Weave:</strong> Place 5-7 cones in a zig-zag pattern for players to weave around.</li>",
@@ -393,7 +453,8 @@
                 ],
                 materials: ["Pool Noodles (36)", "Inflatable Balls (3)", "Cones (various)", "Hula Hoops (25)", "Bean Bags (10)", "Wooden Blocks (32)", "Buckets (various)", "Tennis Balls (50+)", "Frisbees (26)", "Masking Tape or Rope", "White Tarp (1)"],
                 safety: "Clear the play area of any tripping hazards. Emphasize safe running, crawling, and proper equipment handling. Close supervision is essential, especially during balance tasks or segments that involve climbing/crawling. Ensure obstacles are stable and won't tip over.",
-                supercharged: "Just like navigating an obstacle course requires teamwork and perseverance, our faith journey often presents challenges that we can overcome with God's help and the support of our community. Each obstacle represents a hurdle, and with every step, we learn to trust God more and rely on each other. What 'obstacles' in your life can you ask God and your friends to help you navigate?"
+                supercharged: "Just like navigating an obstacle course requires teamwork and perseverance, our faith journey often presents challenges that we can overcome with God's help and the support of our community. Each obstacle represents a hurdle, and with every step, we learn to trust God more and rely on each other. What 'obstacles' in your life can you ask God and your friends to help you navigate?",
+                deleted: false
             },
             {
                 id: 'game3',
@@ -412,7 +473,8 @@
                 ],
                 materials: ["Water Guns (14)", "Sponges (21½ bags)", "Large Buckets (various)", "Cones", "Kiddie Pools (for water refills)", "Whistles (2)"],
                 safety: "Strict rule: Aim water only at the body, never at faces or heads. Emphasize no running with water guns pointed at others. Supervise water refills to prevent slipping hazards. Ensure the playing field is free of obstacles that could cause trips. Remind players to be aware of their surroundings and not to run into others.",
-                supercharged: "In Capture the Flag, we work together to achieve a common goal, just like in our faith, we are part of God's team, working to spread His love and truth. Sometimes we need to be strategic, sometimes we need to rescue others, and sometimes we need to protect what's important. How can we be good teammates for God's kingdom?"
+                supercharged: "In Capture the Flag, we work together to achieve a common goal, just like in our faith, we are part of God's team, working to spread His love and truth. Sometimes we need to be strategic, sometimes we need to rescue others, and sometimes we need to protect what's important. How can we be good teammates for God's kingdom?",
+                deleted: false
             },
             {
                 id: 'game4',
@@ -431,7 +493,8 @@
                 ],
                 materials: ["Pool Noodles (36)", "Inflatable Ball", "Cones (for goals and boundaries)", "Whistles (2)"],
                 safety: "Emphasize no excessive pulling or pushing on the ropes/noodles to prevent injury. Ensure the playing surface is even and free of obstacles. Supervise closely to prevent collisions, especially when players are moving quickly sideways. Remind players to be mindful of their teammates' positions and to avoid kicking too hard or at other players.",
-                supercharged: "In Human Foosball, we're all connected and have to move together to achieve our goal. This reminds us that in God's family, we are all connected, and we need to work together, communicate, and support each other to reach our spiritual goals. How can we better connect and communicate with others in our faith community?"
+                supercharged: "In Human Foosball, we're all connected and have to move together to achieve our goal. This reminds us that in God's family, we are all connected, and we need to work together, communicate, and support each other to reach our spiritual goals. How can we better connect and communicate with others in our faith community?",
+                deleted: false
             },
             {
                 id: 'game5',
@@ -450,7 +513,8 @@
                 ],
                 materials: ["Masking Tape or Rope", "Frisbees (26)", "Bean Bags (10)", "Plastic Balls (2 bags)", "Cones (various)", "Whistles (2)", "Stopwatch (1)"],
                 safety: "Ensure the play area is clear of tripping hazards. Emphasize safe running and avoiding collisions, especially when multiple players are moving near the grid. Remind children to place markers gently and not to throw them at others. Ensure players do not interfere with opponents' turns.",
-                supercharged: "In Human Tic-Tac-Toe, we need to think ahead and work together to achieve our goal. This is like our spiritual walk, where we need to be strategic in how we live our lives for God, making wise choices and working with others in the Body of Christ to advance His kingdom. How can we be more intentional in our daily choices to honor God?"
+                supercharged: "In Human Tic-Tac-Toe, we need to think ahead and work together to achieve our goal. This is like our spiritual walk, where we need to be strategic in how we live our lives for God, making wise choices and working with others in the Body of Christ to advance His kingdom. How can we be more intentional in our daily choices to honor God?",
+                deleted: false
             },
             {
                 id: 'game6',
@@ -468,7 +532,8 @@
                 ],
                 materials: ["Bowling Ball (1)", "Bowling Pins (10)", "Plastic Cups (100)", "Inflatable Balls (3)", "Masking Tape", "Cones", "Scoreboard (1)", "Pencils", "Cardstock Paper", "Whistles (2)", "Stopwatch (1)"],
                 safety: "Ensure the rolling area is clear and dry to prevent slipping. Remind children to roll, not throw, the ball, and to keep it low to the ground. Supervise closely to ensure children are not in the ball's path, especially when pins are being reset. Designate clear 'return' paths for the ball and ensure players wait until the ball is stationary before approaching the pins.",
-                supercharged: "Bowling requires focus and aiming for a target. In our spiritual lives, we are called to 'aim' for God's purposes, staying focused on Him and His will. Even if we miss sometimes, we get another chance, just like in bowling. What are some spiritual targets you can aim for this week?"
+                supercharged: "Bowling requires focus and aiming for a target. In our spiritual lives, we are called to 'aim' for God's purposes, staying focused on Him and His will. Even if we miss sometimes, we get another chance, just like in bowling. What are some spiritual targets you can aim for this week?",
+                deleted: false
             },
             {
                 id: 'game7',
@@ -486,7 +551,8 @@
                 ],
                 materials: ["Sling Shots (4)", "Tennis Balls (50+)", "Plastic Balls (2 bags)", "Bean Bags (10)", "Cotton Balls (suggested purchase)", "Large Buckets (various)", "Laundry Baskets (11)", "Tiny Garbage Cans (9)", "Cones", "Hula Hoops (25)", "Scoreboard (1)", "Pencils", "Cardstock Paper", "Whistles (2)", "Stopwatch (1)"],
                 safety: "<strong>Strict Rules:</strong> Emphasize aiming ONLY at designated targets, NEVER at people or animals. Ensure a clear safety zone around targets and behind the shooter where no one should stand. Projectiles MUST be soft and harmless. Supervise closely to ensure proper and safe use of slingshots and projectiles. Collect projectiles promptly to prevent tripping hazards. Ensure no one walks in front of the shooter.",
-                supercharged: "Just like we aim for targets with the slingshot, in our faith, we aim to live lives that honor God and hit the mark of His calling. Sometimes it takes practice and patience. What are some ways we can practice aiming for God's will in our daily lives?"
+                supercharged: "Just like we aim for targets with the slingshot, in our faith, we aim to live lives that honor God and hit the mark of His calling. Sometimes it takes practice and patience. What are some ways we can practice aiming for God's will in our daily lives?",
+                deleted: false
             },
             {
                 id: 'game8',
@@ -505,7 +571,8 @@
                 ],
                 materials: ["Sponges (21½ bags)", "Bean Bags (10)", "Large Buckets (various)", "Laundry Baskets (11)", "Tiny Garbage Cans (9)", "Cones", "Hula Hoops (25)", "Scoreboard (1)", "Pencils", "Cardstock Paper", "Whistles (2)", "Stopwatch (1)", "Pool Noodles (36)"],
                 safety: "Ensure the throwing area is clear of obstacles. Remind children to throw gently, only at designated targets, and never at people. Supervise closely to ensure safe throwing and retrieval of projectiles. Ensure no one walks in front of the thrower.",
-                supercharged: "Tossing a sponge at a target requires focus and a steady hand. In life, we are called to be 'on target' with God's will, using our gifts to serve others with precision and care. When we aim to serve God, we can make a big impact. What are some ways you can 'hit the target' by serving others this week?"
+                supercharged: "Tossing a sponge at a target requires focus and a steady hand. In life, we are called to be 'on target' with God's will, using our gifts to serve others with precision and care. When we aim to serve God, we can make a big impact. What are some ways you can 'hit the target' by serving others this week?",
+                deleted: false
             },
             {
                 id: 'game9',
@@ -523,7 +590,8 @@
                 ],
                 materials: ["Bed sheets (2 large - suggested camp supply)", "Inflatable Balls (3)", "Rope (7 available)", "Masking Tape (3 rolls)", "Cones (various)", "Whistles (2)"],
                 safety: "Ensure players are spaced out around the sheet to avoid collisions and accidental hitting. Remind children to hold the sheet firmly and not to let go suddenly. Ensure the playing area is clear of obstacles. Supervise closely to prevent excessive pulling or tugging on the sheet that could cause falls. Emphasize that players should not swing the sheet at other players.",
-                supercharged: "Bed Sheet Volleyball shows us how important it is to work together, communicate, and support each other. Just like everyone holding the sheet has a role, every person in God's family has a unique role to play, and we need each other to succeed. How can you better support your friends and family in their faith journeys?"
+                supercharged: "Bed Sheet Volleyball shows us how important it is to work together, communicate, and support each other. Just like everyone holding the sheet has a role, every person in God's family has a unique role to play, and we need each other to succeed. How can you better support your friends and family in their faith journeys?",
+                deleted: false
             },
             {
                 id: 'game10',
@@ -542,7 +610,8 @@
                 ],
                 materials: ["Small Kiddie Pools (4)", "Fake Gold Coins (approx 130)", "Plastic Critters (2 large ziplocks)", "Small Plastic Dinosaurs (30)", "Diving Octopi (1 set of 6)", "Blindfolds (or Bandanas - approx. 70)", "Whistles (2)", "Stopwatch (1)"],
                 safety: "Ensure pools are on a flat, stable surface to prevent tipping. Supervise children closely around water to prevent splashing into eyes or accidental falls. Remind children not to push or splash excessively. Ensure all submerged 'treasures' are clean, smooth, and safe to handle. Emphasize calm and clear communication for blindfolded players to avoid disorientation.",
-                supercharged: "Searching for treasure reminds us of seeking God's truth and wisdom. Sometimes it feels like we're blindfolded, but God provides guides (like the Holy Spirit and wise mentors) to help us find the precious truths hidden in His Word. What 'treasures' (truths) have you found in the Bible lately?"
+                supercharged: "Searching for treasure reminds us of seeking God's truth and wisdom. Sometimes it feels like we're blindfolded, but God provides guides (like the Holy Spirit and wise mentors) to help us find the precious truths hidden in His Word. What 'treasures' (truths) have you found in the Bible lately?",
+                deleted: false
             },
             {
                 id: 'game11',
@@ -561,7 +630,8 @@
                 ],
                 materials: ["Cardboard Boxes (2)", "Popsicle Sticks (various)", "Rubber Bands (various)", "Plastic Critters (2 large ziplocks)", "Foam Beads (1 bag ziplocks)", "Yarn (various)", "CDs (17)", "Skewers (various)", "Toothpicks (500)", "Plastic Cups (100)", "Wooden Blocks (32)", "Construction Paper (various)", "Washable Markers (various)", "Glue Sticks (various)", "White Glue Bottles (11)", "Scissors (various)", "Stopwatch (1)", "Masking Tape", "Scotch Tape", "Aluminum Foil (suggested purchase)"],
                 safety: "Ensure all mystery box items are safe for children to handle. Supervise the use of scissors and glue carefully. Remind children not to put small items in their mouths. Ensure the building area is tidy to prevent tripping hazards. Emphasize that inventions should be demonstrated safely and not used to hit or harm others.",
-                supercharged: "This challenge reminds us that God has given us creativity and problem-solving skills. He wants us to use our minds and talents to find solutions, just like we invented things today. How can you use your creativity to solve problems or bless others in your life?"
+                supercharged: "This challenge reminds us that God has given us creativity and problem-solving skills. He wants us to use our minds and talents to find solutions, just like we invented things today. How can you use your creativity to solve problems or bless others in your life?",
+                deleted: false
             },
             {
                 id: 'game12',
@@ -580,7 +650,8 @@
                 ],
                 materials: ["Cones (various)", "Bean Bags (10)", "Whistles (2)", "Blindfolds (or Bandanas - approx. 70)", "Laminated Bible Chapter Names (2 sets)", "Rubber Duckies (44)", "Fake Gold Coins (approx 130)", "Plastic Critters (2 large ziplocks)", "Wooden Blocks (32)", "Plastic Balls (2 bags)", "Laminated Foursquare Symbols/Values (suggested purchase)"],
                 safety: "Ensure the play area is completely clear of actual hazards (e.g., sharp objects, uneven ground). Use only soft 'mines' that won't cause injury if stepped on. Supervise closely to prevent collisions between blindfolded players or with static objects. Emphasize gentle, clear, and calm verbal guidance from the guides. No running for blindfolded players. Guides must ensure the path is clear before giving 'go ahead' commands.",
-                supercharged: "Navigating the minefield blindfolded teaches us to trust and listen to our guides. In life, God is our ultimate guide, and we can trust His Word and the wisdom of those He places in our lives. The 'power-ups' represent the spiritual blessings and truths we find when we follow His guidance. What are some ways you can listen more closely to God's guidance this week?"
+                supercharged: "Navigating the minefield blindfolded teaches us to trust and listen to our guides. In life, God is our ultimate guide, and we can trust His Word and the wisdom of those He places in our lives. The 'power-ups' represent the spiritual blessings and truths we find when we follow His guidance. What are some ways you can listen more closely to God's guidance this week?",
+                deleted: false
             },
             {
                 id: 'game13',
@@ -597,7 +668,8 @@
                 ],
                 materials: ["ABC Beads (3 sets)", "Colored Beads (3 sets)", "Pencils (various)", "Pens (3)", "Cardstock Paper (50)", "Construction Paper (various)", "Washable Markers (various)", "Sticky Notes (various)", "Laminated Bible Chapter Names (2 sets)", "Small Metal Cups (6)", "Plastic Critters (2 large ziplocks)", "Clipboards (4)", "Stopwatch (1)", "Envelopes"],
                 safety: "Ensure all materials are safe for children to handle. Keep the area organized to prevent clutter. Remind children not to put beads or small items in their mouths. Emphasize fair play and not peeking at other teams' solutions.",
-                supercharged: "Decoding messages requires careful thought and teamwork, just like understanding God's Word requires us to study and seek His truth together. The 'secrets' we uncover in the Bible reveal more about God's plan and love for us. What 'messages' is God speaking to you through His Word right now?"
+                supercharged: "Decoding messages requires careful thought and teamwork, just like understanding God's Word requires us to study and seek His truth together. The 'secrets' we uncover in the Bible reveal more about God's plan and love for us. What 'messages' is God speaking to you through His Word right now?",
+                deleted: false
             },
             {
                 id: 'game14',
@@ -616,7 +688,8 @@
                 ],
                 materials: ["Cardboard Boxes (2)", "Popsicle Sticks (various)", "Rubber Bands (various)", "Skewers (various)", "Toothpicks (500)", "Plastic Cups (100)", "Plastic Balls (2 bags)", "Wooden Blocks (32)", "Cardboard (10)", "CDs (17)", "Yarn (various)", "Masking Tape (3 rolls)", "Scotch Tape (14 rolls)", "Packing Tape (15 rolls)", "Duct Tape (1 roll)", "Laundry Baskets (11)", "Balloons (3 bags)", "Small Plastic Critters (2 large ziplocks)", "Small Plastic Dinosaurs (30)", "Golf Balls (approx 100)", "Small Metal Cups (6)", "Scissors (various)", "Glue Sticks (various)", "White Glue Bottles (11)", "Stopwatch (1)", "Marbles (suggested purchase)", "Dominoes (suggested purchase)"],
                 safety: "Supervise the use of sharp objects like skewers and scissors carefully. Ensure the building area is stable and clear to prevent items from falling or causing tripping hazards. Remind children not to throw materials or use them in an unsafe manner. Ensure any moving parts of the contraption are safe and won't pinch fingers or cause injury.",
-                supercharged: "Building a contraption with many steps reminds us that God works in our lives in many ways, often through a series of events that lead to a bigger purpose. Even when things don't go as planned, we can learn and adjust, trusting that God is in control and has a master plan. How can you trust God's process even when you don't see the whole picture?"
+                supercharged: "Building a contraption with many steps reminds us that God works in our lives in many ways, often through a series of events that lead to a bigger purpose. Even when things don't go as planned, we can learn and adjust, trusting that God is in control and has a master plan. How can you trust God's process even when you don't see the whole picture?",
+                deleted: false
             },
             {
                 id: 'game15',
@@ -635,7 +708,8 @@
                 ],
                 materials: ["White Tarp (1)", "Construction Paper (various)", "Butcher Paper (suggested purchase)", "Washable Markers (various)", "Crayons (various)", "Sharpies (various)", "Black Paint (3 bottles)", "Pink Paint (2 bottles)", "Orange Paint (2 bottles)", "Blue Paint (1 bottle)", "Sponges (21½ bags)", "Glue Sticks (various)", "White Glue Bottles (11)", "Scissors (various)", "Plastic Critters (2 large ziplocks)", "Foam Beads (1 bag ziplocks)", "Yarn (various)", "CDs (17)", "Masking Tape (3 rolls)", "Laminated Bible Chapter Names (2 sets)", "Glitter (suggested purchase)", "Magazine cutouts (optional)"],
                 safety: "Ensure adequate ventilation if using paints. Protect surfaces with drop cloths or newspaper. Supervise scissor and glue use carefully. Remind children not to put art supplies in their mouths. Have water and paper towels readily available for clean-up. Ensure walking paths around the mural are clear to prevent tripping over supplies.",
-                supercharged: "Creating a mural together shows us how each of us is a unique part of God's beautiful masterpiece, the Church. When we combine our individual talents and efforts, we can create something much bigger and more beautiful than we could alone. How can you use your unique gifts to contribute to God's 'masterpiece'?"
+                supercharged: "Creating a mural together shows us how each of us is a unique part of God's beautiful masterpiece, the Church. When we combine our individual talents and efforts, we can create something much bigger and more beautiful than we could alone. How can you use your unique gifts to contribute to God's 'masterpiece'?",
+                deleted: false
             },
             {
                 id: 'game16',
@@ -654,7 +728,8 @@
                 ],
                 materials: ["Wooden Blocks (32)", "Plastic Cups (100)", "LEGOs (suggested purchase)", "Bandanas (approx. 70)", "Blindfolds (suggested purchase)", "Cardstock Paper (50)", "Popsicle Sticks (various)", "Stopwatch (1)", "Whistles (2)"],
                 safety: "Ensure the building area is clear and safe to prevent tripping or bumping into objects. Remind children to be gentle with the materials and each other. Supervise closely to ensure blindfolded players are safe and not frustrated. Provide clear boundaries for the guides to prevent them from interfering physically. All building materials must be safe and non-toxic.",
-                supercharged: "This challenge teaches us about the importance of clear communication and trust. Just as the blindfolded builder trusts their teammates, we can trust God's guidance for our lives, even when we can't see the path ahead. And like the guides, we are called to communicate God's truth clearly to others. How can you practice trusting God more and communicating His truth to those around you?"
+                supercharged: "This challenge teaches us about the importance of clear communication and trust. Just as the blindfolded builder trusts their teammates, we can trust God's guidance for our lives, even when we can't see the path ahead. And like the guides, we are called to communicate God's truth clearly to others. How can you practice trusting God more and communicating His truth to those around you?",
+                deleted: false
             },
             {
                 id: 'game17',
@@ -673,7 +748,8 @@
                 ],
                 materials: ["Paper (various)", "Pencils (various)", "Pens (3)", "Washable Markers (various)", "Buckets (various)", "Red Basket (1)", "Scoreboard (1)", "Whistles (2)", "Stopwatch (1)"],
                 safety: "Ensure ample space for acting to prevent collisions or falls. Remind children to be mindful of their surroundings and not to get too wild with their movements. Emphasize respectful guessing and sportsmanship. No physical contact between actors and guessers.",
-                supercharged: "Charades reminds us that we can communicate powerful messages in many ways, not just with words. God speaks to us through His creation, through His Spirit, and through the actions of others. How can you 'act out' God's love to someone this week without saying a word?"
+                supercharged: "Charades reminds us that we can communicate powerful messages in many ways, not just with words. God speaks to us through His creation, through His Spirit, and through the actions of others. How can you 'act out' God's love to someone this week without saying a word?",
+                deleted: false
             },
             {
                 id: 'game18',
@@ -690,7 +766,8 @@
                 ],
                 materials: ["Paper (various)", "Pencils (various)", "Pens (3)", "Washable Markers (various)", "Scoreboard (1)", "Small Metal Cups (6)", "Flash Cards (60)", "Whistles (2)", "Stopwatch (1)", "Sound device (e.g., phone/speaker for 'guess the sound' if applicable)", "Pre-recorded sounds (if using 'Guess the Sound')"],
                 safety: "Ensure the area is clear and organized. Remind children to be respectful when others are answering and to wait for their turn to buzz in. No pushing or shoving to get to the buzzer. Ensure the volume for sound clips is appropriate and not too loud.",
-                supercharged: "Trivia challenges our knowledge, just as studying the Bible helps us grow in our understanding of God and His truth. The more we learn about Him, the better equipped we are to live for Him. What new things did you learn about God or the Foursquare Church today?"
+                supercharged: "Trivia challenges our knowledge, just as studying the Bible helps us grow in our understanding of God and His truth. The more we learn about Him, the better equipped we are to live for Him. What new things did you learn about God or the Foursquare Church today?",
+                deleted: false
             },
             {
                 id: 'game19',
@@ -709,7 +786,8 @@
                 ],
                 materials: ["Popsicle Sticks (various)", "Rubber Bands (various)", "Plastic Spoons (36)", "Plastic Cups (100)", "Small Plastic Balls (2 bags)", "Cotton Balls (suggested purchase)", "Paper Clips (suggested purchase)", "Clay (suggested purchase)", "Glue Sticks (various)", "White Glue Bottles (11)", "Scissors (various)", "Stopwatch (1)", "Measuring Tape (suggested purchase)", "Cones (for marking lines/targets)", "Buckets (various)", "Hula Hoops (25)"],
                 safety: "Emphasize aiming only at designated targets, never at people. Projectiles should always be soft and harmless. Supervise the building process carefully, especially when using scissors or glue. Ensure the launching area is clear and that no one is standing in the path of projectiles. Remind children not to 'overload' or misuse the catapults in a dangerous way.",
-                supercharged: "Building and launching catapults teaches us about design, precision, and cause-and-effect. In our faith, we are called to be intentional in our actions, knowing that our efforts, when guided by God, can have a far-reaching impact. What 'impact' do you want to make for God's kingdom, and what steps can you take to 'launch' into that purpose?"
+                supercharged: "Building and launching catapults teaches us about design, precision, and cause-and-effect. In our faith, we are called to be intentional in our actions, knowing that our efforts, when guided by God, can have a far-reaching impact. What 'impact' do you want to make for God's kingdom, and what steps can you take to 'launch' into that purpose?",
+                deleted: false
             },
             {
                 id: 'game20',
@@ -726,13 +804,15 @@
                 ],
                 materials: ["Giant Checkers Game (at Parkside - assume available)", "Cones (various)", "Whistles (2)", "Stopwatch (1)", "Small hats/sashes (for 'crowned' pieces - suggested purchase)"],
                 safety: "Ensure players move carefully on the board, especially when jumping over other players (if campers are pieces). Remind children not to run, push, or shove. Supervise closely to ensure fair play and prevent any accidental falls. Ensure the board surface is non-slip. Clearly communicate rules regarding physical contact and safe movement.",
-                supercharged: "Playing giant checkers teaches us about strategy and foresight. In our spiritual lives, we are called to be wise and thoughtful, making choices that align with God's plan. Sometimes we need to sacrifice something small for a bigger victory, just like moving a checker piece. How can you be more strategic in your walk with God?"
+                supercharged: "Playing giant checkers teaches us about strategy and foresight. In our faith, we are called to be wise and thoughtful, making choices that align with God's plan. Sometimes we need to sacrifice something small for a bigger victory, just like moving a checker piece. How can you be more strategic in your walk with God?",
+                deleted: false
             }
         ];
 
         // This variable will hold all activities, including initial and user-added ones.
         let allActivities = [];
         let activityTypeChart; // Declare chart variable globally
+        let activityToDeleteId = null; // To store the ID of the activity to be permanently deleted
 
         document.addEventListener('DOMContentLoaded', async () => {
             const gameGrid = document.getElementById('game-grid');
@@ -744,7 +824,7 @@
             const locationFilters = document.getElementById('location-filters');
             const materialFilterSelect = document.getElementById('material-filter-select');
             const addActivityModal = document.getElementById('add-activity-modal');
-            const closeAddActivityModalBtn = document.getElementById('close-add-activity-modal'); // Fixed: Removed double assignment
+            const closeAddActivityModalBtn = document.getElementById('close-add-activity-modal');
             const addActivityForm = document.getElementById('add-activity-form');
             const instructionsContainer = document.getElementById('instructions-container');
             const addInstructionBtn = document.getElementById('add-instruction-btn');
@@ -752,6 +832,19 @@
             const addMaterialBtn = document.getElementById('add-material-btn');
             const loadingIndicator = document.getElementById('loading-indicator');
             const userIdDisplay = document.getElementById('user-id-display');
+            const moveToTrashBtn = document.getElementById('move-to-trash-btn');
+            const viewDeletedActivitiesBtn = document.getElementById('view-deleted-activities-btn');
+            const deletedActivitiesModal = document.getElementById('deleted-activities-modal');
+            const closeDeletedActivitiesModalBtn = document.getElementById('close-deleted-activities-modal');
+            const deletedActivitiesList = document.getElementById('deleted-activities-list');
+            const deletedCountSpan = document.getElementById('deleted-count');
+            const confirmationModal = document.getElementById('confirmation-modal');
+            const confirmPermanentDeleteBtn = document.getElementById('confirm-permanent-delete-btn');
+            const cancelPermanentDeleteBtn = document.getElementById('cancel-permanent-delete-btn');
+            const leaderResourcesToggle = document.getElementById('leader-resources-toggle');
+            const leaderResourcesContent = document.getElementById('leader-resources-content');
+            const collapseIcon = leaderResourcesToggle.querySelector('.collapse-icon');
+
 
             let currentFilters = { type: 'all', location: 'all', material: 'all' };
 
@@ -806,7 +899,7 @@
 
             } catch (error) {
                 console.error("Error initializing Firebase:", error);
-                loadingIndicator.textContent = "Error loading activities. Please ensure Firebase config is correct.";
+                loadingIndicator.textContent = "Error loading activities. Please ensure Firebase config is correct and security rules are set up.";
                 // Fallback to a random UUID if Firebase init fails
                 userId = crypto.randomUUID();
                 userIdDisplay.textContent = `User ID: ${userId} (Offline Mode)`;
@@ -815,6 +908,7 @@
                 renderGames();
                 populateMaterialFilter();
                 updateActivityChart();
+                updateDeletedCount();
             }
 
             // Function to listen for real-time activity updates from Firestore
@@ -826,8 +920,16 @@
                     renderGames();
                     populateMaterialFilter();
                     updateActivityChart();
+                    updateDeletedCount();
                     return;
                 }
+                // Firestore Security Rule Reminder:
+                // Ensure your Firestore security rules allow read/write access to `artifacts/{appId}/users/{userId}/activities`
+                // for authenticated users, where `userId` matches `request.auth.uid`.
+                // Example rule:
+                // match /artifacts/{appId}/users/{userId}/{documents=**} {
+                //   allow read, write: if request.auth != null && request.auth.uid == userId;
+                // }
                 const activitiesCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/activities`);
                 const q = query(activitiesCollectionRef);
 
@@ -846,16 +948,18 @@
                     renderGames();
                     populateMaterialFilter();
                     updateActivityChart();
+                    updateDeletedCount();
                     console.log("Activities updated from Firestore (merged with initial data):", allActivities);
                     console.log(`Total activities currently displayed: ${allActivities.length}`);
                 }, (error) => {
                     console.error("Error fetching activities from Firestore:", error);
-                    loadingIndicator.textContent = "Failed to load user activities. Displaying initial games.";
+                    loadingIndicator.textContent = "Failed to load user activities. Displaying initial games. Please check console for Firebase errors (often security rules related).";
                     // Fallback to initial games if Firestore fetch fails
                     allActivities = [...initialGamesData];
                     renderGames();
                     populateMaterialFilter();
                     updateActivityChart();
+                    updateDeletedCount();
                 });
             }
 
@@ -889,6 +993,8 @@
                 gameGrid.innerHTML = '';
                 
                 const filteredGames = allActivities.filter(game => {
+                    // Only show activities that are NOT deleted and match filters
+                    const notDeleted = !game.deleted;
                     const typeMatch = currentFilters.type === 'all' || game.type === currentFilters.type;
                     const locationMatch = currentFilters.location === 'all' || game.location === currentFilters.location || game.location === 'Both';
                     
@@ -899,7 +1005,7 @@
                         );
                     }
                     
-                    return typeMatch && locationMatch && materialMatch;
+                    return notDeleted && typeMatch && locationMatch && materialMatch;
                 });
 
                 filteredGames.forEach((game) => {
@@ -919,7 +1025,7 @@
                             <h3 class="text-xl font-bold text-teal-700 mb-2">${game.name || 'Untitled Activity'}</h3>
                             <p class="text-stone-600 text-sm">${game.description || (game.objectives ? game.objectives.substring(0, 100) + '...' : 'No description available.')}</p>
                         </div>
-                        <button class="mt-4 w-full bg-teal-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-700 transition-colors">View Details</button>
+                        <button class="mt-4 w-full bg-teal-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-700 transition-colors view-details-btn">View Details</button>
                     `;
                     gameGrid.appendChild(card);
                     
@@ -1011,6 +1117,7 @@
                         </div>
                     </div>
                 `;
+                moveToTrashBtn.dataset.gameId = gameId; // Set the game ID on the trash button
                 modal.classList.add('active');
             }
 
@@ -1035,9 +1142,9 @@
                     `;
                     addRemoveEventListeners(); // Re-add listeners for new fields
                 } else {
-                    const card = e.target.closest('[data-game-id]');
+                    const card = e.target.closest('.view-details-btn'); // Target the "View Details" button specifically
                     if (card) {
-                        showGameDetails(card.dataset.gameId);
+                        showGameDetails(card.closest('[data-game-id]').dataset.gameId);
                     }
                 }
             });
@@ -1075,8 +1182,10 @@
             });
 
             function updateActivityChart() {
-                const fieldGameCount = allActivities.filter(g => g.type === 'Field Game').length;
-                const teamTimeCount = allActivities.filter(g => g.type === 'Team Time').length;
+                // Only count non-deleted activities for the chart
+                const activeActivities = allActivities.filter(g => !g.deleted);
+                const fieldGameCount = activeActivities.filter(g => g.type === 'Field Game').length;
+                const teamTimeCount = activeActivities.filter(g => g.type === 'Team Time').length;
 
                 if (activityTypeChart) {
                     activityTypeChart.data.datasets[0].data = [fieldGameCount, teamTimeCount];
@@ -1096,7 +1205,7 @@
                                 ],
                                 borderColor: [
                                     '#ffffff',
-                                    '#ffffff' // Fixed: Added missing quotes
+                                    '#ffffff'
                                 ],
                                 borderWidth: 4
                             }]
@@ -1187,7 +1296,8 @@
                     // Get all instruction and material values
                     instructions: Array.from(document.querySelectorAll('#instructions-container textarea[name="instructions[]"]')).map(el => el.value).filter(val => val.trim() !== ''),
                     materials: Array.from(document.querySelectorAll('#materials-container input[name="materials[]"]')).map(el => el.value).filter(val => val.trim() !== ''),
-                    description: formData.get('objectives').substring(0, 100) + '...' // Use objectives as description snippet
+                    description: formData.get('objectives').substring(0, 100) + '...', // Use objectives as description snippet
+                    deleted: false // New activities are not deleted by default
                 };
 
                 // Basic validation
@@ -1216,13 +1326,136 @@
                 }
             });
 
+            // --- Soft Delete / Trash Can Logic ---
+            moveToTrashBtn.addEventListener('click', async (e) => {
+                const gameId = e.target.dataset.gameId;
+                if (gameId && db && userId) {
+                    try {
+                        const activityRef = doc(db, `artifacts/${appId}/users/${userId}/activities`, gameId);
+                        await updateDoc(activityRef, { deleted: true });
+                        console.log(`Activity ${gameId} moved to trash.`);
+                        modal.classList.remove('active'); // Close the details modal
+                        // UI will update automatically via onSnapshot
+                    } catch (error) {
+                        console.error("Error moving activity to trash:", error);
+                        // Show user-friendly error message
+                    }
+                }
+            });
+
+            viewDeletedActivitiesBtn.addEventListener('click', () => {
+                renderDeletedActivities();
+                deletedActivitiesModal.classList.add('active');
+            });
+
+            closeDeletedActivitiesModalBtn.addEventListener('click', () => deletedActivitiesModal.classList.remove('active'));
+            deletedActivitiesModal.addEventListener('click', (e) => {
+                if (e.target === deletedActivitiesModal) {
+                    deletedActivitiesModal.classList.remove('active');
+                }
+            });
+
+            function updateDeletedCount() {
+                const deletedActivities = allActivities.filter(game => game.deleted);
+                deletedCountSpan.textContent = deletedActivities.length;
+            }
+
+            function renderDeletedActivities() {
+                deletedActivitiesList.innerHTML = '';
+                const deletedGames = allActivities.filter(game => game.deleted);
+
+                if (deletedGames.length === 0) {
+                    deletedActivitiesList.innerHTML = '<p class="text-stone-600 text-center py-8">No activities in trash.</p>';
+                    return;
+                }
+
+                deletedGames.forEach(game => {
+                    const listItem = document.createElement('div');
+                    listItem.className = 'bg-stone-100 p-4 rounded-lg flex flex-col sm:flex-row justify-between items-start sm:items-center border border-stone-200';
+                    listItem.innerHTML = `
+                        <div class="mb-2 sm:mb-0">
+                            <h4 class="text-lg font-semibold text-stone-800">${game.name}</h4>
+                            <p class="text-sm text-stone-600">${game.type} - ${game.location}</p>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-2">
+                            <button class="restore-activity-btn bg-teal-500 text-white font-semibold py-1 px-3 rounded-md hover:bg-teal-600 transition-colors text-sm" data-id="${game.id}">Restore</button>
+                            <button class="permanent-delete-btn bg-red-500 text-white font-semibold py-1 px-3 rounded-md hover:bg-red-600 transition-colors text-sm" data-id="${game.id}">Delete Permanently</button>
+                        </div>
+                    `;
+                    deletedActivitiesList.appendChild(listItem);
+                });
+
+                // Add event listeners for restore and permanent delete buttons
+                deletedActivitiesList.querySelectorAll('.restore-activity-btn').forEach(button => {
+                    button.addEventListener('click', (e) => restoreActivity(e.target.dataset.id));
+                });
+                deletedActivitiesList.querySelectorAll('.permanent-delete-btn').forEach(button => {
+                    button.addEventListener('click', (e) => showConfirmationModal(e.target.dataset.id));
+                });
+            }
+
+            async function restoreActivity(gameId) {
+                if (db && userId) {
+                    try {
+                        const activityRef = doc(db, `artifacts/${appId}/users/${userId}/activities`, gameId);
+                        await updateDoc(activityRef, { deleted: false });
+                        console.log(`Activity ${gameId} restored.`);
+                        deletedActivitiesModal.classList.remove('active'); // Close trash modal after restore
+                        // UI will update automatically via onSnapshot
+                    } catch (error) {
+                        console.error("Error restoring activity:", error);
+                        // Show user-friendly error message
+                    }
+                }
+            }
+
+            function showConfirmationModal(gameId) {
+                activityToDeleteId = gameId; // Store the ID globally
+                confirmationModal.classList.add('active');
+            }
+
+            confirmPermanentDeleteBtn.addEventListener('click', async () => {
+                if (activityToDeleteId && db && userId) {
+                    try {
+                        await deleteDoc(doc(db, `artifacts/${appId}/users/${userId}/activities`, activityToDeleteId));
+                        console.log(`Activity ${activityToDeleteId} permanently deleted.`);
+                        confirmationModal.classList.remove('active');
+                        deletedActivitiesModal.classList.remove('active'); // Close trash modal
+                        activityToDeleteId = null; // Clear the stored ID
+                        // UI will update automatically via onSnapshot
+                    } catch (error) {
+                        console.error("Error permanently deleting activity:", error);
+                        // Show user-friendly error message
+                    }
+                }
+            });
+
+            cancelPermanentDeleteBtn.addEventListener('click', () => {
+                confirmationModal.classList.remove('active');
+                activityToDeleteId = null; // Clear the stored ID
+            });
+            confirmationModal.addEventListener('click', (e) => {
+                if (e.target === confirmationModal) {
+                    confirmationModal.classList.remove('active');
+                    activityToDeleteId = null;
+                }
+            });
+
+            // --- Leader Resources Collapsible Logic ---
+            leaderResourcesToggle.addEventListener('click', () => {
+                leaderResourcesContent.classList.toggle('collapsed');
+                collapseIcon.classList.toggle('collapsed');
+            });
+            
             // Initial render and chart update (will be updated by onSnapshot once data loads)
             // If Firebase fails to initialize, these will use initialGamesData
             // Otherwise, onSnapshot will trigger the first render after fetching user data.
-            if (!app) { // Only render initial games if Firebase failed to initialize
+            // This check ensures we don't try to render if Firebase is still initializing successfully.
+            if (!app) { 
                 renderGames();
                 populateMaterialFilter();
                 updateActivityChart();
+                updateDeletedCount();
             }
         });
     </script>
