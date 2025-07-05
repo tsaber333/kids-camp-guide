@@ -1314,7 +1314,7 @@
                     if (db && userId) {
                         const docRef = await addDoc(collection(db, `artifacts/${appId}/users/${userId}/activities`), newActivity);
                         console.log("Document written with ID: ", docRef.id);
-                        addActivityModal.classList.remove('active');
+                        addActivityModal.classList.remove('active'); // Close the add activity modal
                         addActivityForm.reset();
                         // The onSnapshot listener will automatically update the UI
                     } else {
@@ -1426,8 +1426,8 @@
                     try {
                         await deleteDoc(doc(db, `artifacts/${appId}/users/${userId}/activities`, activityToDeleteId));
                         console.log(`Activity ${activityToDeleteId} permanently deleted.`);
-                        confirmationModal.classList.remove('active');
-                        deletedActivitiesModal.classList.remove('active'); // Close trash modal
+                        confirmationModal.classList.remove('active'); // Close the confirmation modal
+                        deletedActivitiesModal.classList.remove('active'); // Close the deleted activities modal
                         activityToDeleteId = null; // Clear the stored ID
                         // UI will update automatically via onSnapshot
                     } catch (error) {
