@@ -40,7 +40,7 @@
         }
         /* Collapsible section styles */
         .collapsible-content {
-            max-height: 1000px; /* Arbitrarily large value */
+            max-height: 1000px; /* Arbitrarily large value to allow smooth transition */
             overflow: hidden;
             transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
             opacity: 1;
@@ -53,7 +53,7 @@
             transition: transform 0.3s ease-out;
         }
         .collapse-icon.collapsed {
-            transform: rotate(-90deg);
+            transform: rotate(-90deg); /* Rotate up when collapsed */
         }
     </style>
 </head>
@@ -720,7 +720,7 @@
                 objectives: "Enhances precise communication, active listening, trust, and spatial reasoning.",
                 generalInstructions: [
                     "<strong>Setup:</strong> Prepare a reference image or diagram of a simple structure (e.g., a specific block tower design, a pattern of stacked cups, a LEGO creation, a simple shape made of popsicle sticks). Ensure the structure is achievable with the provided materials and is not overly complex. Provide each team with an identical set of building materials (e.g., wooden blocks, plastic cups, LEGOs, popsicle sticks) and blindfolds or bandanas. Each team should have a designated building surface (e.g., a small table or clear floor space).",
-                    "<strong>Team Formation:</strong> Divide campers into small teams (e.g., 3-5 players per team). For each round, designate one or two team members to be the 'builders' (who will be blindfolded) and the rest to be the 'guides' (who will give instructions). Rotate roles in subsequent rounds.",
+                    "<strong>Team Formation:</strong> Divide campers into small teams (e.g., 3-5 players per team). For each round, designate one or two team members to be the 'builders' (who will be blindfolded) and the rest to be the 'guides'. Rotate roles in subsequent rounds.",
                     "<strong>Game Play:</strong> The builders are blindfolded and sit at their building area with the materials within reach. The guides stand a short distance away, where they can clearly see the reference image but *cannot* touch the materials, the blindfolded builders, or the structure being built. The guides must use only verbal instructions to direct the builders to construct the replica of the reference image.",
                     "<strong>Communication Rules:</strong> Emphasize clear, concise, and specific instructions. Guides should describe shapes, colors, positions, and orientations precisely (e.g., 'Take the red square block', 'Place it on top of the green rectangle, centered', 'Rotate it 90 degrees clockwise'). Builders can ask clarifying questions (e.g., 'Do you mean the long side or the short side?'), but guides cannot use gestures or touch. If the structure falls or is built incorrectly, the team must correct it or restart that section.",
                     "<strong>Winning:</strong> The first team to successfully build the structure exactly as shown in the reference image wins the round. You can play multiple rounds, rotating who is blindfolded and introducing new reference images for each round.",
@@ -919,7 +919,7 @@
                     // If Firestore isn't ready, just display the initial games.
                     allActivities = [...initialGamesData];
                     renderGames();
-                    populateMaterialFilter();
+                    populateMaterialFilter(); // Ensure materials are populated even in offline mode
                     updateActivityChart();
                     updateDeletedCount();
                     return;
@@ -949,7 +949,7 @@
                     
                     allActivities = Array.from(mergedGamesMap.values());
                     renderGames();
-                    populateMaterialFilter();
+                    populateMaterialFilter(); // IMPORTANT: Call this after allActivities is updated
                     updateActivityChart();
                     updateDeletedCount();
                     console.log("Activities updated from Firestore (merged with initial data):", allActivities);
@@ -960,7 +960,7 @@
                     // Fallback to initial games if Firestore fetch fails
                     allActivities = [...initialGamesData];
                     renderGames();
-                    populateMaterialFilter();
+                    populateMaterialFilter(); // Ensure materials are populated even if fetch fails
                     updateActivityChart();
                     updateDeletedCount();
                 });
@@ -978,11 +978,14 @@
                         });
                     }
                 });
-                return Array.from(allMaterials).sort();
+                const sortedMaterials = Array.from(allMaterials).sort((a, b) => a.localeCompare(b)); // Sort alphabetically
+                console.log("Unique materials found:", sortedMaterials); // Debugging
+                return sortedMaterials;
             }
 
             function populateMaterialFilter() {
                 const uniqueMaterials = getUniqueMaterials();
+                const currentSelectedMaterial = materialFilterSelect.value; // Preserve current selection
                 materialFilterSelect.innerHTML = '<option value="all">All Materials</option>';
                 uniqueMaterials.forEach(material => {
                     const option = document.createElement('option');
@@ -990,6 +993,12 @@
                     option.textContent = material;
                     materialFilterSelect.appendChild(option);
                 });
+                // Restore the previous selection if it still exists
+                if (uniqueMaterials.includes(currentSelectedMaterial)) {
+                    materialFilterSelect.value = currentSelectedMaterial;
+                } else {
+                    materialFilterSelect.value = 'all'; // Default to 'All' if previous selection is no longer valid
+                }
             }
 
             function renderGames() {
@@ -1017,7 +1026,7 @@
                     card.dataset.gameId = game.id;
                     
                     const typeColor = game.type === 'Field Game' ? 'bg-sky-100 text-sky-800' : 'bg-amber-100 text-amber-800';
-                    const locationIcon = game.location === 'Outdoor' ? '☀️' : game.location === 'Indoor' ? '🏠' : '☀️/🏠';
+                    const locationIcon = game.location === 'Outdoor' ? '☀️' : game.location === 'Indoor' ? '🏠' : '☀️/�';
 
                     card.innerHTML = `
                         <div class="flex-grow">
@@ -1314,9 +1323,9 @@
                     if (db && userId) {
                         const docRef = await addDoc(collection(db, `artifacts/${appId}/users/${userId}/activities`), newActivity);
                         console.log("Document written with ID: ", docRef.id);
-                        addActivityModal.classList.remove('active'); // Close the add activity modal
+                        addActivityModal.classList.remove('active'); // Close the add activity modal on success
                         addActivityForm.reset();
-                        // The onSnapshot listener will automatically update the UI
+                        // The onSnapshot listener will automatically update the UI and call populateMaterialFilter
                     } else {
                         console.error("Firestore not initialized or user not authenticated. Activity not saved.");
                         // Optionally, add the activity to the local array if Firestore is not available
@@ -1337,7 +1346,7 @@
                         const activityRef = doc(db, `artifacts/${appId}/users/${userId}/activities`, gameId);
                         await updateDoc(activityRef, { deleted: true });
                         console.log(`Activity ${gameId} moved to trash.`);
-                        modal.classList.remove('active'); // Close the details modal
+                        modal.classList.remove('active'); // Close the details modal on success
                         // UI will update automatically via onSnapshot
                     } catch (error) {
                         console.error("Error moving activity to trash:", error);
