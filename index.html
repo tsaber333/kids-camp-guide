@@ -528,7 +528,7 @@
                     "<strong>Team Formation:</strong> Divide campers into small teams (e.g., 3-5 players per team). Each team will take turns bowling.",
                     "<strong>Game Play:</strong> A player from the first team stands behind the rolling line and rolls the bowling ball (or inflatable ball) towards the pins/cups. They get two rolls per turn, just like in traditional bowling, to knock down as many as possible. Players must remain behind the rolling line until the ball has stopped.",
                     "<strong>Scoring:</strong> Points are awarded for each pin/cup knocked down (e.g., 1 point per pin). A perfect strike (all 10 pins on the first roll) can earn bonus points (e.g., 15 points). A spare (all 10 pins on two rolls) can earn a slightly smaller bonus (e.g., 12 points). Keep score on a whiteboard or large paper. After a player's turn, the pins are reset.",
-                    "<strong>Winning:</strong> Play for a set number of rounds (e.g., 5-10 rounds per team) or until a target score is reached. The team with the highest total score at the end wins."
+                    "<strong>Winning:</strong> Play for a set number of rounds (e.g., 5-10 rounds per team) or until a target score is reached. The team with the most points at the end wins."
                 ],
                 materials: ["Bowling Ball (1)", "Bowling Pins (10)", "Plastic Cups (100)", "Inflatable Balls (3)", "Masking Tape", "Cones", "Scoreboard (1)", "Pencils", "Cardstock Paper", "Whistles (2)", "Stopwatch (1)"],
                 safety: "Ensure the rolling area is clear and dry to prevent slipping. Remind children to roll, not throw, the ball, and to keep it low to the ground. Supervise closely to ensure children are not in the ball's path, especially when pins are being reset. Designate clear 'return' paths for the ball and ensure players wait until the ball is stationary before approaching the pins.",
@@ -543,7 +543,7 @@
                 description: "Teams test aim and precision using slingshots to launch projectiles at targets for points.",
                 objectives: "Enhances aim, precision, teamwork, and coordination.",
                 generalInstructions: [
-                    "<strong>Setup:</strong> Designate a clear 'shooting line' using tape or cones. Set up various targets at different distances from the shooting line, assigning different point values to each target (e.g., closer targets = 5 points, medium = 10 points, furthest/smallest = 20 points). Targets can include buckets, laundry baskets, hula hoops laid flat, or stacked plastic cups. Ensure a clear and safe backstop behind the targets to contain projectiles. Provide each team with a slingshot and a supply of soft, safe projectiles (e.g., tennis balls, plastic balls, bean bags, cotton balls, crumpled paper).",
+                    "<strong>Setup:</strong> Designate a clear 'shooting line' using tape or cones. Set up various targets at different distances from the shooting line, assigning different point values to each target (e.g., closer targets = 5 points, medium = 10 points, furthest/smallest = 20 points). Targets can include buckets, laundry baskets, hula hoops laid flat, or stacked plastic cups. Ensure a clear and safe backstop behind the targets to contain projectiles. Provide each team with a slingshot and a supply of soft, safe projectiles (e.g., tennis balls, plastic balls, crumpled paper, small clay balls).",
                     "<strong>Team Formation:</strong> Divide campers into small teams (e.g., 3-5 players per team). Each team will take turns shooting.",
                     "<strong>Game Play:</strong> Teams send one player at a time to the shooting line. The player uses the slingshot to launch a projectile at the targets. They get a set number of shots per turn (e.g., 3-5 shots). After shooting, the player retrieves their projectiles (if safe to do so and not interfering with other players) and returns to tag the next player in line. Only one player should be at the shooting line at a time.",
                     "<strong>Scoring:</strong> Points are tallied for successful hits on targets. Projectiles must hit or land inside the target to count. A designated scorekeeper records points for each team.",
@@ -667,7 +667,7 @@
                     "<strong>Winning:</strong> The game continues until all messages are decoded, leading to a final message (e.g., 'You have unlocked the secret of teamwork!') or a small 'treasure' (e.g., a bag of fake gold coins, a small treat). The first team to successfully decode all messages wins."
                 ],
                 materials: ["ABC Beads (3 sets)", "Colored Beads (3 sets)", "Pencils (various)", "Pens (3)", "Cardstock Paper (50)", "Construction Paper (various)", "Washable Markers (various)", "Sticky Notes (various)", "Laminated Bible Chapter Names (2 sets)", "Small Metal Cups (6)", "Plastic Critters (2 large ziplocks)", "Clipboards (4)", "Stopwatch (1)", "Envelopes"],
-                safety: "Ensure all materials are safe for children to handle. Keep the area organized to prevent clutter. Remind children not to put beads or small items in their mouths. Emphasize fair play and not peeking at other teams' solutions.",
+                safety: "Ensure all materials are safe for children to handle. Keep the area organized to prevent clutter. Remind children not to put small items in their mouths. Emphasize fair play and not peeking at other teams' solutions.",
                 supercharged: "Decoding messages requires careful thought and teamwork, just like understanding God's Word requires us to study and seek His truth together. The 'secrets' we uncover in the Bible reveal more about God's plan and love for us. What 'messages' is God speaking to you through His Word right now?",
                 deleted: false
             },
@@ -861,6 +861,7 @@
                         userId = user.uid;
                     } else {
                         let signedIn = false;
+                        // Use __initial_auth_token if available (from Canvas environment)
                         if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                             try {
                                 console.log("Attempting signInWithCustomToken...");
@@ -927,8 +928,10 @@
                 // Ensure your Firestore security rules allow read/write access to `artifacts/{appId}/users/{userId}/activities`
                 // for authenticated users, where `userId` matches `request.auth.uid`.
                 // Example rule:
-                // match /artifacts/{appId}/users/{userId}/{documents=**} {
-                //   allow read, write: if request.auth != null && request.auth.uid == userId;
+                // match /databases/{database}/documents {
+                //   match /artifacts/{appId}/users/{userId}/{documents=**} {
+                //     allow read, write: if request.auth != null && request.auth.uid == userId;
+                //   }
                 // }
                 const activitiesCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/activities`);
                 const q = query(activitiesCollectionRef);
@@ -1410,11 +1413,15 @@
             }
 
             function showConfirmationModal(gameId) {
+                console.log("Showing confirmation modal for gameId:", gameId); // DEBUG LOG
                 activityToDeleteId = gameId; // Store the ID globally
                 confirmationModal.classList.add('active');
             }
 
             confirmPermanentDeleteBtn.addEventListener('click', async () => {
+                console.log("Permanent delete button clicked."); // DEBUG LOG
+                console.log("Values before deletion check:", { activityToDeleteId, dbReady: !!db, userId }); // DEBUG LOG
+
                 if (activityToDeleteId && db && userId) {
                     try {
                         await deleteDoc(doc(db, `artifacts/${appId}/users/${userId}/activities`, activityToDeleteId));
@@ -1427,6 +1434,8 @@
                         console.error("Error permanently deleting activity:", error);
                         // Show user-friendly error message
                     }
+                } else {
+                    console.warn("Permanent delete aborted: Missing activityToDeleteId, db, or userId."); // DEBUG LOG
                 }
             });
 
