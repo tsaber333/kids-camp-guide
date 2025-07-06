@@ -290,12 +290,10 @@
                     </div>
                 </div>
 
-                <!-- Grid to display activity cards with horizontal scrolling -->
-                <div class="overflow-x-auto pb-4">
-                    <div id="game-grid" class="grid grid-flow-col auto-cols-[minmax(250px,1fr)] sm:auto-cols-[minmax(280px,1fr)] md:auto-cols-[minmax(300px,1fr)] lg:auto-cols-[minmax(320px,1fr)] gap-6">
-                        <!-- Loading indicator for activities -->
-                        <div id="loading-indicator" class="col-span-full text-center text-stone-500 text-lg py-8">Loading activities...</div>
-                    </div>
+                <!-- Grid to display activity cards -->
+                <div id="game-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <!-- Loading indicator for activities -->
+                    <div id="loading-indicator" class="col-span-full text-center text-stone-500 text-lg py-8">Loading activities...</div>
                 </div>
             </section>
 
@@ -1684,7 +1682,6 @@
             /**
              * Toggles the selection of an activity for scheduling.
              * Highlights the selected card and updates `selectedActivityForSchedule`.
-             * @param {string} gameId - The ID of the activity to select/deselect.
              */
             function toggleActivitySelection(gameId) {
                 const previouslySelectedCard = document.querySelector('.game-card.selected');
