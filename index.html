@@ -189,15 +189,15 @@
             opacity: 1; /* Show on hover */
         }
 
-        /* Team Colors */
-        .team-1 { color: #dc2626; font-weight: bold; font-size: 0.875rem; } /* red-600 */
-        .team-2 { color: #2563eb; font-weight: bold; font-size: 0.875rem; } /* blue-600 */
-        .team-3 { color: #16a34a; font-weight: bold; font-size: 0.875rem; } /* green-600 */
-        .team-4 { color: #9333ea; font-weight: bold; font-size: 0.875rem; } /* purple-600 */
-        .team-5 { color: #ea580c; font-weight: bold; font-size: 0.875rem; } /* orange-600 */
-        .team-6 { color: #4f46e5; font-weight: bold; font-size: 0.875rem; } /* indigo-600 */
-        .team-7 { color: #db2777; font-weight: bold; font-size: 0.875rem; } /* pink-600 */
-        .team-8 { color: #0d9488; font-weight: bold; font-size: 0.875rem; } /* teal-600 */
+        /* Team Colors - Made more distinct */
+        .team-1 { color: #b91c1c; font-weight: bold; font-size: 0.875rem; } /* red-700 */
+        .team-2 { color: #1d4ed8; font-weight: bold; font-size: 0.875rem; } /* blue-700 */
+        .team-3 { color: #0f766e; font-weight: bold; font-size: 0.875rem; } /* teal-700 */
+        .team-4 { color: #7e22ce; font-weight: bold; font-size: 0.875rem; } /* purple-700 */
+        .team-5 { color: #c2410c; font-weight: bold; font-size: 0.875rem; } /* orange-700 */
+        .team-6 { color: #4338ca; font-weight: bold; font-size: 0.875rem; } /* indigo-700 */
+        .team-7 { color: #be185d; font-weight: bold; font-size: 0.875rem; } /* pink-700 */
+        .team-8 { color: #047857; font-weight: bold; font-size: 0.875rem; } /* emerald-700 */
 
     </style>
 </head>
@@ -603,7 +603,7 @@
                             <ul>
                                 <li><strong>Setup:</strong> Arrange 5-10 empty soda cans (or plastic bottles, small plastic cups) on a raised surface (e.g., a bench, small table) at varying distances. Mark a 'shooting line' 10-15 feet away. Provide a supply of rubber bands.</li>
                                 <li><strong>Goal:</strong> Knock down as many cans as possible in one minute using rubber bands.</li>
-                                <li><strong>How to Play:</strong> Players stand at the shooting line and fling rubber bands at the cans. They can shoot as quickly as they can reload.</li>
+                                <li><strong>How to Play:</strong> Players stand at the throwing line and fling rubber bands at the cans. They can shoot as quickly as they can reload.</li>
                                 <li><strong>Scoring:</strong> 1 point for each can knocked completely off the surface. Cans are reset after each player's turn or after 60 seconds for the next team.</li>
                             </ul>
                         `
@@ -860,7 +860,7 @@
                 objectives: "Enhances trust, communication, active listening, teamwork, and reinforces camp values.",
                 generalInstructions: [
                     "<strong>Setup:</strong> In an open indoor or outdoor area, scatter 'mines' (e.g., cones, bean bags, soft objects like small balls or crumpled paper) randomly across the space. These are obstacles to be avoided. Then, strategically place 'power-up' items (e.g., laminated Bible verses, rubber ducks, fake gold coins, plastic critters, wooden blocks, small laminated pictures representing Foursquare values) throughout the minefield. Ensure power-ups are distinct from mines and easily identifiable by touch or by a quick verbal description from guides. Have blindfolds or bandanas ready.",
-                    "<strong>Team Formation:</strong> Divide campers into small teams (e.g., 3-5 campers per team). Each team will designate one player to be the 'navigator' (blindfolded) and the rest to be the 'guides'. Teams should have a designated 'collection zone' for their power-ups.",
+                    "<strong>Team Formation:</strong> Divide campers into small teams (e.g., 4-6 campers per team). Each team will designate one player to be the 'navigator' (blindfolded) and the rest to be the 'guides'. Teams should have a designated 'collection zone' for their power-ups.",
                     "<strong>Game Play:</strong> The navigator is blindfolded and stands at the edge of the minefield. On 'Go!', the guides must use only verbal instructions (no touching, pointing, or physical contact!) to direct their blindfolded navigator through the minefield. The goal is to collect as many 'power-ups' as possible while avoiding touching any 'mines'. Once a power-up is found, the navigator must bring it back to their team's collection zone before seeking another.",
                     "<strong>Mine Penalty:</strong> If the navigator touches a 'mine', they must immediately stop. The guides must then verbally direct them back to the starting point of that specific segment of the minefield (or the beginning of the entire minefield, depending on desired difficulty) before they can continue their search.",
                     "<strong>Scoring:</strong> Teams earn points for each 'power-up' successfully collected and brought back to their collection zone. The game can be timed (e.g., 10-15 minutes), with the team collecting the most power-ups in that set time winning, or the first team to collect all designated power-ups winning. Rotate navigators within each team so everyone gets a chance to experience both roles.",
@@ -1027,31 +1027,31 @@
             }
         ];
 
-        // Define the schedule data from the PDF and CSV, including team rotations for non-droppable slots
+        // Define the schedule data from the PDF and image, including team rotations for non-droppable slots
         const scheduleDataFromPDF = {
             'TUES': {
                 '10:10-11:10': {
-                    'ROCKWALL': 'Team 1, Team 3',
-                    'ARCHERY': 'Team 2',
-                    'TEAM TIME': 'Team 4, Team 5',
-                    'POOL': 'Team 6',
-                    'CREATION STATION': 'Team 7',
-                    'FIELD': 'Team 5, Team 7', // Corrected from CSV
-                    'GAMES & CHILL': 'Team 6, Team 8' // Corrected from CSV
+                    'ROCKWALL': '', // Blocked out - no teams
+                    'ARCHERY': '', // Blocked out - no teams
+                    'TEAM TIME': 'Team 1, Team 3', 
+                    'POOL': 'Team 2', // Corrected
+                    'CREATION STATION': 'Team 4', 
+                    'FIELD': 'Team 5, Team 7',
+                    'GAMES & CHILL': 'Team 6, Team 8'
                 },
                 '1:25-2:25': {
                     'ROCKWALL': 'Team 1',
                     'ARCHERY': 'Team 6',
                     'TEAM TIME': 'Team 2, Team 7',
-                    'POOL': 'Team 3', // Corrected from CSV
-                    'CREATION STATION': 'Team 4', // Corrected from CSV
+                    'POOL': '', // Blocked out - no teams
+                    'CREATION STATION': '', // Blocked out - no teams
                     'FIELD': 'Team 3, Team 8',
                     'GAMES & CHILL': 'Team 4, Team 5'
                 },
                 '4:20-5:20': {
                     'ROCKWALL': 'Team 8',
                     'ARCHERY': 'Team 4',
-                    'TEAM TIME': 'Team 1, Team 5', // Corrected from CSV
+                    'TEAM TIME': '', // Blocked out - no teams
                     'POOL': 'Team 1',
                     'CREATION STATION': 'Team 5',
                     'FIELD': 'Team 2, Team 6',
@@ -1062,13 +1062,13 @@
                 '10:10-11:10': {
                     'ROCKWALL': 'Team 2',
                     'ARCHERY': 'Team 3',
-                    'TEAM TIME': 'Team 6, Team 5', // Corrected from CSV
-                    'POOL': 'Team 8', // Corrected from CSV
-                    'CREATION STATION': 'Team 7', // Corrected from CSV
-                    'FIELD': 'Team 1, Team 4', // Corrected from CSV
-                    'GAMES & CHILL': 'Team 4' // Corrected from CSV
+                    'TEAM TIME': 'Team 6, Team 5',
+                    'POOL': 'Team 8',
+                    'CREATION STATION': 'Team 7',
+                    'FIELD': 'Team 1, Team 4',
+                    'GAMES & CHILL': '', // Blocked out - no teams
                 },
-                '1:25-2:25': { // This will be handled by colspan in calendarGridStructure
+                '1:25-2:25': { 
                     'CAMP CARNIVAL': 'CAMP CARNIVAL'
                 },
                 '4:20-5:20': {
@@ -1077,7 +1077,7 @@
                     'TEAM TIME': 'Team 4, Team 8',
                     'POOL': 'Team 6',
                     'CREATION STATION': 'Team 3',
-                    'FIELD': 'Team 1, Team 2', // Corrected from CSV
+                    'FIELD': '', // Blocked out - no teams
                     'GAMES & CHILL': 'Team 1, Team 2'
                 }
             },
@@ -1085,15 +1085,15 @@
                 '10:10-11:10': {
                     'ROCKWALL': 'Team 3',
                     'ARCHERY': 'Team 7',
-                    'TEAM TIME': 'Team 1, Team 2', // Corrected from CSV
+                    'TEAM TIME': '', // Blocked out - no teams
                     'POOL': 'Team 4',
                     'CREATION STATION': 'Team 8',
                     'FIELD': 'Team 1, Team 5',
                     'GAMES & CHILL': 'Team 2, Team 6'
                 },
                 '1:25-2:25': {
-                    'ROCKWALL': 'Team 5', // Corrected from CSV
-                    'ARCHERY': 'Team 7', // Corrected from CSV
+                    'ROCKWALL': '', // Blocked out - no teams
+                    'ARCHERY': '', // Blocked out - no teams
                     'TEAM TIME': 'Team 8, Team 2',
                     'POOL': 'Team 3',
                     'CREATION STATION': 'Team 1',
@@ -1104,8 +1104,8 @@
                     'ROCKWALL': 'Team 5',
                     'ARCHERY': 'Team 8',
                     'TEAM TIME': 'Team 1, Team 6',
-                    'POOL': 'Team 7', // Corrected from CSV
-                    'CREATION STATION': 'Team 2', // Corrected from CSV
+                    'POOL': '', // Blocked out - no teams
+                    'CREATION STATION': '', // Blocked out - no teams
                     'FIELD': 'Team 2, Team 7',
                     'GAMES & CHILL': 'Team 3, Team 4'
                 }
@@ -1117,34 +1117,34 @@
                     'TEAM TIME': 'Team 7, Team 3',
                     'POOL': 'Team 5',
                     'CREATION STATION': 'Team 6',
-                    'FIELD': 'Team 1, Team 8', // Corrected from CSV
+                    'FIELD': '', // Blocked out - no teams
                     'GAMES & CHILL': 'Team 8, Team 1'
                 },
-                '1:25-2:25': { // This will be handled by colspan in calendarGridStructure
+                '1:25-2:25': { 
                     'POINTS PALOOZA': 'POINTS PALOOZA'
                 },
-                '4:20-5:20': { // Corrected based on CSV and image
+                '4:20-5:20': { 
                     'ROCKWALL': 'Team 6',
                     'ARCHERY': 'Team 1',
                     'TEAM TIME': 'Team 5, Team 4',
                     'POOL': 'Team 7',
                     'CREATION STATION': 'Team 2',
                     'FIELD': 'Team 8, Team 3',
-                    'GAMES & CHILL': 'Team 6, Team 7' // Corrected from CSV
+                    'GAMES & CHILL': '', // Blocked out - no teams
                 }
             }
         };
 
         // Define the color mapping for each team
         const teamColors = {
-            'Team 1': 'team-1', // red-600
-            'Team 2': 'team-2', // blue-600
-            'Team 3': 'team-3', // green-600
-            'Team 4': 'team-4', // purple-600
-            'Team 5': 'team-5', // orange-600
-            'Team 6': 'team-6', // indigo-600
-            'Team 7': 'team-7', // pink-600
-            'Team 8': 'team-8'  // teal-600
+            'Team 1': 'team-1', // red-700
+            'Team 2': 'team-2', // blue-700
+            'Team 3': 'team-3', // teal-700
+            'Team 4': 'team-4', // purple-700
+            'Team 5': 'team-5', // orange-700
+            'Team 6': 'team-6', // indigo-700
+            'Team 7': 'team-7', // pink-700
+            'Team 8': 'team-8'  // emerald-700
         };
 
 
@@ -1162,8 +1162,8 @@
 
             // TUESDAY
             { type: 'time-slot', day: 'TUES', timeSlot: '10:10-11:10', label: 'TUES<br>Activity 1<br>10:10-11:10' },
-            { type: 'activity-slot', day: 'TUES', timeSlot: '10:10-11:10', slotCategory: 'ROCKWALL', isDroppable: false },
-            { type: 'activity-slot', day: 'TUES', timeSlot: '10:10-11:10', slotCategory: 'ARCHERY', isDroppable: false },
+            { type: 'activity-slot', day: 'TUES', timeSlot: '10:10-11:10', slotCategory: 'ROCKWALL', isDroppable: false }, // Blocked out
+            { type: 'activity-slot', day: 'TUES', timeSlot: '10:10-11:10', slotCategory: 'ARCHERY', isDroppable: false }, // Blocked out
             { type: 'activity-slot', day: 'TUES', timeSlot: '10:10-11:10', slotCategory: 'TEAM TIME', isDroppable: true },
             { type: 'activity-slot', day: 'TUES', timeSlot: '10:10-11:10', slotCategory: 'POOL', isDroppable: false },
             { type: 'activity-slot', day: 'TUES', timeSlot: '10:10-11:10', slotCategory: 'CREATION STATION', isDroppable: false },
@@ -1174,8 +1174,8 @@
             { type: 'activity-slot', day: 'TUES', timeSlot: '1:25-2:25', slotCategory: 'ROCKWALL', isDroppable: false },
             { type: 'activity-slot', day: 'TUES', timeSlot: '1:25-2:25', slotCategory: 'ARCHERY', isDroppable: false },
             { type: 'activity-slot', day: 'TUES', timeSlot: '1:25-2:25', slotCategory: 'TEAM TIME', isDroppable: true },
-            { type: 'activity-slot', day: 'TUES', timeSlot: '1:25-2:25', slotCategory: 'POOL', isDroppable: false },
-            { type: 'activity-slot', day: 'TUES', timeSlot: '1:25-2:25', slotCategory: 'CREATION STATION', isDroppable: false },
+            { type: 'activity-slot', day: 'TUES', timeSlot: '1:25-2:25', slotCategory: 'POOL', isDroppable: false }, // Blocked out
+            { type: 'activity-slot', day: 'TUES', timeSlot: '1:25-2:25', slotCategory: 'CREATION STATION', isDroppable: false }, // Blocked out
             { type: 'activity-slot', day: 'TUES', timeSlot: '1:25-2:25', slotCategory: 'FIELD', isDroppable: true },
             { type: 'activity-slot', day: 'TUES', timeSlot: '1:25-2:25', slotCategory: 'GAMES & CHILL', isDroppable: false },
 
@@ -1197,7 +1197,7 @@
             { type: 'activity-slot', day: 'WED', timeSlot: '10:10-11:10', slotCategory: 'CREATION STATION', isDroppable: false },
             { type: 'activity-slot', day: 'WED', timeSlot: '10:10-11:10', slotCategory: 'FIELD', isDroppable: true },
             { type: 'activity-slot', day: 'WED', timeSlot: '10:10-11:10', slotCategory: 'GAMES & CHILL', isDroppable: false }, // Blocked out
-
+            
             { type: 'time-slot', day: 'WED', timeSlot: '1:25-2:25', label: 'WED<br>Activity 2<br>1:25-2:25' },
             { type: 'activity-slot', day: 'WED', timeSlot: '1:25-2:25', slotCategory: 'CAMP CARNIVAL', isDroppable: false, colspan: 7 },
 
@@ -1234,7 +1234,7 @@
             { type: 'activity-slot', day: 'THUR', timeSlot: '4:20-5:20', slotCategory: 'ARCHERY', isDroppable: false },
             { type: 'activity-slot', day: 'THUR', timeSlot: '4:20-5:20', slotCategory: 'TEAM TIME', isDroppable: true },
             { type: 'activity-slot', day: 'THUR', timeSlot: '4:20-5:20', slotCategory: 'POOL', isDroppable: false }, // Blocked out
-            { type: 'activity-slot', day: 'THUR', timeSlot: '4:20-5:20', slotCategory: 'CREATION STATION', isDroppable: false }, // Blocked out
+            { type: 'activity-slot', day: 'THUR', timeSlot: '4:20-5:20', slotCategory: 'CREATION STATION', isDroppable: false },
             { type: 'activity-slot', day: 'THUR', timeSlot: '4:20-5:20', slotCategory: 'FIELD', isDroppable: true },
             { type: 'activity-slot', day: 'THUR', timeSlot: '4:20-5:20', slotCategory: 'GAMES & CHILL', isDroppable: false },
 
@@ -1284,7 +1284,7 @@
             const moveToTrashBtn = document.getElementById('move-to-trash-btn');
             const viewDeletedActivitiesBtn = document.getElementById('view-deleted-activities-btn');
             const deletedActivitiesModal = document.getElementById('deleted-activities-modal');
-            const closeDeletedActivitiesModalBtn = document('close-deleted-activities-modal');
+            const closeDeletedActivitiesModalBtn = document.getElementById('close-deleted-activities-modal'); 
             const deletedActivitiesList = document.getElementById('deleted-activities-list');
             const deletedCountSpan = document.getElementById('deleted-count');
             const confirmationModal = document.getElementById('confirmation-modal');
@@ -2061,10 +2061,12 @@
              * @returns {string} HTML string with color-coded team spans.
              */
             function formatTeamContent(content) {
-                if (!content) return '';
+                if (!content) return ''; // Return empty string for truly blank cells
+
                 // Split by comma and then by '<br>' to handle multiple teams on one line or multiple lines
-                const lines = content.split(',').map(s => s.trim()); // Split by comma first
-                return lines.map(team => {
+                const teams = content.split(',').map(s => s.trim()).filter(s => s !== ''); // Filter out empty strings from split
+                
+                return teams.map(team => {
                     const teamNumberMatch = team.match(/Team (\d+)/);
                     if (teamNumberMatch && teamColors[`Team ${teamNumberMatch[1]}`]) {
                         // Apply the specific team color class and font-bold
@@ -2105,11 +2107,7 @@
                             cell.style.gridColumn = `span ${cellData.colspan}`;
                         }
 
-                        // All activity slots will display fixed content if available,
-                        // but only `isDroppable: true` slots can be overwritten by drag/drop.
-                        // Add non-droppable class to all cells that have fixed content for consistent styling
-                        // and to ensure team data is rendered.
-                        // Only add 'non-droppable' class if it's explicitly non-droppable
+                        // Apply non-droppable styling if not droppable
                         if (!cellData.isDroppable) {
                             cell.classList.add('non-droppable'); 
                         } else {
@@ -2122,9 +2120,13 @@
                             const timeSlotSchedule = daySchedule[cellData.timeSlot];
                             if (timeSlotSchedule) {
                                 const activityContent = timeSlotSchedule[cellData.slotCategory];
-                                if (activityContent) {
+                                // Only populate if content exists, otherwise leave empty for truly blank blocked slots
+                                if (activityContent !== undefined && activityContent !== null && activityContent !== '') {
                                     // Format content with color-coded teams
                                     cell.innerHTML = formatTeamContent(activityContent);
+                                } else if (!cellData.isDroppable) {
+                                    // For non-droppable slots with no content, ensure they are visually empty/blacked out
+                                    cell.innerHTML = ''; 
                                 }
                             }
                         }
