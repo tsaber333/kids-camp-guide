@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">\
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* Base font and general layout */
         body { font-family: 'Inter', sans-serif; }
@@ -84,12 +84,13 @@
         .calendar-grid {
             display: grid;
             /* 100px for time column + 7 activity columns */
-            grid-template-columns: 100px repeat(7, 1fr); 
+            grid-template-columns: 100px repeat(7, minmax(100px, 1fr)); /* Ensure minimum width for columns */
             gap: 1px; /* Thin lines between cells */
             background-color: #e5e7eb; /* Light gray for grid lines */
             border: 1px solid #e5e7eb;
             border-radius: 0.5rem;
             overflow: hidden; /* Ensures rounded corners apply correctly */
+            min-width: max-content; /* Allow grid to expand to content width for scrolling */
         }
 
         .calendar-header, .calendar-time-slot, .calendar-slot {
@@ -145,10 +146,22 @@
             text-overflow: clip; /* Prevent ellipsis on wrapped text */
         }
 
-        .calendar-slot.drag-over {
-            background-color: #e0f2f7; /* Light blue on drag over */
-            border: 2px dashed #22d3ee; /* Cyan dashed border */
+        /* Styling for selected activity card */
+        .game-card.selected {
+            border: 3px solid #065f46; /* emerald-800 */
+            box-shadow: 0 0 15px rgba(6, 95, 70, 0.4); /* Green glow */
         }
+
+        /* Styling for calendar slot when an activity is selected */
+        .calendar-slot.droppable.highlight-drop {
+            background-color: #d1fae5; /* emerald-100 */
+            border: 2px dashed #065f46; /* emerald-800 dashed border */
+        }
+        .calendar-slot.droppable.invalid-drop {
+            background-color: #fee2e2; /* red-100 */
+            border: 2px dashed #dc2626; /* red-600 dashed border */
+        }
+
 
         .scheduled-activity-item {
             background-color: #d1fae5; /* emerald-100 */
@@ -278,8 +291,8 @@
                 </div>
 
                 <!-- Grid to display activity cards with horizontal scrolling -->
-                <div class="overflow-x-auto">
-                    <div id="game-grid" class="grid grid-flow-col auto-cols-[minmax(250px,1fr)] sm:auto-cols-[minmax(280px,1fr)] md:auto-cols-[minmax(300px,1fr)] lg:auto-cols-[minmax(320px,1fr)] gap-6 pb-4">
+                <div class="overflow-x-auto pb-4">
+                    <div id="game-grid" class="grid grid-flow-col auto-cols-[minmax(250px,1fr)] sm:auto-cols-[minmax(280px,1fr)] md:auto-cols-[minmax(300px,1fr)] lg:auto-cols-[minmax(320px,1fr)] gap-6">
                         <!-- Loading indicator for activities -->
                         <div id="loading-indicator" class="col-span-full text-center text-stone-500 text-lg py-8">Loading activities...</div>
                     </div>
@@ -300,11 +313,12 @@
                     </div>
                     <div id="calendar-instructions-content" class="collapsible-content collapsed">
                         <ul class="list-disc list-inside text-stone-700 space-y-2 mt-4">
-                            <li><strong>Drag & Drop Activities:</strong> To schedule an activity, simply drag a game card from the "Find an Activity" list above into an empty, white slot on the calendar.</li>
+                            <li><strong>Select an Activity:</strong> Click on any activity card in the "Find an Activity" section above to select it. The selected card will be highlighted.</li>
+                            <li><strong>Add to Schedule:</strong> Once an activity is selected, click on an empty, white slot on the calendar. The activity will be added to that slot.</li>
                             <li><strong>Slot Types:</strong>
                                 <ul class="list-circle list-inside ml-4">
-                                    <li><span class="font-semibold text-teal-700">White Slots:</span> These are 'droppable' slots. You can drag a "Field Game" into a "FIELD" slot, and a "Team Time" activity into a "TEAM TIME" slot.</li>
-                                    <li><span class="font-semibold text-teal-700">Gray Slots:</span> These slots are 'non-droppable' and are already pre-assigned with specific teams or are blocked out. You cannot drag activities into these.</li>
+                                    <li><span class="font-semibold text-teal-700">White Slots:</span> These are 'addable' slots. You can add a "Field Game" into a "FIELD" slot, and a "Team Time" activity into a "TEAM TIME" slot.</li>
+                                    <li><span class="font-semibold text-teal-700">Gray Slots:</span> These slots are 'non-addable' and are already pre-assigned with specific teams or are blocked out. You cannot add activities into these.</li>
                                 </ul>
                             </li>
                             <li><strong>Remove Scheduled Activities:</strong> To remove an activity you've scheduled, hover over the activity name in the calendar slot and click the small 'x' button that appears.</li>
@@ -313,8 +327,10 @@
                     </div>
                 </div>
 
-                <div id="calendar-grid-container" class="calendar-grid">
-                    <!-- Calendar grid will be dynamically generated here by JavaScript -->
+                <div id="calendar-grid-container" class="overflow-x-auto">
+                    <div class="calendar-grid">
+                        <!-- Calendar grid will be dynamically generated here by JavaScript -->
+                    </div>
                 </div>
             </section>
 
@@ -400,7 +416,7 @@
                                 <li>To bring an activity back to your main list, click its "<span class="font-semibold text-teal-500">Restore</span>" button.</li>
                                 <li>
                                     <span class="font-semibold text-red-500">Important:</span>
-                                    If you restore an activity, it will appear back in the main list, but if it was previously scheduled on the calendar, it will *not* automatically reappear on the calendar. You will need to drag and drop it onto the calendar again.
+                                    If you restore an activity, it will appear back in the main list, but if it was previously scheduled on the calendar, it will *not* automatically reappear on the calendar. You will need to click and add it onto the calendar again.
                                 </li>
                             </ul>
                         </li>
@@ -581,6 +597,7 @@
         let allActivities = []; // Declare allActivities once here
         let activityTypeChart; // Variable to hold the Chart.js instance
         let activityToDeleteId = null; // Stores the ID of the activity targeted for permanent deletion
+        let selectedActivityForSchedule = null; // Stores the activity selected for scheduling
 
         // MANDATORY: Use __app_id and __firebase_config provided by the Canvas environment
         // These global variables are injected by the Canvas runtime.
@@ -1392,7 +1409,7 @@
                     updateActivityChart();
                     updateDeletedCount();
                     renderCalendarGrid(); // Render calendar even without full Firebase
-                    setupCalendarDropZones(); // Setup drop zones
+                    setupCalendarClickListeners(); // Setup click listeners
                     return; // Exit early if config is not set
                 }
 
@@ -1476,7 +1493,7 @@
                 updateActivityChart();
                 updateDeletedCount();
                 renderCalendarGrid(); // Render calendar even in offline mode
-                setupCalendarDropZones(); // Setup drop zones
+                setupCalendarClickListeners(); // Setup click listeners
             }
 
             /**
@@ -1605,11 +1622,15 @@
                 // Create and append a card for each filtered game
                 filteredGames.forEach((game) => {
                     const card = document.createElement('div');
-                    card.className = 'bg-white rounded-xl shadow-sm border border-stone-200 p-6 cursor-pointer hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col';
+                    card.className = 'game-card bg-white rounded-xl shadow-sm border border-stone-200 p-6 cursor-pointer hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col';
                     card.dataset.gameId = game.id; // Store game ID for easy retrieval
-                    card.draggable = true; // Make activity cards draggable
-                    card.dataset.activityType = game.type; // Store activity type for drag-and-drop validation
+                    card.dataset.activityType = game.type; // Store activity type for scheduling validation
                     
+                    // Add 'selected' class if this card is currently selected
+                    if (selectedActivityForSchedule && selectedActivityForSchedule.id === game.id) {
+                        card.classList.add('selected');
+                    }
+
                     // Determine card color based on activity type
                     const typeColor = game.type === 'Field Game' ? 'bg-sky-100 text-sky-800' : 'bg-amber-100 text-amber-800';
                     // Determine location icon
@@ -1628,11 +1649,15 @@
                     `;
                     gameGrid.appendChild(card);
                     
-                    // Add dragstart listener to the card
-                    card.addEventListener('dragstart', (e) => {
-                        e.dataTransfer.setData('text/plain', game.id); // Set the activity ID
-                        e.dataTransfer.setData('text/activity-type', game.type); // Set the activity type
-                        e.dataTransfer.effectAllowed = 'move'; // Visual feedback for allowed drag operation
+                    // Add click listener to the card for selection
+                    card.addEventListener('click', (e) => {
+                        // If the "View Details" button was clicked, handle that specifically
+                        if (e.target.classList.contains('view-details-btn')) {
+                            showGameDetails(game.id);
+                        } else {
+                            // Otherwise, it's a click on the card for selection
+                            toggleActivitySelection(game.id);
+                        }
                     });
 
                     // Apply card entry animation
@@ -1654,6 +1679,52 @@
                     <p class="text-emerald-600 text-sm mt-2">Create a custom activity for your camp!</p>
                 `;
                 gameGrid.appendChild(addActivityCard);
+            }
+
+            /**
+             * Toggles the selection of an activity for scheduling.
+             * Highlights the selected card and updates `selectedActivityForSchedule`.
+             * @param {string} gameId - The ID of the activity to select/deselect.
+             */
+            function toggleActivitySelection(gameId) {
+                const previouslySelectedCard = document.querySelector('.game-card.selected');
+                if (previouslySelectedCard) {
+                    previouslySelectedCard.classList.remove('selected');
+                }
+
+                if (selectedActivityForSchedule && selectedActivityForSchedule.id === gameId) {
+                    // If the same card is clicked again, deselect it
+                    selectedActivityForSchedule = null;
+                } else {
+                    // Select the new card
+                    const newSelectedCard = document.querySelector(`.game-card[data-game-id="${gameId}"]`);
+                    if (newSelectedCard) {
+                        newSelectedCard.classList.add('selected');
+                        selectedActivityForSchedule = allActivities.find(g => g.id === gameId);
+                    }
+                }
+                // Update calendar slot highlights based on new selection
+                updateCalendarSlotHighlights();
+            }
+
+            /**
+             * Updates the highlighting of calendar slots based on the currently selected activity.
+             */
+            function updateCalendarSlotHighlights() {
+                document.querySelectorAll('.calendar-slot.droppable').forEach(slot => {
+                    slot.classList.remove('highlight-drop', 'invalid-drop'); // Clear previous highlights
+
+                    if (selectedActivityForSchedule) {
+                        const slotCategory = slot.dataset.slotCategory;
+                        const mappedActivityTypeForSlot = selectedActivityForSchedule.type === 'Field Game' ? 'FIELD' : selectedActivityForSchedule.type === 'Team Time' ? 'TEAM TIME' : null;
+
+                        if (mappedActivityTypeForSlot === slotCategory) {
+                            slot.classList.add('highlight-drop');
+                        } else {
+                            slot.classList.add('invalid-drop');
+                        }
+                    }
+                });
             }
 
             /**
@@ -1733,36 +1804,6 @@
                 moveToTrashBtn.dataset.gameId = gameId; // Set the game ID on the trash button for later use
                 modal.classList.add('active'); // Show the modal
             }
-
-            // Event listener for clicks on the game grid (handles both activity cards and "Add New Activity" card)
-            gameGrid.addEventListener('click', (e) => {
-                const addCard = e.target.closest('#add-activity-card');
-                if (addCard) {
-                    // If "Add New Activity" card is clicked, open the add activity modal
-                    addActivityModal.classList.add('active');
-                    addActivityForm.reset(); // Clear form fields
-                    // Ensure at least one instruction and material field is present by resetting innerHTML
-                    instructionsContainer.innerHTML = `
-                        <div class="instruction-item flex items-center gap-2">
-                            <textarea name="instructions[]" rows="2" required class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., Setup: Divide a large outdoor field..."></textarea>
-                            <button type="button" class="remove-instruction-btn text-red-500 hover:text-red-700 text-xl font-bold">&times;</button>
-                        </div>
-                    `;
-                    materialsContainer.innerHTML = `
-                        <div class="material-item flex items-center gap-2">
-                            <input type="text" name="materials[]" class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., Water Guns (14)">
-                            <button type="button" class="remove-material-btn text-red-500 hover:text-red-700 text-xl font-bold">&times;</button>
-                        </div>
-                    `;
-                    addRemoveEventListeners(); // Re-add event listeners for new dynamic fields
-                } else {
-                    // If a "View Details" button on an activity card is clicked, show game details
-                    const card = e.target.closest('.view-details-btn');
-                    if (card) {
-                        showGameDetails(card.closest('[data-game-id]').dataset.gameId);
-                    }
-                }
-            });
 
             // Close Game Details Modal via 'X' button
             closeModalBtn.addEventListener('click', () => {
@@ -2120,7 +2161,7 @@
                 activityManagementContent.classList.add('collapsed');
                 activityManagementCollapseIcon.classList.add('collapsed');
             } else {
-                console.warn("Activity management instructions toggle elements not found. Collapsible section may not function.");
+                console.warn("Activity management instructions toggle elements not found.");
             }
 
 
@@ -2193,7 +2234,8 @@
              * Populates non-droppable slots with data from scheduleDataFromPDF.
              */
             function renderCalendarGrid() {
-                calendarGridContainer.innerHTML = ''; // Clear existing grid
+                const calendarGridElement = calendarGridContainer.querySelector('.calendar-grid');
+                calendarGridElement.innerHTML = ''; // Clear existing grid
                 
                 calendarGridStructure.forEach(cellData => {
                     const cell = document.createElement('div');
@@ -2240,53 +2282,33 @@
                             }
                         }
                     }
-                    calendarGridContainer.appendChild(cell);
+                    calendarGridElement.appendChild(cell);
                 });
             }
 
             /**
-             * Sets up drag and drop event listeners for calendar slots.
+             * Sets up click event listeners for calendar slots for scheduling.
              */
-            function setupCalendarDropZones() {
-                document.querySelectorAll('.calendar-slot[data-droppable="true"]').forEach(slot => {
-                    slot.addEventListener('dragover', (e) => {
-                        e.preventDefault(); // Allow drop
-                        e.dataTransfer.dropEffect = 'move';
-                        slot.classList.add('drag-over'); // Add visual feedback
-                    });
+            function setupCalendarClickListeners() {
+                document.querySelectorAll('.calendar-slot.droppable').forEach(slot => {
+                    slot.addEventListener('click', async () => {
+                        if (!selectedActivityForSchedule) {
+                            console.warn("No activity selected for scheduling.");
+                            // Optional: Add a temporary visual cue to the slot indicating no activity selected
+                            slot.classList.add('invalid-drop');
+                            setTimeout(() => slot.classList.remove('invalid-drop'), 1000);
+                            return;
+                        }
 
-                    slot.addEventListener('dragleave', () => {
-                        slot.classList.remove('drag-over'); // Remove visual feedback
-                    });
-
-                    slot.addEventListener('drop', async (e) => {
-                        e.preventDefault();
-                        slot.classList.remove('drag-over'); // Remove visual feedback
-
-                        const activityId = e.dataTransfer.getData('text/plain');
-                        const draggedActivityType = e.dataTransfer.getData('text/activity-type'); // "Field Game" or "Team Time"
                         const day = slot.dataset.day;
                         const timeSlot = slot.dataset.timeSlot;
                         const slotCategory = slot.dataset.slotCategory; // "TEAM TIME" or "FIELD"
 
-                        // Check if the slot is actually droppable
-                        if (slot.dataset.droppable !== 'true') {
-                            console.warn("Attempted to drop into a non-droppable slot.");
-                            slot.classList.add('bg-red-200');
-                            setTimeout(() => slot.classList.remove('bg-red-200'), 1000);
-                            return;
-                        }
+                        // Map activity type from game data to slot category for validation
+                        const mappedActivityTypeForSlot = selectedActivityForSchedule.type === 'Field Game' ? 'FIELD' : selectedActivityForSchedule.type === 'Team Time' ? 'TEAM TIME' : null;
 
-                        const activity = allActivities.find(g => g.id === activityId);
-
-                        if (activity && db) {
-                            // Map activity type from game data to slot category for validation
-                            const mappedActivityTypeForSlot = draggedActivityType === 'Field Game' ? 'FIELD' : draggedActivityType === 'Team Time' ? 'TEAM TIME' : null;
-
-                            if (mappedActivityTypeForSlot === slotCategory) {
-                                // Clear previous content in the slot (only for droppable slots)
-                                slot.innerHTML = ''; 
-
+                        if (mappedActivityTypeForSlot === slotCategory) {
+                            if (db) {
                                 // Save to Firestore
                                 const scheduledActivitiesCollectionRef = collection(db, `artifacts/${appId}/public/data/scheduledActivities`);
                                 // Create a unique ID for the scheduled event in this specific slot
@@ -2294,23 +2316,24 @@
 
                                 try {
                                     await setDoc(doc(scheduledActivitiesCollectionRef, scheduledEventId), {
-                                        activityId: activity.id,
-                                        activityName: activity.name,
+                                        activityId: selectedActivityForSchedule.id,
+                                        activityName: selectedActivityForSchedule.name,
                                         day: day,
                                         timeSlot: timeSlot,
                                         slotCategory: slotCategory, // Store the category
                                         timestamp: new Date().toISOString() // Store timestamp for potential ordering
                                     });
                                     // The onSnapshot listener will re-render the calendar
+                                    toggleActivitySelection(selectedActivityForSchedule.id); // Deselect after successful add
                                 } catch (error) {
                                     console.error("Error scheduling activity:", error);
                                 }
-                            } else {
-                                // Provide visual feedback for invalid drop
-                                console.warn(`Cannot drop '${draggedActivityType}' into a '${slotCategory}' slot.`);
-                                slot.classList.add('bg-red-200');
-                                setTimeout(() => slot.classList.remove('bg-red-200'), 1000);
                             }
+                        } else {
+                            // Provide visual feedback for invalid slot type
+                            console.warn(`Cannot add '${selectedActivityForSchedule.type}' into a '${slotCategory}' slot.`);
+                            slot.classList.add('invalid-drop');
+                            setTimeout(() => slot.classList.remove('invalid-drop'), 1000);
                         }
                     });
                 });
@@ -2381,14 +2404,16 @@
                         slot.appendChild(activityNameDiv);
                     }
                 });
-                // Re-setup drop zones after rendering the calendar
-                setupCalendarDropZones();
+                // Re-setup click listeners after rendering the calendar
+                setupCalendarClickListeners();
+                // Re-apply highlights after rendering if an activity is selected
+                updateCalendarSlotHighlights();
             }
 
             // Initial render of the calendar grid when the DOM is ready
             renderCalendarGrid();
-            // Setup drop zones for the newly rendered calendar
-            setupCalendarDropZones();
+            // Setup click listeners for the newly rendered calendar
+            setupCalendarClickListeners();
         });
     </script>
 </body>
