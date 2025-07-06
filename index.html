@@ -127,8 +127,8 @@
             gap: 0.25rem; /* Space between dropped items */
             position: relative; /* For positioning remove button */
             overflow: hidden; /* Hide overflow for long text */
-            text-overflow: ellipsis; /* Add ellipsis for long text */
-            white-space: nowrap; /* Prevent wrapping for long text */
+            /* Removed text-overflow: ellipsis; and white-space: nowrap; */
+            white-space: normal; /* Allow text to wrap naturally */
         }
 
         .calendar-slot.droppable {
@@ -172,10 +172,11 @@
             border-radius: 0.375rem; /* rounded-md */
             width: 100%;
             overflow: hidden;
-            text-overflow: ellipsis;
+            /* text-overflow: ellipsis; Removed for wrapping */
             white-space: normal; /* Allow text to wrap */
             cursor: grab; /* Indicate draggable */
             position: relative;
+            word-wrap: break-word; /* Ensure long words break if necessary */
         }
 
         .scheduled-activity-item .remove-scheduled-activity {
@@ -986,15 +987,15 @@
                 objectives: "Fosters engineering design, creative problem-solving, collaborative planning, and understanding of cause-and-effect.",
                 generalInstructions: [
                     "<strong>Setup:</strong> Designate a building area for each team (e.g., a section of a table or floor, or a designated corner). Provide each team with a diverse assortment of safe, random camp materials (e.g., cardboard, popsicle sticks, rubber bands, plastic spoons, plastic cups, string, small plastic balls, CDs, tape, glue, empty bottles/cans, paper towel rolls, marbles, dominoes). Clearly state the simple task their contraption must achieve (e.g., 'move a small object from Point A to Point B', 'pop a balloon', 'ring a bell', 'turn a page', 'drop a coin into a cup'). Provide a target object for the task (e.g., a specific small ball to move, a balloon to pop).",
-                    "<strong>Team Formation:</strong> Divide campers into small teams (e.g., 4-6 campers per team). Present the challenge and the available materials.",
-                    "<strong>Brainstorm & Design (10-15 minutes):</strong> Teams have this initial time to brainstorm ideas and sketch out a plan for their contraption. Encourage them to think about cause-and-effect sequences and how one action will lead to the next. Provide large paper and markers for sketching.",
-                    "<strong>Build & Test (30-40 minutes):</strong> Teams then have this time to build their contraption. Emphasize that it's okay to try, fail, and adjust their design – this is part of the engineering process. They should test sections as they build to ensure each step works. Leaders should circulate to offer guidance, answer questions, and provide encouragement.",
-                    "<strong>Presentation & Demonstration (5-7 minutes per team):</strong> After the building time, each team presents their contraption to the group. They should explain their design process, the challenges they faced, and then attempt to demonstrate their contraption achieving the designated task. It's perfectly fine if it doesn't work perfectly on the first try – learning from failure is part of the fun! Allow multiple attempts if time permits.",
-                    "<strong>Discussion:</strong> Facilitate a discussion about the challenges they faced, how they worked together, what they learned about physics or problem-solving, and the importance of perseverance. Award fun titles like 'Most Creative Chain Reaction', 'Most Collaborative Team', 'Best Problem-Solving', or 'Most Unexpected Outcome'."
+                    "<strong>Team Formation:</strong> Divide campers into small teams (e.g., 4-6 campers per team). Present the challenge: to design and build a functional catapult that can launch a projectile.",
+                    "<strong>Build Time (30-40 minutes):</strong> Teams have this time to brainstorm, design, and construct their catapult. Encourage them to experiment with different designs and test their catapults during the building phase. Leaders should circulate to offer guidance and ensure safe construction.",
+                    "<strong>Competition Challenges:</strong> Once the building time is up, teams will bring their catapults to a designated competition area and compete in one or more challenges: <br> - <strong>Distance Challenge:</strong> Each team launches a projectile from a designated line, aiming for the furthest distance. Mark the landing spots and measure the distance. Each team gets 3-5 attempts. <br> - <strong>Accuracy Challenge:</strong> Set up targets (e.g., buckets, hula hoops, marked circles on the floor) at various distances. Teams try to land projectiles inside the targets for points. Assign different point values for different targets/distances. Each team gets 3-5 attempts. <br> - <strong>Volume Challenge:</strong> Teams try to launch as many projectiles as possible into a container within a set time (e.g., 60 seconds).",
+                    "<strong>Scoring:</strong> Points are awarded based on performance in the chosen challenges (e.g., furthest distance in feet/meters, most accurate shots, most projectiles in the bucket). Keep a clear score for each team on a scoreboard.",
+                    "<strong>Winning:</strong> The team with the highest total score across all challenges wins. Celebrate all efforts, regardless of score."
                 ],
-                materials: ["Cardboard Boxes (2)", "Popsicle Sticks (various)", "Rubber Bands (various)", "Skewers (various)", "Toothpicks (500)", "Plastic Cups (100)", "Plastic Balls (2 bags)", "Wooden Blocks (32)", "Cardboard (10)", "CDs (17)", "Yarn (various)", "Masking Tape (3 rolls)", "Scotch Tape (14 rolls)", "Packing Tape (15 rolls)", "Duct Tape (1 roll)", "Laundry Baskets (11)", "Balloons (3 bags)", "Small Plastic Critters (2 large ziplocks)", "Small Plastic Dinosaurs (30)", "Golf Balls (approx 100)", "Small Metal Cups (6)", "Scissors (various)", "Glue Sticks (various)", "White Glue Bottles (11)", "Stopwatch (1)", "Marbles (suggested purchase)", "Dominoes (suggested purchase)"],
-                safety: "Supervise the use of sharp objects like skewers and scissors carefully. Ensure the building area is stable and clear to prevent items from falling or causing tripping hazards. Remind children not to throw materials or use them in an unsafe manner. Ensure any moving parts of the contraption are safe and won't pinch fingers or cause injury.",
-                supercharged: "Building a contraption with many steps reminds us that God works in our lives in many ways, often through a series of events that lead to a bigger purpose. Even when things don't go as planned, we can learn and adjust, trusting that God is in control and has a master plan. How can you trust God's process even when you don't see the whole picture?",
+                materials: ["Popsicle Sticks (various)", "Rubber Bands (various)", "Plastic Spoons (36)", "Plastic Cups (100)", "Small Plastic Balls (2 bags)", "Cotton Balls (suggested purchase)", "Paper Clips (suggested purchase)", "Clay (suggested purchase)", "Glue Sticks (various)", "White Glue Bottles (11)", "Scissors (various)", "Stopwatch (1)", "Measuring Tape (suggested purchase)", "Cones (for marking lines/targets)", "Buckets (various)", "Hula Hoops (25)"],
+                safety: "Emphasize aiming only at designated targets, never at people. Projectiles should always be soft and harmless. Supervise the building process carefully, especially when using scissors or glue. Ensure the launching area is clear and that no one is standing in the path of projectiles. Remind children not to 'overload' or misuse the catapults in a dangerous way.",
+                supercharged: "Building and launching catapults teaches us about design, precision, and cause-and-effect. In our faith, we are called to be intentional in our actions, knowing that our efforts, when guided by God, can have a far-reaching impact. What 'impact' do you want to make for God's kingdom, and what steps can you take to 'launch' into that purpose?",
                 deleted: false
             },
             {
