@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">\
     <style>
         /* Base font and general layout */
         body { font-family: 'Inter', sans-serif; }
@@ -490,6 +490,9 @@
         let db;
         let auth;
         let userId; 
+        let allActivities = []; // Declare allActivities once here
+        let activityTypeChart; // Variable to hold the Chart.js instance
+        let activityToDeleteId = null; // Stores the ID of the activity targeted for permanent deletion
 
         // MANDATORY: Use __app_id and __firebase_config provided by the Canvas environment
         // These global variables are injected by the Canvas runtime.
@@ -817,7 +820,7 @@
                     "<strong>Game Play:</strong> The navigator is blindfolded and stands at the edge of the minefield. On 'Go!', the guides must use only verbal instructions (no touching, pointing, or physical contact!) to direct their blindfolded navigator through the minefield. The goal is to collect as many 'power-ups' as possible while avoiding touching any 'mines'. Once a power-up is found, the navigator must bring it back to their team's collection zone before seeking another.",
                     "<strong>Mine Penalty:</strong> If the navigator touches a 'mine', they must immediately stop. The guides must then verbally direct them back to the starting point of that specific segment of the minefield (or the beginning of the entire minefield, depending on desired difficulty) before they can continue their search.",
                     "<strong>Scoring:</strong> Teams earn points for each 'power-up' successfully collected and brought back to their collection zone. The game can be timed (e.g., 10-15 minutes), with the team collecting the most power-ups in that set time winning, or the first team to collect all designated power-ups winning. Rotate navigators within each team so everyone gets a chance to experience both roles.",
-                    "<strong>Guide Communication:</strong> Emphasize clear, concise, and calm verbal guidance. Guides should use directional words (e.g., 'take two steps forward', 'turn slightly left', 'mine on your right', 'mine on your right')."
+                    "<strong>Guide Communication:</strong> Emphasize clear, concise, and calm verbal guidance. Guides should use directional words (e.g., 'take two steps forward', 'turn slightly left', 'mine on your right', 'mine on your right').'"
                 ],
                 materials: ["Cones (various)", "Bean Bags (10)", "Whistles (2)", "Blindfolds (or Bandanas - approx. 70)", "Laminated Bible Chapter Names (2 sets)", "Rubber Duckies (44)", "Fake Gold Coins (approx 130)", "Plastic Critters (2 large ziplocks)", "Wooden Blocks (32)", "Plastic Balls (2 bags)", "Laminated Foursquare Symbols/Values (suggested purchase)"],
                 safety: "Ensure the play area is completely clear of actual hazards (e.g., sharp objects, uneven ground). Use only soft 'mines' that won't cause injury if stepped on. Supervise closely to prevent collisions between blindfolded players or with static objects. Emphasize gentle, clear, and calm verbal guidance from the guides. No running for blindfolded players. Guides must ensure the path is clear before giving 'go ahead' commands.",
@@ -979,11 +982,6 @@
                 deleted: false
             }
         ];
-
-        // This variable will hold all activities, including initial and user-added ones from Firestore.
-        let allActivities = [];
-        let activityTypeChart; // Variable to hold the Chart.js instance
-        let activityToDeleteId = null; // Stores the ID of the activity targeted for permanent deletion
 
         // Define the fixed schedule data
         const fixedScheduleData = [
@@ -1168,11 +1166,6 @@
             { type: 'activity-slot', day: 'FRI', timeSlot: '4:20-5:20', slotCategory: 'CAMP CARNIVAL', isDroppable: false, colspan: 7 },
         ];
 
-
-        // This variable will hold all activities, including initial and user-added ones from Firestore.
-        let allActivities = [];
-        let activityTypeChart; // Variable to hold the Chart.js instance
-        let activityToDeleteId = null; // Stores the ID of the activity targeted for permanent deletion
 
         // Event listener for when the DOM content is fully loaded
         document.addEventListener('DOMContentLoaded', async () => {
