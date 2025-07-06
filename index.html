@@ -91,7 +91,8 @@
             border: 1px solid #e5e7eb;
             border-radius: 0.5rem;
             overflow: hidden; /* Ensures rounded corners apply correctly */
-            /* Removed min-width: max-content; to allow grid to shrink and force wrapping */
+            /* Added min-width to ensure the grid can expand beyond container, enabling horizontal scroll */
+            min-width: 667px; /* 100px (time) + 7*80px (min activity) + 7*1px (gap) */
         }
 
         .calendar-header, .calendar-time-slot, .calendar-slot {
@@ -127,9 +128,8 @@
             flex-direction: column; /* Stack dropped items vertically */
             gap: 0.25rem; /* Space between dropped items */
             position: relative; /* For positioning remove button */
-            /* Removed overflow: hidden; to allow content to expand vertically */
-            /* Removed text-overflow: ellipsis; and white-space: nowrap; */
             white-space: normal; /* Allow text to wrap naturally */
+            word-break: break-word; /* Force words to break if they are too long for the container */
         }
 
         .calendar-slot.droppable {
@@ -172,8 +172,6 @@
             padding: 0.35rem 0.6rem; /* Slightly more padding */
             border-radius: 0.375rem; /* rounded-md */
             width: 100%;
-            /* Removed overflow: hidden; */
-            /* Removed text-overflow: ellipsis; */
             white-space: normal; /* Allow text to wrap */
             cursor: grab; /* Indicate draggable */
             position: relative;
@@ -410,12 +408,12 @@
                     </div>
                     <div id="calendar-instructions-content" class="collapsible-content collapsed">
                         <ul class="list-disc list-inside text-stone-700 space-y-2 mt-4">
-                            <li><strong>Select an Activity:</strong> Click on any activity card in the "Find an Activity" section above to select it. The selected card will be highlighted.</li>
-                            <li><strong>Add to Schedule:</strong> Once an activity is selected, click on an empty, white slot on the calendar. The activity will be added to that slot.</li>
-                            <li><strong>Slot Types:</strong>
-                                <ul class="list-circle list-inside ml-4">
-                                    <li><span class="font-semibold text-teal-700">White Slots:</span> These are 'addable' slots. You can add a "Field Game" into a "FIELD" slot, and a "Team Time" activity into a "TEAM TIME" slot.</li>
-                                    <li><span class="font-semibold text-teal-700">Gray Slots:</span> These slots are 'non-addable' and are already pre-assigned with specific teams or are blocked out. You cannot add activities into these.</li>
+                            <li><strong>Select an Activity:</strong> Click on any activity card in the "Find an Activity" section above to select it. The selected card will be highlighted with a green border.</li>
+                            <li><strong>Add to Schedule:</strong> Once an activity is selected, the calendar slots will change color to guide you:
+                                <ul class="list-circle list-inside ml-4 mt-2">
+                                    <li><span class="font-semibold text-emerald-700">Green Highlighted Slots:</span> These are valid 'addable' slots where the selected activity can be placed (e.g., a "Field Game" into a "FIELD" slot, or a "Team Time" activity into a "TEAM TIME" slot). Click on a green slot to add the activity.</li>
+                                    <li><span class="font-semibold text-red-700">Red Highlighted Slots:</span> These slots are 'invalid' for the currently selected activity type. You cannot add the activity here.</li>
+                                    <li><span class="font-semibold text-stone-700">Gray Slots:</span> These slots are 'non-addable' and are already pre-assigned with specific teams or are blocked out. You cannot add activities into these.</li>
                                 </ul>
                             </li>
                             <li><strong>Remove Scheduled Activities:</strong> To remove an activity you've scheduled, hover over the activity name in the calendar slot and click the small 'x' button that appears.</li>
