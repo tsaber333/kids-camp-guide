@@ -88,7 +88,10 @@
         <header class="text-center mb-12">
             <h1 class="text-4xl md:text-5xl font-bold text-teal-700">Foursquare Kids Camp</h1>
             <p class="mt-4 text-lg text-stone-600">Interactive Leader's Guide</p>
-            <!-- User ID display removed as per user request -->
+            <!-- User ID display -->
+            <div class="mt-2 text-sm text-stone-600">
+                <span id="current-user-id">Loading user...</span>
+            </div>
         </header>
 
         <!-- Main content area -->
@@ -368,7 +371,7 @@
         let app;
         let db;
         let auth;
-        let userId; // userId is still used for authentication purposes, but not for data path
+        let userId; // userId is used for authentication purposes
 
         // MANDATORY: Use __app_id and __firebase_config provided by the Canvas environment
         // These global variables are injected by the Canvas runtime.
@@ -521,14 +524,14 @@
                 description: "Players link arms or hold onto pool noodles in rows, restricted to side-to-side movement like a foosball table. They must work together to kick a large ball into the opponent's goal.",
                 objectives: "Emphasizes coordination, teamwork, spatial awareness, and constant communication.",
                 generalInstructions: [
-                    "<strong>Setup:</strong> Create a large rectangular playing area (e.g., 30ft x 15ft) using cones or boundary markers. Inside this area, use ropes or pool noodles to create 3-4 parallel 'lanes' across the width of the field. Players will stand in these lanes, holding onto the rope/noodle. Place a goal (e.g., two cones spaced apart) at each end of the rectangle. The ball should be an inflatable beach ball or similar large, lightweight ball.",
-                    "<strong>Team Formation:</strong> Divide campers into two equal teams. Assign each player to a specific lane. Players in the same lane on opposing teams will face each other. Players must hold onto a rope or pool noodle, restricting them to only move horizontally within their lane. They cannot move forward or backward out of their designated lane. Ensure an equal number of players per lane, or adjust lane sizes accordingly.",
+                    "<strong>Setup:</strong> Create a large rectangular playing area (e.g., 30ft x 15ft) using cones or boundary markers. Inside this area, use ropes or pool noodles to create 3-4 parallel 'lanes' across the width of the field. Players will stand in these lanes, holding onto the rope/noodle, restricting them to only move horizontally within their lane. They cannot move forward or backward out of their designated lane. Ensure an equal number of players per lane, or adjust lane sizes accordingly. Place a goal (e.g., two cones spaced apart) at each end of the rectangle. The ball should be an inflatable beach ball or similar large, lightweight ball.",
+                    "<strong>Team Formation:</strong> Divide campers into two equal teams. Assign each player to a specific lane. Players in the same lane on opposing teams will face each other.",
                     "<strong>Game Start:</strong> Place the large inflatable ball in the center of the playing area. On the whistle, the game begins.",
                     "<strong>Game Play:</strong> Players must work together within their restricted horizontal movement to pass the ball to teammates in other lanes and eventually shoot it into the opponent's goal. Players can only use their feet to kick the ball. If the ball goes out of bounds, it is returned to the nearest boundary line and put back into play by the team that did not cause it to go out (e.g., a simple kick-in from the sideline).",
                     "<strong>Scoring:</strong> A point is scored when the ball successfully enters the opponent's goal. After a goal, the ball is returned to the center for a restart.",
                     "<strong>Winning:</strong> Play for a set time (e.g., 15-20 minutes) or until one team reaches a target score (e.g., 5-7 goals). The team with the most points at the end wins."
                 ],
-                materials: ["Pool Noodles (36)", "Inflatable Ball", "Cones (for goals and boundaries)", "Whistles (2)"],
+                materials: ["Pool Noodles (36)", "Inflatable Ball", "Rope (7 available)", "Cones (for goals and boundaries)", "Whistles (2)"],
                 safety: "Emphasize no excessive pulling or pushing on the ropes/noodles to prevent injury. Ensure the playing surface is even and free of obstacles. Supervise closely to prevent collisions, especially when players are moving quickly sideways. Remind players to be mindful of their teammates' positions and to avoid kicking too hard or at other players.",
                 supercharged: "In Human Foosball, we're all connected and have to move together to achieve our goal. This reminds us that in God's family, we are all connected, and we need to work together, communicate, and support each other to reach our spiritual goals. How can we better connect and communicate with others in our faith community?",
                 deleted: false
@@ -870,7 +873,7 @@
             const materialsContainer = document.getElementById('materials-container');
             const addMaterialBtn = document.getElementById('add-material-btn');
             const loadingIndicator = document.getElementById('loading-indicator');
-            // userIdDisplay removed as per user request
+            const userIdDisplay = document.getElementById('current-user-id'); // Get user ID display element
             const moveToTrashBtn = document.getElementById('move-to-trash-btn');
             const viewDeletedActivitiesBtn = document.getElementById('view-deleted-activities-btn');
             const deletedActivitiesModal = document.getElementById('deleted-activities-modal');
@@ -901,7 +904,8 @@
                 onAuthStateChanged(auth, async (user) => {
                     if (user) {
                         // If user is already signed in (e.g., from a previous session)
-                        userId = user.uid; // Store user ID (even if not used for data path, useful for auth state)
+                        userId = user.uid; // Store user ID
+                        userIdDisplay.textContent = `User ID: ${userId}`; // Update UI
                     } else {
                         let signedIn = false;
                         // Attempt to sign in with a custom token provided by Canvas (if available)
@@ -909,6 +913,7 @@
                             try {
                                 await signInWithCustomToken(auth, __initial_auth_token);
                                 userId = auth.currentUser.uid;
+                                userIdDisplay.textContent = `User ID: ${userId}`; // Update UI
                                 signedIn = true;
                             } catch (error) {
                                 // Log specific error for custom token if it fails
@@ -926,12 +931,13 @@
                             try {
                                 await signInAnonymously(auth);
                                 userId = auth.currentUser.uid; // Store anonymous user ID
+                                userIdDisplay.textContent = `User ID: ${userId}`; // Update UI
                                 signedIn = true;
                             } catch (anonError) {
                                 console.error("Firebase anonymous authentication failed, falling back to initial data only:", anonError);
                                 // If all authentication methods fail, Firebase will not be fully functional.
-                                // In this case, we rely only on initialGamesData.
                                 userId = null; // Explicitly set userId to null if auth fails
+                                userIdDisplay.textContent = 'User ID: Not authenticated (offline mode)';
                             }
                         }
                     }
@@ -944,6 +950,7 @@
                 loadingIndicator.textContent = "Error loading activities. Please ensure Firebase config is correct and security rules are set up.";
                 // Fallback to initial games if Firebase init fails
                 userId = null; // Ensure userId is null if Firebase itself fails to initialize
+                userIdDisplay.textContent = 'User ID: Not authenticated (offline mode)';
                 allActivities = [...initialGamesData]; // Display initial games in offline mode
                 renderGames();
                 populateMaterialFilter(); // Ensure materials are populated even in offline mode
@@ -970,6 +977,10 @@
                 
                 // IMPORTANT CHANGE: Using a public collection for shared data
                 // This path allows all authenticated users to read/write to the same activity list.
+                // Ensure your Firebase Security Rules allow authenticated users to read/write to this path:
+                // match /artifacts/{appId}/public/data/{document=**} {
+                //   allow read, write: if request.auth != null;
+                // }
                 const activitiesCollectionRef = collection(db, `artifacts/${appId}/public/data/activities`);
                 const q = query(activitiesCollectionRef); // Create a query for the collection
 
@@ -1422,7 +1433,6 @@
 
                 // Basic client-side validation
                 if (!newActivity.name || !newActivity.type || !newActivity.location || !newActivity.objectives || !newActivity.safety || !newActivity.supercharged || newActivity.instructions.length === 0) {
-                    // In a real application, you would display a user-friendly error message here.
                     console.error("Validation failed: Please fill in all required fields (marked with *).");
                     return;
                 }
