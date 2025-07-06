@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Foursquare Kids Camp - Interactive Leader's Guide</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E⛺%3C/text%3E%3C/svg%3E" type="image/svg+xml">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -770,7 +771,7 @@
                     "<strong>Game Play:</strong> Teams send one player at a time to the throwing line. The player throws a set number of sponges/bean bags (e.g., 3-5 throws) at the targets. After their throws, the player retrieves their projectiles (if safe to do so and not interfering with other players) and returns to tag the next player in line. Only one player should be at the throwing line at a time.",
                     "<strong>Scoring:</strong> Points are tallied for successful hits on targets. Projectiles must hit or land inside the target to count. A designated scorekeeper records points for each team.",
                     "<strong>Optional: Deflectors:</strong> For an added challenge, leaders can hold pool noodles to act as deflectors, making it harder to hit targets. Ensure deflectors are held safely and do not interfere with the throwing motion.",
-                    "<strong>Winning:</strong> The game continues for a set time (e.g., 20-30 minutes) or until all players have had a predetermined number of turns. The team with the highest total score at the end wins."
+                    "<strong>Winning:</strong> The game continues for a set time (e.g., 20-30 minutes) or until all players have had a predetermined number of turns. The team with the most points at the end wins."
                 ],
                 materials: ["Sponges (21½ bags)", "Bean Bags (10)", "Large Buckets (various)", "Laundry Baskets (11)", "Tiny Garbage Cans (9)", "Cones", "Hula Hoops (25)", "Scoreboard (1)", "Pencils", "Cardstock Paper", "Whistles (2)", "Stopwatch (1)", "Pool Noodles (36)"],
                 safety: "Ensure the throwing area is clear of obstacles. Remind children to throw gently, only at designated targets, and never at people. Supervise closely to ensure safe throwing and retrieval of projectiles. Ensure no one walks in front of the thrower.",
@@ -1012,12 +1013,54 @@
             }
         ];
 
-        // Define the fixed schedule data for special spanning events only
-        const fixedScheduleData = [
-            // FRIDAY special events
-            { day: 'FRI', timeSlot: '1:25-2:25', slotCategory: 'POINTS PALOOZA', activityName: 'POINTS PALOOZA', colspan: 7 }, // Special fixed event, spans all 7 activity columns
-            { day: 'FRI', timeSlot: '4:20-5:20', slotCategory: 'CAMP CARNIVAL', activityName: 'CAMP CARNIVAL', colspan: 7 } // Special fixed event, spans all 7 activity columns
-        ];
+        // Define the schedule data from the PDF, including team rotations for non-droppable slots
+        const scheduleDataFromPDF = {
+            'TUES': {
+                '10:10-11:10': {
+                    'ROCKWALL': 'ROCKWALL', 'ARCHERY': 'ARCHERY', 'TEAM TIME': 'TEAM 1<br>TEAM 3', 'POOL': 'POOL', 'CREATION STATION': 'CREATION STATION', 'FIELD': 'TEAM 5<br>TEAM 7', 'GAMES & CHILL': 'GAMES & CHILL'
+                },
+                '1:25-2:25': {
+                    'ROCKWALL': 'ROCKWALL', 'ARCHERY': 'ARCHERY', 'TEAM TIME': 'TEAM 2', 'POOL': 'POOL', 'CREATION STATION': 'CREATION STATION', 'FIELD': 'TEAM 3<br>TEAM 4', 'GAMES & CHILL': 'GAMES & CHILL'
+                },
+                '4:20-5:20': {
+                    'ROCKWALL': 'ROCKWALL', 'ARCHERY': 'ARCHERY', 'TEAM TIME': 'TEAM 8<br>TEAM 4', 'POOL': 'POOL', 'CREATION STATION': 'CREATION STATION', 'FIELD': 'TEAM 1<br>TEAM 5', 'GAMES & CHILL': 'GAMES & CHILL'
+                }
+            },
+            'WED': {
+                '10:10-11:10': {
+                    'ROCKWALL': 'ROCKWALL', 'ARCHERY': 'ARCHERY', 'TEAM TIME': 'TEAM 6', 'POOL': 'POOL', 'CREATION STATION': 'CREATION STATION', 'FIELD': 'TEAM 1', 'GAMES & CHILL': 'GAMES & CHILL'
+                },
+                '1:25-2:25': {
+                    'ROCKWALL': 'ROCKWALL', 'ARCHERY': 'ARCHERY', 'TEAM TIME': 'TEAM 2', 'POOL': 'POOL', 'CREATION STATION': 'CREATION STATION', 'FIELD': 'TEAM 3<br>TEAM 5', 'GAMES & CHILL': 'GAMES & CHILL'
+                },
+                '4:20-5:20': {
+                    'ROCKWALL': 'ROCKWALL', 'ARCHERY': 'ARCHERY', 'TEAM TIME': 'TEAM 8<br>TEAM 7', 'POOL': 'POOL', 'CREATION STATION': 'CREATION STATION', 'FIELD': 'TEAM 4', 'GAMES & CHILL': 'GAMES & CHILL'
+                }
+            },
+            'THUR': {
+                '10:10-11:10': {
+                    'ROCKWALL': 'ROCKWALL', 'ARCHERY': 'ARCHERY', 'TEAM TIME': 'TEAM 3<br>TEAM 7', 'POOL': 'POOL', 'CREATION STATION': 'CREATION STATION', 'FIELD': 'TEAM 4<br>TEAM 8', 'GAMES & CHILL': 'GAMES & CHILL'
+                },
+                '1:25-2:25': {
+                    'ROCKWALL': 'ROCKWALL', 'ARCHERY': 'ARCHERY', 'TEAM TIME': 'TEAM 8<br>TEAM 2', 'POOL': 'POOL', 'CREATION STATION': 'CREATION STATION', 'FIELD': 'TEAM 4<br>TEAM 6', 'GAMES & CHILL': 'GAMES & CHILL'
+                },
+                '4:20-5:20': {
+                    'ROCKWALL': 'ROCKWALL', 'ARCHERY': 'ARCHERY', 'TEAM TIME': 'TEAM 1', 'POOL': 'POOL', 'CREATION STATION': 'CREATION STATION', 'FIELD': 'TEAM 2<br>TEAM 3', 'GAMES & CHILL': 'GAMES & CHILL'
+                }
+            },
+            'FRI': {
+                '10:10-11:10': {
+                    'ROCKWALL': 'ROCKWALL', 'ARCHERY': 'ARCHERY', 'TEAM TIME': 'TEAM 4<br>TEAM 2', 'POOL': 'POOL', 'CREATION STATION': 'CREATION STATION', 'FIELD': 'TEAM 3<br>TEAM 5', 'GAMES & CHILL': 'GAMES & CHILL'
+                },
+                '1:25-2:25': { // POINTS PALOOZA - spans all
+                    'POINTS PALOOZA': 'POINTS PALOOZA'
+                },
+                '4:20-5:20': { // CAMP CARNIVAL - spans all
+                    'CAMP CARNIVAL': 'CAMP CARNIVAL'
+                }
+            }
+        };
+
 
         // Define the structure of the calendar grid for dynamic generation
         const calendarGridStructure = [
@@ -1155,7 +1198,7 @@
             const moveToTrashBtn = document.getElementById('move-to-trash-btn');
             const viewDeletedActivitiesBtn = document.getElementById('view-deleted-activities-btn');
             const deletedActivitiesModal = document.getElementById('deleted-activities-modal');
-            const closeDeletedActivitiesModalBtn = document.getElementById('close-deleted-activities-btn');
+            const closeDeletedActivitiesModalBtn = document.getElementById('close-deleted-activities-modal');
             const deletedActivitiesList = document.getElementById('deleted-activities-list');
             const deletedCountSpan = document.getElementById('deleted-count');
             const confirmationModal = document.getElementById('confirmation-modal');
@@ -1405,7 +1448,7 @@
                     // Determine card color based on activity type
                     const typeColor = game.type === 'Field Game' ? 'bg-sky-100 text-sky-800' : 'bg-amber-100 text-amber-800';
                     // Determine location icon
-                    const locationIcon = game.location === 'Outdoor' ? '☀️' : game.location === 'Indoor' ? '🏠' : '☀️/�';
+                    const locationIcon = game.location === 'Outdoor' ? '☀️' : game.location === 'Indoor' ? '🏠' : '☀️/🏠';
 
                     card.innerHTML = `
                         <div class="flex-grow">
@@ -1876,13 +1919,23 @@
             });
 
             // --- Leader Resources Collapsible Logic ---
-            leaderResourcesToggle.addEventListener('click', () => {
-                leaderResourcesContent.classList.toggle('collapsed'); // Toggle content visibility
-                collapseIcon.classList.toggle('collapsed'); // Toggle icon rotation
-            });
+            // Ensure these elements exist before adding listeners
+            if (leaderResourcesToggle && leaderResourcesContent && collapseIcon) {
+                leaderResourcesToggle.addEventListener('click', () => {
+                    leaderResourcesContent.classList.toggle('collapsed'); // Toggle content visibility
+                    collapseIcon.classList.toggle('collapsed'); // Toggle icon rotation
+                });
+            } else {
+                console.warn("Leader resources toggle elements not found. Collapsible section may not function.");
+            }
 
             // --- Populate Initial Games Logic ---
-            populateInitialGamesBtn.addEventListener('click', populateInitialGamesIfEmpty);
+            // Ensure button exists before adding listener
+            if (populateInitialGamesBtn) {
+                populateInitialGamesBtn.addEventListener('click', populateInitialGamesIfEmpty);
+            } else {
+                console.warn("Populate initial games button not found.");
+            }
 
             /**
              * Populates Firestore with initialGamesData if the collection is empty.
@@ -1920,6 +1973,7 @@
 
             /**
              * Dynamically renders the calendar grid based on calendarGridStructure.
+             * Populates non-droppable slots with data from scheduleDataFromPDF.
              */
             function renderCalendarGrid() {
                 calendarGridContainer.innerHTML = ''; // Clear existing grid
@@ -1949,17 +2003,16 @@
                             cell.classList.add('droppable');
                         } else {
                             cell.classList.add('non-droppable');
-                            // Check for special spanning events from fixedScheduleData
-                            const specialEvent = fixedScheduleData.find(e => 
-                                e.day === cellData.day && 
-                                e.timeSlot === cellData.timeSlot && 
-                                e.slotCategory === cellData.slotCategory
-                            );
-                            if (specialEvent) {
-                                cell.textContent = specialEvent.activityName;
-                            } else {
-                                // For regular fixed columns (ROCKWALL, ARCHERY, etc.), display their category name
-                                cell.textContent = cellData.slotCategory;
+                            // Get the activity name/team rotation from scheduleDataFromPDF
+                            const daySchedule = scheduleDataFromPDF[cellData.day];
+                            if (daySchedule) {
+                                const timeSlotSchedule = daySchedule[cellData.timeSlot];
+                                if (timeSlotSchedule) {
+                                    const activityContent = timeSlotSchedule[cellData.slotCategory];
+                                    if (activityContent) {
+                                        cell.innerHTML = activityContent; // Use innerHTML to render <br> for team rotations
+                                    }
+                                }
                             }
                         }
                     }
