@@ -10,10 +10,28 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Base font and general layout */
         body { font-family: 'Inter', sans-serif; }
-        .chart-container { position: relative; width: 100%; max-width: 350px; margin-left: auto; margin-right: auto; height: 350px; }
-        .modal { display: none; }
-        .modal.active { display: flex; }
+        
+        /* Chart container styling for responsiveness */
+        .chart-container { 
+            position: relative; 
+            width: 100%; 
+            max-width: 350px; 
+            margin-left: auto; 
+            margin-right: auto; 
+            height: 350px; /* Fixed height for chart area */
+        }
+
+        /* Modal overlay and content display */
+        .modal { 
+            display: none; /* Hidden by default */
+        }
+        .modal.active { 
+            display: flex; /* Flexbox for centering when active */
+        }
+
+        /* Card entry animation */
         .card-enter {
             opacity: 0;
             transform: translateY(20px);
@@ -23,7 +41,8 @@
             opacity: 1;
             transform: translateY(0);
         }
-        /* Custom scrollbar for modals */
+
+        /* Custom scrollbar for modals for better UX */
         .modal-content-scroll::-webkit-scrollbar {
             width: 8px;
         }
@@ -38,6 +57,7 @@
         .modal-content-scroll::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
+
         /* Collapsible section styles */
         .collapsible-content {
             max-height: 1000px; /* Arbitrarily large value to allow smooth transition */
@@ -49,7 +69,9 @@
             max-height: 0;
             opacity: 0;
         }
+        /* Icon rotation for collapsible section */
         .collapse-icon {
+            display: inline-block; /* Essential for transform to work reliably on span */
             transition: transform 0.3s ease-out;
         }
         .collapse-icon.collapsed {
@@ -59,15 +81,20 @@
 </head>
 <body class="bg-stone-50 text-stone-800">
 
+    <!-- Main application container -->
     <div id="app-container" class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
         
+        <!-- Header section -->
         <header class="text-center mb-12">
             <h1 class="text-4xl md:text-5xl font-bold text-teal-700">Foursquare Kids Camp</h1>
             <p class="mt-4 text-lg text-stone-600">Interactive Leader's Guide</p>
+            <!-- Displays the current user ID for debugging/identification -->
             <div id="user-id-display" class="mt-2 text-sm text-stone-500"></div>
         </header>
 
+        <!-- Main content area -->
         <main>
+            <!-- Dashboard section with welcome message and activity overview chart -->
             <section id="dashboard" class="mb-12">
                  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-center">
                     <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
@@ -75,10 +102,12 @@
                         <p class="text-stone-600">
                             This guide is your central hub for planning and leading activities. Use the filters below to quickly find the perfect game for your next slot, whether you're on the field or need an indoor option for a rainy day. Each game card provides a full breakdown of instructions, materials, and key discussion points to connect with our camp's mission.
                         </p>
+                        <!-- Button to view deleted activities -->
                         <button id="view-deleted-activities-btn" class="mt-4 bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 transition-colors text-sm">
                             View Deleted Activities (<span id="deleted-count">0</span>)
                         </button>
                     </div>
+                    <!-- Doughnut chart for activity type distribution -->
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
                         <h3 class="text-xl font-bold text-center text-teal-700 mb-4">Activity Overview</h3>
                         <div class="chart-container" style="height: 150px; max-width: 150px;">
@@ -88,11 +117,12 @@
                 </div>
             </section>
 
+            <!-- Leader Resources & Best Practices collapsible section -->
             <section id="leader-resources" class="mb-12 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
                 <div class="flex justify-between items-center cursor-pointer" id="leader-resources-toggle">
                     <h2 class="text-2xl font-bold text-teal-700 mb-4">Leader Resources & Best Practices</h2>
                     <button class="text-stone-500 hover:text-teal-600 transition-colors">
-                        <span class="text-2xl font-bold collapse-icon">&#9660;</span> <!-- Down arrow -->
+                        <span class="text-2xl font-bold collapse-icon">&#9660;</span> <!-- Down arrow icon -->
                     </button>
                 </div>
                 <div id="leader-resources-content" class="collapsible-content">
@@ -135,10 +165,12 @@
                 </div>
             </section>
             
+            <!-- Activity Finder section with filters and game grid -->
             <section id="activity-finder">
                 <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200 mb-8">
                     <h2 class="text-2xl font-bold text-teal-700 mb-4">Find an Activity</h2>
                     <div class="flex flex-wrap gap-4 items-center">
+                        <!-- Type filters (Field Game, Team Time) -->
                         <div>
                             <label class="font-bold text-stone-700">Filter by Type:</label>
                             <div id="type-filters" class="flex flex-wrap gap-2 mt-2">
@@ -147,6 +179,7 @@
                                 <button class="filter-btn-type bg-stone-200 text-stone-700 py-2 px-4 rounded-full" data-type="Team Time">Team Time</button>
                             </div>
                         </div>
+                        <!-- Location filters (Outdoor, Indoor, Both) -->
                          <div>
                             <label class="font-bold text-stone-700">Filter by Location:</label>
                             <div id="location-filters" class="flex flex-wrap gap-2 mt-2">
@@ -156,24 +189,27 @@
                                 <button class="filter-btn-location bg-stone-200 text-stone-700 py-2 px-4 rounded-full" data-location="Both">Both</button>
                             </div>
                         </div>
+                        <!-- Material filter dropdown -->
                         <div>
                             <label for="material-filter-select" class="font-bold text-stone-700">Filter by Material:</label>
                             <select id="material-filter-select" class="mt-2 block w-full pl-3 pr-10 py-2 text-base border-stone-300 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm rounded-md">
                                 <option value="all">All Materials</option>
-                                <!-- Options will be dynamically populated here -->
+                                <!-- Options will be dynamically populated here by JavaScript -->
                             </select>
                         </div>
                     </div>
                 </div>
 
+                <!-- Grid to display activity cards -->
                 <div id="game-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Loading indicator for activities -->
                     <div id="loading-indicator" class="col-span-full text-center text-stone-500 text-lg py-8">Loading activities...</div>
                 </div>
             </section>
         </main>
     </div>
 
-    <!-- Game Details Modal -->
+    <!-- Game Details Modal (displays full information about an activity) -->
     <div id="game-modal" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto modal-content-scroll">
             <div class="sticky top-0 bg-white p-4 sm:p-6 border-b border-stone-200 flex justify-between items-center">
@@ -185,6 +221,7 @@
             <div id="modal-content" class="p-4 sm:p-6">
             </div>
             <div class="p-4 sm:p-6 border-t border-stone-200 flex justify-end">
+                <!-- Button to soft-delete an activity -->
                 <button id="move-to-trash-btn" class="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 transition-colors text-sm">
                     Move to Trash
                 </button>
@@ -192,7 +229,7 @@
         </div>
     </div>
 
-    <!-- Add Activity Modal -->
+    <!-- Add Activity Modal (form for creating new activities) -->
     <div id="add-activity-modal" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto modal-content-scroll">
             <div class="sticky top-0 bg-white p-4 sm:p-6 border-b border-stone-200 flex justify-between items-center">
@@ -202,11 +239,13 @@
                 </button>
             </div>
             <form id="add-activity-form" class="p-4 sm:p-6 space-y-6">
+                <!-- Activity Name Input -->
                 <div>
                     <label for="activity-name" class="block text-stone-700 font-bold mb-2">Activity Name <span class="text-red-500">*</span></label>
                     <input type="text" id="activity-name" name="name" required class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500">
                 </div>
 
+                <!-- Activity Type Radio Buttons -->
                 <div>
                     <label class="block text-stone-700 font-bold mb-2">Activity Type <span class="text-red-500">*</span></label>
                     <div class="flex flex-wrap gap-4">
@@ -221,6 +260,7 @@
                     </div>
                 </div>
 
+                <!-- Location Radio Buttons -->
                 <div>
                     <label class="block text-stone-700 font-bold mb-2">Location <span class="text-red-500">*</span></label>
                     <div class="flex flex-wrap gap-4">
@@ -239,14 +279,17 @@
                     </div>
                 </div>
 
+                <!-- Objectives Textarea -->
                 <div>
                     <label for="objectives" class="block text-stone-700 font-bold mb-2">Objectives <span class="text-red-500">*</span></label>
                     <textarea id="objectives" name="objectives" rows="3" required class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
                 </div>
 
+                <!-- Dynamic Instructions Input -->
                 <div>
                     <label class="block text-stone-700 font-bold mb-2">Instructions <span class="text-red-500">*</span></label>
                     <div id="instructions-container" class="space-y-3">
+                        <!-- Initial instruction field, more added by JS -->
                         <div class="instruction-item flex items-center gap-2">
                             <textarea name="instructions[]" rows="2" required class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., Setup: Divide a large outdoor field..."></textarea>
                             <button type="button" class="remove-instruction-btn text-red-500 hover:text-red-700 text-xl font-bold">&times;</button>
@@ -255,9 +298,11 @@
                     <button type="button" id="add-instruction-btn" class="mt-3 bg-stone-200 text-stone-700 py-2 px-4 rounded-md hover:bg-stone-300 transition-colors">Add Instruction Step</button>
                 </div>
 
+                <!-- Dynamic Materials Input -->
                 <div>
                     <label class="block text-stone-700 font-bold mb-2">Materials Needed</label>
                     <div id="materials-container" class="space-y-3">
+                        <!-- Initial material field, more added by JS -->
                         <div class="material-item flex items-center gap-2">
                             <input type="text" name="materials[]" class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., Water Guns (14)">
                             <button type="button" class="remove-material-btn text-red-500 hover:text-red-700 text-xl font-bold">&times;</button>
@@ -266,16 +311,19 @@
                     <button type="button" id="add-material-btn" class="mt-3 bg-stone-200 text-stone-700 py-2 px-4 rounded-md hover:bg-stone-300 transition-colors">Add Material</button>
                 </div>
 
+                <!-- Safety Notes Textarea -->
                 <div>
                     <label for="safety-notes" class="block text-stone-700 font-bold mb-2">Safety Notes <span class="text-red-500">*</span></label>
                     <textarea id="safety-notes" name="safety" rows="3" required class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
                 </div>
 
+                <!-- SuperCharged Application Textarea -->
                 <div>
                     <label for="supercharged-app" class="block text-stone-700 font-bold mb-2">SuperCharged Application <span class="text-red-500">*</span></label>
                     <textarea id="supercharged-app" name="supercharged" rows="3" required class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
                 </div>
 
+                <!-- Submit Button -->
                 <div class="flex justify-end">
                     <button type="submit" class="bg-teal-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-teal-700 transition-colors">Add Activity</button>
                 </div>
@@ -283,7 +331,7 @@
         </div>
     </div>
 
-    <!-- Deleted Activities Modal -->
+    <!-- Deleted Activities Modal (shows activities marked as deleted) -->
     <div id="deleted-activities-modal" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto modal-content-scroll">
             <div class="sticky top-0 bg-white p-4 sm:p-6 border-b border-stone-200 flex justify-between items-center">
@@ -293,12 +341,12 @@
                 </button>
             </div>
             <div id="deleted-activities-list" class="p-4 sm:p-6 space-y-4">
-                <!-- Deleted activities will be listed here -->
+                <!-- Deleted activities will be listed here by JavaScript -->
             </div>
         </div>
     </div>
 
-    <!-- Confirmation Modal (for permanent delete) -->
+    <!-- Confirmation Modal (for permanent deletion) -->
     <div id="confirmation-modal" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center">
             <h3 class="text-xl font-bold text-red-700 mb-4">Confirm Permanent Deletion</h3>
@@ -323,23 +371,13 @@
         let auth;
         let userId;
 
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyCNMLCw5f1ajmGLHP9gnfzojcryUIufs6E",
-            authDomain: "kids-camp-guide.firebaseapp.com",
-            projectId: "kids-camp-guide",
-            storageBucket: "kids-camp-guide.firebasestorage.app",
-            messagingSenderId: "774110400277",
-            appId: "1:774110400277:web:7e3b65313073e3aacf631c"
-        };
-        
-        // For GitHub Pages, __app_id and __initial_auth_token are not automatically provided by the Canvas environment.
-        // So, we'll derive the appId for Firestore collection path from firebaseConfig.appId
-        // or default to 'default-app-id' if not found.
-        const appId = firebaseConfig.appId || 'default-app-id';
+        // MANDATORY: Use __app_id and __firebase_config provided by the Canvas environment
+        // These global variables are injected by the Canvas runtime.
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
 
-
-        // Initial games data - these will be loaded first, then merged with user-added data from Firestore
+        // Initial games data - these will be loaded first, then merged with user-added data from Firestore.
+        // This provides a baseline set of activities even if no user data is present or Firestore fails.
         const initialGamesData = [
             {
                 id: 'game1',
@@ -603,7 +641,7 @@
                 generalInstructions: [
                     "<strong>Setup:</strong> Place several small kiddie pools in a designated outdoor area. Fill each pool with water to a depth that allows treasures to be submerged but is safe for children. Submerge various 'treasures' at the bottom of the pools (e.g., fake gold coins, plastic critters, diving octopi, weighted plastic balls). Ensure the treasures are safe to handle, clean, and easily distinguishable by touch. Have blindfolds or bandanas ready.",
                     "<strong>Team Formation:</strong> Divide campers into teams. Each team will take turns sending one or two players to search the pools.",
-                    "<strong>Game Play (Option 1 - Blindfolded):</strong> One player from a team is blindfolded. They approach a pool and, guided verbally by their non-blindfolded teammates, attempt to find and retrieve as many treasures as possible within a set time limit (e.g., 60-90 seconds). The blindfolded player cannot see, relying entirely on their teammates' instructions. Teammates must stay outside the pool and can only use verbal commands (e.g., 'left a little', 'straight ahead', 'feel with your foot').",
+                    "<strong>Game Play (Option 1 - Blindfolded):</strong> One player from a team is blindfolded. They approach a pool and, guided verbally by their non-blindfolded teammates, attempt to find and retrieve as many treasures as possible within a set time limit (e.g., 60-90 seconds). The blindfolded player cannot see, relying entirely on their teammates' instructions. Teammates must stay outside the pool and can only use verbal commands (e.g., 'left a little', 'straight ahead', 'mine on your right').",
                     "<strong>Game Play (Option 2 - Feet Only):</strong> Players are not blindfolded but must use only their feet/toes to search for and retrieve treasures from the bottom of the pool. No hands allowed. This can be done individually or as a relay.",
                     "<strong>Scoring:</strong> After the time limit, count the treasures collected by the player. The treasures are then returned to the pool for the next team. The team with the most treasures collected at the end wins. You can assign different point values to different types of treasures if desired.",
                     "<strong>Rotation:</strong> Teams rotate through the pools until all players have had a turn, or for a set number of rounds."
@@ -662,7 +700,7 @@
                 objectives: "Enhances problem-solving, logical thinking, communication, critical thinking, and subtly reinforces camp values.",
                 generalInstructions: [
                     "<strong>Setup:</strong> Create 3-5 encrypted messages for each team. Ensure the messages are progressive, with one leading to the next. Examples include: <br> - <strong>Substitution Cipher:</strong> Each letter is replaced by another (e.g., A=Z, B=Y, or a simple shift cipher like A=C, B=D). Provide a small, clear key (e.g., 'A=Z', 'B=Y') for the first message, or make it a simple pattern they can deduce. <br> - <strong>Number Code:</strong> Each letter corresponds to a number (e.g., A=1, B=2). Provide a number-to-letter key. <br> - <strong>Bead Sequence:</strong> A sequence of colored beads represents a word or phrase (e.g., Red-Blue-Green = 'Faith', Yellow-Yellow-Red = 'Love'). Provide a clear legend for the bead code. <br> The decoded messages should reveal Foursquare values, short Bible verses, or clues leading to the next message. Place the first message and any necessary decoding tools (pencils, paper, bead legend, cipher key) in a sealed envelope labeled for each team.",
-                    "<strong>Team Formation:</strong> Divide campers into small teams (e.g., 3-5 players per team). Give each team their first encrypted message envelope and a clipboard/writing surface.",
+                    "<strong>Team Formation:</strong> Divide campers into small teams (e.g., 3-5 campers per team). Give each team their first encrypted message envelope and a clipboard/writing surface.",
                     "<strong>Game Play:</strong> Teams collaboratively work to decode their message. They must use the provided key or their own logic to figure out the code. Encourage discussion and collaboration within the team. Once a message is decoded, they show it to a leader to verify. If correct, the leader provides the next encrypted message or clue. If incorrect, the leader can give a small hint (e.g., 'check your second word') and send them back to try again.",
                     "<strong>Winning:</strong> The game continues until all messages are decoded, leading to a final message (e.g., 'You have unlocked the secret of teamwork!') or a small 'treasure' (e.g., a bag of fake gold coins, a small treat). The first team to successfully decode all messages wins."
                 ],
@@ -809,12 +847,14 @@
             }
         ];
 
-        // This variable will hold all activities, including initial and user-added ones.
+        // This variable will hold all activities, including initial and user-added ones from Firestore.
         let allActivities = [];
-        let activityTypeChart; // Declare chart variable globally
-        let activityToDeleteId = null; // To store the ID of the activity to be permanently deleted
+        let activityTypeChart; // Variable to hold the Chart.js instance
+        let activityToDeleteId = null; // Stores the ID of the activity targeted for permanent deletion
 
+        // Event listener for when the DOM content is fully loaded
         document.addEventListener('DOMContentLoaded', async () => {
+            // Get references to all necessary DOM elements
             const gameGrid = document.getElementById('game-grid');
             const modal = document.getElementById('game-modal');
             const modalTitle = document.getElementById('modal-title');
@@ -845,31 +885,34 @@
             const leaderResourcesContent = document.getElementById('leader-resources-content');
             const collapseIcon = leaderResourcesToggle.querySelector('.collapse-icon');
 
-
+            // Object to store current filter selections
             let currentFilters = { type: 'all', location: 'all', material: 'all' };
 
             // Initialize Firebase
             try {
-                app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-                console.log("Firebase Auth initialized:", auth); // Log auth object for debugging
+                // Check if Firebase configuration is provided by the Canvas environment
+                if (!firebaseConfig) {
+                    throw new Error("Firebase configuration not found. Ensure __firebase_config is provided.");
+                }
+                app = initializeApp(firebaseConfig); // Initialize Firebase app
+                db = getFirestore(app); // Get Firestore instance
+                auth = getAuth(app); // Get Auth instance
 
-                // Authenticate user
+                // Listen for authentication state changes
                 onAuthStateChanged(auth, async (user) => {
                     if (user) {
+                        // If user is already signed in (e.g., from a previous session)
                         userId = user.uid;
                     } else {
                         let signedIn = false;
-                        // Use __initial_auth_token if available (from Canvas environment)
+                        // Attempt to sign in with a custom token provided by Canvas (if available)
                         if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                             try {
-                                console.log("Attempting signInWithCustomToken...");
                                 await signInWithCustomToken(auth, __initial_auth_token);
                                 userId = auth.currentUser.uid;
                                 signedIn = true;
-                                console.log("Signed in with custom token.");
                             } catch (error) {
+                                // Log specific error for custom token if it fails
                                 if (error.code === 'auth/custom-token-mismatch') {
                                     console.warn("Firebase custom token mismatch, attempting anonymous sign-in.");
                                 } else {
@@ -879,121 +922,127 @@
                             }
                         }
 
-                        if (!signedIn) { // This condition will be true if custom token failed or was not present
+                        // If custom token failed or was not present, attempt anonymous sign-in
+                        if (!signedIn) {
                             try {
-                                console.log("Attempting signInAnonymously...");
                                 await signInAnonymously(auth);
                                 userId = auth.currentUser.uid;
                                 signedIn = true;
-                                console.log("Signed in anonymously.");
                             } catch (anonError) {
                                 console.error("Firebase anonymous authentication failed, falling back to random UUID:", anonError);
+                                // Fallback to a random UUID if all authentication methods fail
                                 userId = crypto.randomUUID();
                             }
                         }
                     }
+                    // Display the user ID in the UI
                     userIdDisplay.textContent = `User ID: ${userId}`;
-                    console.log("Firebase initialized. User ID:", userId);
-                    // Start listening for activities only after auth is ready
+                    // Start listening for activities only after authentication is ready
                     listenForActivities();
                 });
 
             } catch (error) {
                 console.error("Error initializing Firebase:", error);
                 loadingIndicator.textContent = "Error loading activities. Please ensure Firebase config is correct and security rules are set up.";
-                // Fallback to a random UUID if Firebase init fails
+                // Fallback to a random UUID and initial data if Firebase init fails
                 userId = crypto.randomUUID();
                 userIdDisplay.textContent = `User ID: ${userId} (Offline Mode)`;
-                // If Firebase fails to initialize, we can still show initial games
-                allActivities = [...initialGamesData];
+                allActivities = [...initialGamesData]; // Display initial games in offline mode
                 renderGames();
-                populateMaterialFilter();
+                populateMaterialFilter(); // Ensure materials are populated even in offline mode
                 updateActivityChart();
                 updateDeletedCount();
             }
 
-            // Function to listen for real-time activity updates from Firestore
+            /**
+             * Sets up a real-time listener for activities from Firestore.
+             * Merges initial static data with user-specific data from Firestore.
+             */
             function listenForActivities() {
+                // Ensure Firestore and userId are available before attempting to listen
                 if (!db || !userId) {
-                    console.warn("Firestore or User ID not ready for listening.");
-                    // If Firestore isn't ready, just display the initial games.
+                    console.warn("Firestore or User ID not ready for listening. Displaying initial data.");
                     allActivities = [...initialGamesData];
                     renderGames();
-                    populateMaterialFilter(); // Ensure materials are populated even in offline mode
+                    populateMaterialFilter();
                     updateActivityChart();
                     updateDeletedCount();
                     return;
                 }
-                // Firestore Security Rule Reminder:
-                // Ensure your Firestore security rules allow read/write access to `artifacts/{appId}/users/{userId}/activities`
-                // for authenticated users, where `userId` matches `request.auth.uid`.
-                // Example rule:
-                // match /databases/{database}/documents {
-                //   match /artifacts/{appId}/users/{userId}/{documents=**} {
-                //     allow read, write: if request.auth != null && request.auth.uid == userId;
-                //   }
-                // }
+                
+                // Construct the correct Firestore collection path using the provided appId and userId
                 const activitiesCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/activities`);
-                const q = query(activitiesCollectionRef);
+                const q = query(activitiesCollectionRef); // Create a query for the collection
 
+                // Set up the real-time listener
                 onSnapshot(q, (snapshot) => {
-                    loadingIndicator.style.display = 'none'; // Hide loading indicator once data starts coming
+                    loadingIndicator.style.display = 'none'; // Hide loading indicator once data is received
                     const fetchedGames = [];
                     snapshot.forEach(doc => {
-                        fetchedGames.push({ id: doc.id, ...doc.data() });
+                        fetchedGames.push({ id: doc.id, ...doc.data() }); // Extract document ID and data
                     });
+
                     // Merge initial games with fetched games, prioritizing fetched games by ID if duplicates exist
                     const mergedGamesMap = new Map();
                     initialGamesData.forEach(game => mergedGamesMap.set(game.id, game));
                     fetchedGames.forEach(game => mergedGamesMap.set(game.id, game));
                     
-                    allActivities = Array.from(mergedGamesMap.values());
+                    allActivities = Array.from(mergedGamesMap.values()); // Convert Map back to Array
+                    
+                    // Update UI components after data is loaded/updated
                     renderGames();
                     populateMaterialFilter(); // IMPORTANT: Call this after allActivities is updated
                     updateActivityChart();
                     updateDeletedCount();
-                    console.log("Activities updated from Firestore (merged with initial data):", allActivities);
-                    console.log(`Total activities currently displayed: ${allActivities.length}`);
                 }, (error) => {
                     console.error("Error fetching activities from Firestore:", error);
                     loadingIndicator.textContent = "Failed to load user activities. Displaying initial games. Please check console for Firebase errors (often security rules related).";
                     // Fallback to initial games if Firestore fetch fails
                     allActivities = [...initialGamesData];
                     renderGames();
-                    populateMaterialFilter(); // Ensure materials are populated even if fetch fails
+                    populateMaterialFilter();
                     updateActivityChart();
                     updateDeletedCount();
                 });
             }
 
+            /**
+             * Extracts and returns a sorted list of unique materials from all activities.
+             */
             function getUniqueMaterials() {
                 const allMaterials = new Set();
                 allActivities.forEach(game => {
                     if (game.materials && Array.isArray(game.materials)) {
                         game.materials.forEach(material => {
+                            // Normalize material names (e.g., "Water Guns (14)" becomes "Water Guns")
                             const normalizedMaterial = material.split('(')[0].trim();
-                            if (normalizedMaterial) { // Ensure material is not empty
+                            if (normalizedMaterial) {
                                 allMaterials.add(normalizedMaterial);
                             }
                         });
                     }
                 });
-                const sortedMaterials = Array.from(allMaterials).sort((a, b) => a.localeCompare(b)); // Sort alphabetically
-                console.log("Unique materials found:", sortedMaterials); // Debugging
-                return sortedMaterials;
+                return Array.from(allMaterials).sort((a, b) => a.localeCompare(b)); // Sort alphabetically
             }
 
+            /**
+             * Populates the material filter dropdown with unique materials.
+             * Preserves the currently selected option if it's still valid.
+             */
             function populateMaterialFilter() {
                 const uniqueMaterials = getUniqueMaterials();
-                const currentSelectedMaterial = materialFilterSelect.value; // Preserve current selection
-                materialFilterSelect.innerHTML = '<option value="all">All Materials</option>';
+                const currentSelectedMaterial = materialFilterSelect.value; // Save current selection
+                materialFilterSelect.innerHTML = '<option value="all">All Materials</option>'; // Reset options
+
+                // Add unique materials as options
                 uniqueMaterials.forEach(material => {
                     const option = document.createElement('option');
                     option.value = material;
                     option.textContent = material;
                     materialFilterSelect.appendChild(option);
                 });
-                // Restore the previous selection if it still exists
+
+                // Restore the previous selection if it still exists in the new list
                 if (uniqueMaterials.includes(currentSelectedMaterial)) {
                     materialFilterSelect.value = currentSelectedMaterial;
                 } else {
@@ -1001,17 +1050,23 @@
                 }
             }
 
+            /**
+             * Renders activity cards in the game grid based on current filters.
+             * Includes an "Add New Activity" card.
+             */
             function renderGames() {
-                gameGrid.innerHTML = '';
+                gameGrid.innerHTML = ''; // Clear existing cards
                 
+                // Filter activities based on type, location, material, and deleted status
                 const filteredGames = allActivities.filter(game => {
-                    // Only show activities that are NOT deleted and match filters
-                    const notDeleted = !game.deleted;
+                    const notDeleted = !game.deleted; // Only show non-deleted activities
                     const typeMatch = currentFilters.type === 'all' || game.type === currentFilters.type;
+                    // 'Both' location matches both 'Outdoor' and 'Indoor' filters
                     const locationMatch = currentFilters.location === 'all' || game.location === currentFilters.location || game.location === 'Both';
                     
                     let materialMatch = true;
                     if (currentFilters.material !== 'all') {
+                        // Check if any of the game's materials match the selected material filter
                         materialMatch = game.materials && Array.isArray(game.materials) && game.materials.some(material => 
                             material.split('(')[0].trim() === currentFilters.material
                         );
@@ -1020,13 +1075,16 @@
                     return notDeleted && typeMatch && locationMatch && materialMatch;
                 });
 
+                // Create and append a card for each filtered game
                 filteredGames.forEach((game) => {
                     const card = document.createElement('div');
                     card.className = 'bg-white rounded-xl shadow-sm border border-stone-200 p-6 cursor-pointer hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col';
-                    card.dataset.gameId = game.id;
+                    card.dataset.gameId = game.id; // Store game ID for easy retrieval
                     
+                    // Determine card color based on activity type
                     const typeColor = game.type === 'Field Game' ? 'bg-sky-100 text-sky-800' : 'bg-amber-100 text-amber-800';
-                    const locationIcon = game.location === 'Outdoor' ? '☀️' : game.location === 'Indoor' ? '🏠' : '☀️/�';
+                    // Determine location icon
+                    const locationIcon = game.location === 'Outdoor' ? '☀️' : game.location === 'Indoor' ? '🏠' : '☀️/🏠';
 
                     card.innerHTML = `
                         <div class="flex-grow">
@@ -1041,6 +1099,7 @@
                     `;
                     gameGrid.appendChild(card);
                     
+                    // Apply card entry animation
                     requestAnimationFrame(() => {
                         card.classList.add('card-enter');
                         requestAnimationFrame(() => {
@@ -1049,7 +1108,7 @@
                     });
                 });
 
-                // Add the "Add New Activity" card at the end
+                // Add the "Add New Activity" card at the end of the grid
                 const addActivityCard = document.createElement('div');
                 addActivityCard.className = 'bg-emerald-100 rounded-xl shadow-sm border border-emerald-300 p-6 cursor-pointer hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center h-48'; // Fixed height for consistency
                 addActivityCard.id = 'add-activity-card';
@@ -1061,17 +1120,22 @@
                 gameGrid.appendChild(addActivityCard);
             }
 
+            /**
+             * Displays the detailed information of a selected game in a modal.
+             * @param {string} gameId - The ID of the game to display.
+             */
             function showGameDetails(gameId) {
                 const game = allActivities.find(g => g.id == gameId);
-                if (!game) return;
+                if (!game) return; // Exit if game not found
 
                 modalTitle.textContent = game.name || 'Activity Details';
                 
+                // Generate HTML for materials list
                 let materialsHTML = game.materials && Array.isArray(game.materials) && game.materials.length > 0 ? game.materials.map(item => `<li class="bg-stone-100 py-1 px-3 rounded-md">${item}</li>`).join('') : '<p class="text-stone-700">No specific materials listed.</p>';
                 
                 let instructionsContent = '';
 
-                // Prioritize generalInstructions, then fallback to instructions
+                // Prioritize generalInstructions, then fallback to instructions array
                 const instructionsToRender = game.generalInstructions && Array.isArray(game.generalInstructions) && game.generalInstructions.length > 0
                     ? game.generalInstructions
                     : (game.instructions && Array.isArray(game.instructions) && game.instructions.length > 0 ? game.instructions : []);
@@ -1089,7 +1153,7 @@
                     instructionsContent += `<div><h4 class="text-lg font-bold text-teal-700 mb-2">⚙️ Instructions</h4><p class="text-stone-700">No instructions available.</p></div>`;
                 }
 
-                // Render station-specific instructions if available (assuming this might be in some future data)
+                // Render station-specific instructions if available
                 if (game.stationInstructions && Array.isArray(game.stationInstructions) && game.stationInstructions.length > 0) {
                     instructionsContent += `
                         <div class="mt-6">
@@ -1106,6 +1170,7 @@
                     `;
                 }
 
+                // Populate modal content
                 modalContent.innerHTML = `
                     <div class="space-y-6">
                         <div>
@@ -1129,17 +1194,18 @@
                         </div>
                     </div>
                 `;
-                moveToTrashBtn.dataset.gameId = gameId; // Set the game ID on the trash button
-                modal.classList.add('active');
+                moveToTrashBtn.dataset.gameId = gameId; // Set the game ID on the trash button for later use
+                modal.classList.add('active'); // Show the modal
             }
 
-            // Event listener for the game grid, including the new "Add Activity" card
+            // Event listener for clicks on the game grid (handles both activity cards and "Add New Activity" card)
             gameGrid.addEventListener('click', (e) => {
                 const addCard = e.target.closest('#add-activity-card');
                 if (addCard) {
+                    // If "Add New Activity" card is clicked, open the add activity modal
                     addActivityModal.classList.add('active');
-                    addActivityForm.reset(); // Clear form on open
-                    // Ensure at least one instruction and material field is present
+                    addActivityForm.reset(); // Clear form fields
+                    // Ensure at least one instruction and material field is present by resetting innerHTML
                     instructionsContainer.innerHTML = `
                         <div class="instruction-item flex items-center gap-2">
                             <textarea name="instructions[]" rows="2" required class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., Setup: Divide a large outdoor field..."></textarea>
@@ -1152,47 +1218,66 @@
                             <button type="button" class="remove-material-btn text-red-500 hover:text-red-700 text-xl font-bold">&times;</button>
                         </div>
                     `;
-                    addRemoveEventListeners(); // Re-add listeners for new fields
+                    addRemoveEventListeners(); // Re-add event listeners for new dynamic fields
                 } else {
-                    const card = e.target.closest('.view-details-btn'); // Target the "View Details" button specifically
+                    // If a "View Details" button on an activity card is clicked, show game details
+                    const card = e.target.closest('.view-details-btn');
                     if (card) {
                         showGameDetails(card.closest('[data-game-id]').dataset.gameId);
                     }
                 }
             });
 
-            closeModalBtn.addEventListener('click', () => modal.classList.remove('active'));
+            // Close Game Details Modal via 'X' button
+            closeModalBtn.addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+            // Close Game Details Modal via outside click on the overlay
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
                     modal.classList.remove('active');
                 }
             });
 
+            /**
+             * Handles clicks on filter buttons (Type and Location).
+             * Updates the current filter and re-renders games.
+             * @param {Event} e - The click event object.
+             * @param {string} filterType - 'type' or 'location'.
+             */
             function handleFilterClick(e, filterType) {
-                 if (e.target.tagName !== 'BUTTON') return;
+                 if (e.target.tagName !== 'BUTTON') return; // Only process button clicks
 
-                const value = e.target.dataset[filterType];
-                currentFilters[filterType] = value;
+                const value = e.target.dataset[filterType]; // Get the data-type or data-location value
+                currentFilters[filterType] = value; // Update the current filter
 
                 const filterGroup = e.target.parentElement;
+                // Remove active styling from all buttons in the group
                 filterGroup.querySelectorAll('button').forEach(btn => {
                     btn.classList.remove('bg-teal-600', 'text-white');
                     btn.classList.add('bg-stone-200', 'text-stone-700');
                 });
+                // Add active styling to the clicked button
                 e.target.classList.add('bg-teal-600', 'text-white');
                 e.target.classList.remove('bg-stone-200', 'text-stone-700');
                 
-                renderGames();
+                renderGames(); // Re-render games with new filters
             }
 
+            // Event listeners for Type and Location filter buttons
             typeFilters.addEventListener('click', (e) => handleFilterClick(e, 'type'));
             locationFilters.addEventListener('click', (e) => handleFilterClick(e, 'location'));
             
+            // Event listener for Material filter dropdown change
             materialFilterSelect.addEventListener('change', (e) => {
-                currentFilters.material = e.target.value;
-                renderGames();
+                currentFilters.material = e.target.value; // Update material filter
+                renderGames(); // Re-render games with new material filter
             });
 
+            /**
+             * Updates the doughnut chart with current activity type counts.
+             * Initializes the chart if it doesn't exist.
+             */
             function updateActivityChart() {
                 // Only count non-deleted activities for the chart
                 const activeActivities = allActivities.filter(g => !g.deleted);
@@ -1200,9 +1285,11 @@
                 const teamTimeCount = activeActivities.filter(g => g.type === 'Team Time').length;
 
                 if (activityTypeChart) {
+                    // If chart already exists, update its data
                     activityTypeChart.data.datasets[0].data = [fieldGameCount, teamTimeCount];
                     activityTypeChart.update();
                 } else {
+                    // If chart doesn't exist, create a new one
                     const ctx = document.getElementById('activityTypeChart').getContext('2d');
                     activityTypeChart = new Chart(ctx, {
                         type: 'doughnut',
@@ -1244,13 +1331,21 @@
             }
             
             // --- Add Activity Modal Logic ---
-            closeAddActivityModalBtn.addEventListener('click', () => addActivityModal.classList.remove('active'));
+
+            // Close Add Activity Modal via 'X' button
+            closeAddActivityModalBtn.addEventListener('click', () => {
+                addActivityModal.classList.remove('active');
+            });
+            // Close Add Activity Modal via outside click on the overlay
             addActivityModal.addEventListener('click', (e) => {
                 if (e.target === addActivityModal) {
                     addActivityModal.classList.remove('active');
                 }
             });
 
+            /**
+             * Adds a new instruction input field to the Add Activity form.
+             */
             function addInstructionField() {
                 const div = document.createElement('div');
                 div.className = 'instruction-item flex items-center gap-2';
@@ -1259,9 +1354,12 @@
                     <button type="button" class="remove-instruction-btn text-red-500 hover:text-red-700 text-xl font-bold">&times;</button>
                 `;
                 instructionsContainer.appendChild(div);
-                addRemoveEventListeners(); // Re-add listeners after adding new elements
+                addRemoveEventListeners(); // Re-add listeners for new dynamic fields
             }
 
+            /**
+             * Adds a new material input field to the Add Activity form.
+             */
             function addMaterialField() {
                 const div = document.createElement('div');
                 div.className = 'material-item flex items-center gap-2';
@@ -1270,34 +1368,44 @@
                     <button type="button" class="remove-material-btn text-red-500 hover:text-red-700 text-xl font-bold">&times;</button>
                 `;
                 materialsContainer.appendChild(div);
-                addRemoveEventListeners(); // Re-add listeners after adding new elements
+                addRemoveEventListeners(); // Re-add listeners for new dynamic fields
             }
 
+            /**
+             * Attaches event listeners to dynamically added 'remove' buttons
+             * for instruction and material fields.
+             */
             function addRemoveEventListeners() {
+                // For instruction fields
                 document.querySelectorAll('.remove-instruction-btn').forEach(button => {
                     button.onclick = (e) => {
-                        if (instructionsContainer.children.length > 1) { // Ensure at least one field remains
+                        // Ensure at least one instruction field remains
+                        if (instructionsContainer.children.length > 1) {
                             e.target.closest('.instruction-item').remove();
                         }
                     };
                 });
+                // For material fields
                 document.querySelectorAll('.remove-material-btn').forEach(button => {
                     button.onclick = (e) => {
-                        if (materialsContainer.children.length > 1) { // Ensure at least one field remains
+                        // Ensure at least one material field remains
+                        if (materialsContainer.children.length > 1) {
                             e.target.closest('.material-item').remove();
                         }
                     };
                 });
             }
 
+            // Event listeners for adding new instruction/material fields
             addInstructionBtn.addEventListener('click', addInstructionField);
             addMaterialBtn.addEventListener('click', addMaterialField);
-            addRemoveEventListeners(); // Initial call for existing fields
+            addRemoveEventListeners(); // Initial call to set up listeners for default fields
 
+            // Event listener for Add Activity form submission
             addActivityForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
+                e.preventDefault(); // Prevent default form submission
 
-                const formData = new FormData(e.target);
+                const formData = new FormData(e.target); // Get form data
                 const newActivity = {
                     name: formData.get('name'),
                     type: formData.get('type'),
@@ -1305,82 +1413,97 @@
                     objectives: formData.get('objectives'),
                     safety: formData.get('safety'),
                     supercharged: formData.get('supercharged'),
-                    // Get all instruction and material values
+                    // Collect all instruction values from dynamic textareas
                     instructions: Array.from(document.querySelectorAll('#instructions-container textarea[name="instructions[]"]')).map(el => el.value).filter(val => val.trim() !== ''),
+                    // Collect all material values from dynamic inputs
                     materials: Array.from(document.querySelectorAll('#materials-container input[name="materials[]"]')).map(el => el.value).filter(val => val.trim() !== ''),
-                    description: formData.get('objectives').substring(0, 100) + '...', // Use objectives as description snippet
+                    description: formData.get('objectives').substring(0, 100) + '...', // Use objectives as a short description
                     deleted: false // New activities are not deleted by default
                 };
 
-                // Basic validation
+                // Basic client-side validation
                 if (!newActivity.name || !newActivity.type || !newActivity.location || !newActivity.objectives || !newActivity.safety || !newActivity.supercharged || newActivity.instructions.length === 0) {
-                    console.error("Please fill in all required fields (marked with *).");
-                    // In a real app, you'd show a user-friendly message here.
+                    // In a real application, you would display a user-friendly error message here.
+                    console.error("Validation failed: Please fill in all required fields (marked with *).");
                     return;
                 }
 
                 try {
+                    // Check if Firestore and user are ready before attempting to save
                     if (db && userId) {
+                        // Add the new activity document to Firestore
                         const docRef = await addDoc(collection(db, `artifacts/${appId}/users/${userId}/activities`), newActivity);
-                        console.log("Document written with ID: ", docRef.id);
-                        addActivityModal.classList.remove('active'); // Close the add activity modal on success
-                        addActivityForm.reset();
-                        // The onSnapshot listener will automatically update the UI and call populateMaterialFilter
+                        addActivityModal.classList.remove('active'); // Close the modal on success
+                        addActivityForm.reset(); // Reset the form
+                        // The onSnapshot listener will automatically update the UI with the new activity
                     } else {
                         console.error("Firestore not initialized or user not authenticated. Activity not saved.");
-                        // Optionally, add the activity to the local array if Firestore is not available
-                        // This would mean it won't persist, but will appear for the current session.
-                        // For this request, we prioritize persistence, so we won't add to local array if save fails.
+                        // Handle case where Firestore is not available (e.g., show error to user)
                     }
                 } catch (error) {
                     console.error("Error adding document to Firestore: ", error);
-                    // In a real app, you'd show an error message to the user
+                    // Handle Firestore write error (e.g., show error message to user)
                 }
             });
 
             // --- Soft Delete / Trash Can Logic ---
+
+            // Event listener for "Move to Trash" button in the Game Details Modal
             moveToTrashBtn.addEventListener('click', async (e) => {
-                const gameId = e.target.dataset.gameId;
+                const gameId = e.target.dataset.gameId; // Get the ID of the activity to delete
                 if (gameId && db && userId) {
                     try {
+                        // Get a reference to the activity document
                         const activityRef = doc(db, `artifacts/${appId}/users/${userId}/activities`, gameId);
+                        // Update the 'deleted' field to true for soft deletion
                         await updateDoc(activityRef, { deleted: true });
-                        console.log(`Activity ${gameId} moved to trash.`);
-                        modal.classList.remove('active'); // Close the details modal on success
-                        // UI will update automatically via onSnapshot
+                        modal.classList.remove('active'); // Close the details modal
+                        // The UI will automatically update via the onSnapshot listener
                     } catch (error) {
                         console.error("Error moving activity to trash:", error);
-                        // Show user-friendly error message
+                        // Handle error (e.g., show user-friendly message)
                     }
                 }
             });
 
+            // Event listener for "View Deleted Activities" button on the dashboard
             viewDeletedActivitiesBtn.addEventListener('click', () => {
-                renderDeletedActivities();
-                deletedActivitiesModal.classList.add('active');
+                renderDeletedActivities(); // Populate and display deleted activities
+                deletedActivitiesModal.classList.add('active'); // Show the deleted activities modal
             });
 
-            closeDeletedActivitiesModalBtn.addEventListener('click', () => deletedActivitiesModal.classList.remove('active'));
+            // Close Deleted Activities Modal via 'X' button
+            closeDeletedActivitiesModalBtn.addEventListener('click', () => {
+                deletedActivitiesModal.classList.remove('active');
+            });
+            // Close Deleted Activities Modal via outside click on the overlay
             deletedActivitiesModal.addEventListener('click', (e) => {
                 if (e.target === deletedActivitiesModal) {
                     deletedActivitiesModal.classList.remove('active');
                 }
             });
 
+            /**
+             * Updates the count of deleted activities displayed on the dashboard.
+             */
             function updateDeletedCount() {
                 const deletedActivities = allActivities.filter(game => game.deleted);
                 deletedCountSpan.textContent = deletedActivities.length;
             }
 
+            /**
+             * Renders the list of deleted activities in the Deleted Activities Modal.
+             */
             function renderDeletedActivities() {
-                deletedActivitiesList.innerHTML = '';
-                const deletedGames = allActivities.filter(game => game.deleted);
+                deletedActivitiesList.innerHTML = ''; // Clear existing list
+                const deletedGames = allActivities.filter(game => game.deleted); // Get only deleted games
 
                 if (deletedGames.length === 0) {
                     deletedActivitiesList.innerHTML = '<p class="text-stone-600 text-center py-8">No activities in trash.</p>';
                     return;
                 }
 
+                // Create and append a list item for each deleted game
                 deletedGames.forEach(game => {
                     const listItem = document.createElement('div');
                     listItem.className = 'bg-stone-100 p-4 rounded-lg flex flex-col sm:flex-row justify-between items-start sm:items-center border border-stone-200';
@@ -1397,61 +1520,71 @@
                     deletedActivitiesList.appendChild(listItem);
                 });
 
-                // Add event listeners for restore and permanent delete buttons
+                // Add event listeners for restore and permanent delete buttons within the deleted list
                 deletedActivitiesList.querySelectorAll('.restore-activity-btn').forEach(button => {
-                    button.addEventListener('click', (e) => restoreActivity(e.target.dataset.id));
+                    button.addEventListener('click', async (e) => {
+                        await restoreActivity(e.target.dataset.id);
+                    });
                 });
                 deletedActivitiesList.querySelectorAll('.permanent-delete-btn').forEach(button => {
-                    button.addEventListener('click', (e) => showConfirmationModal(e.target.dataset.id));
+                    button.addEventListener('click', (e) => {
+                        showConfirmationModal(e.target.dataset.id); // Show confirmation before permanent delete
+                    });
                 });
             }
 
+            /**
+             * Restores a soft-deleted activity by setting its 'deleted' field to false.
+             * @param {string} gameId - The ID of the activity to restore.
+             */
             async function restoreActivity(gameId) {
                 if (db && userId) {
                     try {
                         const activityRef = doc(db, `artifacts/${appId}/users/${userId}/activities`, gameId);
-                        await updateDoc(activityRef, { deleted: false });
-                        console.log(`Activity ${gameId} restored.`);
+                        await updateDoc(activityRef, { deleted: false }); // Set deleted to false
                         deletedActivitiesModal.classList.remove('active'); // Close trash modal after restore
-                        // UI will update automatically via onSnapshot
+                        // The UI will automatically update via the onSnapshot listener
                     } catch (error) {
                         console.error("Error restoring activity:", error);
-                        // Show user-friendly error message
+                        // Handle error
                     }
                 }
             }
 
+            /**
+             * Shows the permanent deletion confirmation modal.
+             * @param {string} gameId - The ID of the activity to be permanently deleted.
+             */
             function showConfirmationModal(gameId) {
-                console.log("Showing confirmation modal for gameId:", gameId); // DEBUG LOG
-                activityToDeleteId = gameId; // Store the ID globally
-                confirmationModal.classList.add('active');
+                activityToDeleteId = gameId; // Store the ID for the confirmation action
+                confirmationModal.classList.add('active'); // Show the confirmation modal
             }
 
+            // Event listener for confirming permanent deletion
             confirmPermanentDeleteBtn.addEventListener('click', async () => {
-                console.log("Permanent delete button clicked."); // DEBUG LOG
-                console.log("Values before deletion check:", { activityToDeleteId, dbReady: !!db, userId }); // DEBUG LOG
-
                 if (activityToDeleteId && db && userId) {
                     try {
+                        // Delete the document permanently from Firestore
                         await deleteDoc(doc(db, `artifacts/${appId}/users/${userId}/activities`, activityToDeleteId));
-                        console.log(`Activity ${activityToDeleteId} permanently deleted.`);
-                        confirmationModal.classList.remove('active'); // Close the confirmation modal
-                        deletedActivitiesModal.classList.remove('active'); // Close the deleted activities modal
+                        confirmationModal.classList.remove('active'); // Close confirmation modal
+                        deletedActivitiesModal.classList.remove('active'); // Close deleted activities modal
                         activityToDeleteId = null; // Clear the stored ID
-                        // UI will update automatically via onSnapshot
+                        // The UI will automatically update via the onSnapshot listener
                     } catch (error) {
                         console.error("Error permanently deleting activity:", error);
-                        // Show user-friendly error message
+                        // Handle error
                     }
                 } else {
-                    console.warn("Permanent delete aborted: Missing activityToDeleteId, db, or userId."); // DEBUG LOG
+                    console.warn("Permanent delete aborted: Missing activityToDeleteId, db, or userId.");
                 }
             });
 
+            // Event listener for canceling permanent deletion
             cancelPermanentDeleteBtn.addEventListener('click', () => {
-                confirmationModal.classList.remove('active');
+                confirmationModal.classList.remove('active'); // Close confirmation modal
                 activityToDeleteId = null; // Clear the stored ID
             });
+            // Close Confirmation Modal via outside click on the overlay
             confirmationModal.addEventListener('click', (e) => {
                 if (e.target === confirmationModal) {
                     confirmationModal.classList.remove('active');
@@ -1461,14 +1594,16 @@
 
             // --- Leader Resources Collapsible Logic ---
             leaderResourcesToggle.addEventListener('click', () => {
-                leaderResourcesContent.classList.toggle('collapsed');
-                collapseIcon.classList.toggle('collapsed');
+                leaderResourcesContent.classList.toggle('collapsed'); // Toggle content visibility
+                collapseIcon.classList.toggle('collapsed'); // Toggle icon rotation
             });
             
-            // Initial render and chart update (will be updated by onSnapshot once data loads)
-            // If Firebase fails to initialize, these will use initialGamesData
-            // Otherwise, onSnapshot will trigger the first render after fetching user data.
-            // This check ensures we don't try to render if Firebase is still initializing successfully.
+            // Initial render and chart update
+            // This block ensures that some content is displayed immediately upon page load,
+            // even before Firebase data is fully fetched and processed by onSnapshot.
+            // If Firebase initialization fails, this will be the final state of the data display.
+            // If Firebase initializes successfully, the onSnapshot listener will then
+            // trigger a re-render with the actual user data.
             if (!app) { 
                 renderGames();
                 populateMaterialFilter();
