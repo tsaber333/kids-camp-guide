@@ -88,8 +88,7 @@
         <header class="text-center mb-12">
             <h1 class="text-4xl md:text-5xl font-bold text-teal-700">Foursquare Kids Camp</h1>
             <p class="mt-4 text-lg text-stone-600">Interactive Leader's Guide</p>
-            <!-- Displays the current user ID for debugging/identification -->
-            <div id="user-id-display" class="mt-2 text-sm text-stone-500"></div>
+            <!-- User ID display removed as per user request -->
         </header>
 
         <!-- Main content area -->
@@ -369,7 +368,7 @@
         let app;
         let db;
         let auth;
-        let userId;
+        let userId; // userId is still used for authentication purposes, but not for data path
 
         // MANDATORY: Use __app_id and __firebase_config provided by the Canvas environment
         // These global variables are injected by the Canvas runtime.
@@ -871,7 +870,7 @@
             const materialsContainer = document.getElementById('materials-container');
             const addMaterialBtn = document.getElementById('add-material-btn');
             const loadingIndicator = document.getElementById('loading-indicator');
-            const userIdDisplay = document.getElementById('user-id-display');
+            // userIdDisplay removed as per user request
             const moveToTrashBtn = document.getElementById('move-to-trash-btn');
             const viewDeletedActivitiesBtn = document.getElementById('view-deleted-activities-btn');
             const deletedActivitiesModal = document.getElementById('deleted-activities-modal');
@@ -902,7 +901,7 @@
                 onAuthStateChanged(auth, async (user) => {
                     if (user) {
                         // If user is already signed in (e.g., from a previous session)
-                        userId = user.uid;
+                        userId = user.uid; // Store user ID (even if not used for data path, useful for auth state)
                     } else {
                         let signedIn = false;
                         // Attempt to sign in with a custom token provided by Canvas (if available)
@@ -926,17 +925,16 @@
                         if (!signedIn) {
                             try {
                                 await signInAnonymously(auth);
-                                userId = auth.currentUser.uid;
+                                userId = auth.currentUser.uid; // Store anonymous user ID
                                 signedIn = true;
                             } catch (anonError) {
-                                console.error("Firebase anonymous authentication failed, falling back to random UUID:", anonError);
-                                // Fallback to a random UUID if all authentication methods fail
-                                userId = crypto.randomUUID();
+                                console.error("Firebase anonymous authentication failed, falling back to initial data only:", anonError);
+                                // If all authentication methods fail, Firebase will not be fully functional.
+                                // In this case, we rely only on initialGamesData.
+                                userId = null; // Explicitly set userId to null if auth fails
                             }
                         }
                     }
-                    // Display the user ID in the UI
-                    userIdDisplay.textContent = `User ID: ${userId}`;
                     // Start listening for activities only after authentication is ready
                     listenForActivities();
                 });
@@ -944,9 +942,8 @@
             } catch (error) {
                 console.error("Error initializing Firebase:", error);
                 loadingIndicator.textContent = "Error loading activities. Please ensure Firebase config is correct and security rules are set up.";
-                // Fallback to a random UUID and initial data if Firebase init fails
-                userId = crypto.randomUUID();
-                userIdDisplay.textContent = `User ID: ${userId} (Offline Mode)`;
+                // Fallback to initial games if Firebase init fails
+                userId = null; // Ensure userId is null if Firebase itself fails to initialize
                 allActivities = [...initialGamesData]; // Display initial games in offline mode
                 renderGames();
                 populateMaterialFilter(); // Ensure materials are populated even in offline mode
@@ -959,9 +956,10 @@
              * Merges initial static data with user-specific data from Firestore.
              */
             function listenForActivities() {
-                // Ensure Firestore and userId are available before attempting to listen
-                if (!db || !userId) {
-                    console.warn("Firestore or User ID not ready for listening. Displaying initial data.");
+                // If Firebase DB is not available (e.g., initialization failed),
+                // we only display the initial static data.
+                if (!db) {
+                    console.warn("Firestore not ready for listening. Displaying initial data only.");
                     allActivities = [...initialGamesData];
                     renderGames();
                     populateMaterialFilter();
@@ -970,8 +968,9 @@
                     return;
                 }
                 
-                // Construct the correct Firestore collection path using the provided appId and userId
-                const activitiesCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/activities`);
+                // IMPORTANT CHANGE: Using a public collection for shared data
+                // This path allows all authenticated users to read/write to the same activity list.
+                const activitiesCollectionRef = collection(db, `artifacts/${appId}/public/data/activities`);
                 const q = query(activitiesCollectionRef); // Create a query for the collection
 
                 // Set up the real-time listener
@@ -1429,15 +1428,15 @@
                 }
 
                 try {
-                    // Check if Firestore and user are ready before attempting to save
-                    if (db && userId) {
-                        // Add the new activity document to Firestore
-                        const docRef = await addDoc(collection(db, `artifacts/${appId}/users/${userId}/activities`), newActivity);
+                    // Check if Firestore is ready before attempting to save
+                    if (db) {
+                        // IMPORTANT CHANGE: Add the new activity document to the public collection
+                        const docRef = await addDoc(collection(db, `artifacts/${appId}/public/data/activities`), newActivity);
                         addActivityModal.classList.remove('active'); // Close the modal on success
                         addActivityForm.reset(); // Reset the form
                         // The onSnapshot listener will automatically update the UI with the new activity
                     } else {
-                        console.error("Firestore not initialized or user not authenticated. Activity not saved.");
+                        console.error("Firestore not initialized. Activity not saved.");
                         // Handle case where Firestore is not available (e.g., show error to user)
                     }
                 } catch (error) {
@@ -1451,10 +1450,10 @@
             // Event listener for "Move to Trash" button in the Game Details Modal
             moveToTrashBtn.addEventListener('click', async (e) => {
                 const gameId = e.target.dataset.gameId; // Get the ID of the activity to delete
-                if (gameId && db && userId) {
+                if (gameId && db) { // No need to check userId here as it's public data
                     try {
-                        // Get a reference to the activity document
-                        const activityRef = doc(db, `artifacts/${appId}/users/${userId}/activities`, gameId);
+                        // Get a reference to the activity document in the public collection
+                        const activityRef = doc(db, `artifacts/${appId}/public/data/activities`, gameId);
                         // Update the 'deleted' field to true for soft deletion
                         await updateDoc(activityRef, { deleted: true });
                         modal.classList.remove('active'); // Close the details modal
@@ -1538,9 +1537,9 @@
              * @param {string} gameId - The ID of the activity to restore.
              */
             async function restoreActivity(gameId) {
-                if (db && userId) {
+                if (db) { // No need to check userId here as it's public data
                     try {
-                        const activityRef = doc(db, `artifacts/${appId}/users/${userId}/activities`, gameId);
+                        const activityRef = doc(db, `artifacts/${appId}/public/data/activities`, gameId);
                         await updateDoc(activityRef, { deleted: false }); // Set deleted to false
                         deletedActivitiesModal.classList.remove('active'); // Close trash modal after restore
                         // The UI will automatically update via the onSnapshot listener
@@ -1562,10 +1561,10 @@
 
             // Event listener for confirming permanent deletion
             confirmPermanentDeleteBtn.addEventListener('click', async () => {
-                if (activityToDeleteId && db && userId) {
+                if (activityToDeleteId && db) { // No need to check userId here as it's public data
                     try {
                         // Delete the document permanently from Firestore
-                        await deleteDoc(doc(db, `artifacts/${appId}/users/${userId}/activities`, activityToDeleteId));
+                        await deleteDoc(doc(db, `artifacts/${appId}/public/data/activities`, activityToDeleteId));
                         confirmationModal.classList.remove('active'); // Close confirmation modal
                         deletedActivitiesModal.classList.remove('active'); // Close deleted activities modal
                         activityToDeleteId = null; // Clear the stored ID
@@ -1575,7 +1574,7 @@
                         // Handle error
                     }
                 } else {
-                    console.warn("Permanent delete aborted: Missing activityToDeleteId, db, or userId.");
+                    console.warn("Permanent delete aborted: Missing activityToDeleteId or db.");
                 }
             });
 
