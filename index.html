@@ -74,9 +74,10 @@
         .collapse-icon {
             display: inline-block; /* Essential for transform to work reliably on span */
             transition: transform 0.3s ease-out;
+            transform: rotate(90deg); /* Default state (OPEN): points DOWN (because the base icon is a right arrow) */
         }
         .collapse-icon.collapsed {
-            transform: rotate(-90deg); /* Rotate up when collapsed */
+            transform: rotate(0deg); /* When collapsed (CLOSED): points RIGHT (because the base icon is a right arrow) */
         }
 
         /* Calendar specific styles */
@@ -244,7 +245,7 @@
             </section>
             
             <!-- Activity Finder section with filters and game grid -->
-            <section id="activity-finder" class="flex-grow bg-white p-6 rounded-xl shadow-sm border border-stone-200 mb-8 overflow-y-auto" style="max-height: calc(100vh - 200px);">
+            <section id="activity-finder" class="flex-grow bg-white p-6 rounded-xl shadow-sm border border-stone-200 mb-8 overflow-y-auto">
                 <h2 class="text-2xl font-bold text-teal-700 mb-4">Find an Activity</h2>
                 <div class="flex flex-wrap gap-4 items-center mb-6">
                     <!-- Type filters (Field Game, Team Time) -->
@@ -276,10 +277,12 @@
                     </div>
                 </div>
 
-                <!-- Grid to display activity cards -->
-                <div id="game-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    <!-- Loading indicator for activities -->
-                    <div id="loading-indicator" class="col-span-full text-center text-stone-500 text-lg py-8">Loading activities...</div>
+                <!-- Grid to display activity cards with horizontal scrolling -->
+                <div class="overflow-x-auto">
+                    <div id="game-grid" class="grid grid-flow-col auto-cols-[minmax(250px,1fr)] sm:auto-cols-[minmax(280px,1fr)] md:auto-cols-[minmax(300px,1fr)] lg:auto-cols-[minmax(320px,1fr)] gap-6 pb-4">
+                        <!-- Loading indicator for activities -->
+                        <div id="loading-indicator" class="col-span-full text-center text-stone-500 text-lg py-8">Loading activities...</div>
+                    </div>
                 </div>
             </section>
 
@@ -292,7 +295,7 @@
                     <div class="flex justify-between items-center cursor-pointer" id="calendar-instructions-toggle">
                         <h3 class="text-xl font-bold text-teal-700">How to Use the Schedule</h3>
                         <button class="text-stone-500 hover:text-teal-600 transition-colors">
-                            <span class="text-xl font-bold collapse-icon">&#9660;</span>
+                            <span class="text-xl font-bold collapse-icon">&#x25B6;</span>
                         </button>
                     </div>
                     <div id="calendar-instructions-content" class="collapsible-content collapsed">
@@ -301,7 +304,7 @@
                             <li><strong>Slot Types:</strong>
                                 <ul class="list-circle list-inside ml-4">
                                     <li><span class="font-semibold text-teal-700">White Slots:</span> These are 'droppable' slots. You can drag a "Field Game" into a "FIELD" slot, and a "Team Time" activity into a "TEAM TIME" slot.</li>
-                                    <li><span class="font-semibold text-stone-700">Gray Slots:</span> These slots are 'non-droppable' and are already pre-assigned with specific teams or are blocked out. You cannot drag activities into these.</li>
+                                    <li><span class="font-semibold text-teal-700">Gray Slots:</span> These slots are 'non-droppable' and are already pre-assigned with specific teams or are blocked out. You cannot drag activities into these.</li>
                                 </ul>
                             </li>
                             <li><strong>Remove Scheduled Activities:</strong> To remove an activity you've scheduled, hover over the activity name in the calendar slot and click the small 'x' button that appears.</li>
@@ -320,7 +323,7 @@
                 <div class="flex justify-between items-center cursor-pointer" id="leader-resources-toggle">
                     <h2 class="text-2xl font-bold text-teal-700 mb-4">Leader Resources & Best Practices</h2>
                     <button class="text-stone-500 hover:text-teal-600 transition-colors">
-                        <span class="text-2xl font-bold collapse-icon">&#9660;</span> <!-- Down arrow icon -->
+                        <span class="text-2xl font-bold collapse-icon">&#x25B6;</span> <!-- Right arrow icon -->
                     </button>
                 </div>
                 <div id="leader-resources-content" class="collapsible-content collapsed">
@@ -368,7 +371,7 @@
                 <div class="flex justify-between items-center cursor-pointer" id="activity-management-toggle">
                     <h2 class="text-2xl font-bold text-teal-700 mb-4">Activity Management Instructions</h2>
                     <button class="text-stone-500 hover:text-teal-600 transition-colors">
-                        <span class="text-2xl font-bold collapse-icon">&#9660;</span>
+                        <span class="text-2xl font-bold collapse-icon">&#x25B6;</span>
                     </button>
                 </div>
                 <div id="activity-management-content" class="collapsible-content collapsed">
@@ -395,6 +398,10 @@
                                 <li>On the dashboard, click the "<span class="font-semibold text-red-500">View Deleted Activities</span>" button.</li>
                                 <li>A modal will appear showing all activities you've moved to trash.</li>
                                 <li>To bring an activity back to your main list, click its "<span class="font-semibold text-teal-500">Restore</span>" button.</li>
+                                <li>
+                                    <span class="font-semibold text-red-500">Important:</span>
+                                    If you restore an activity, it will appear back in the main list, but if it was previously scheduled on the calendar, it will *not* automatically reappear on the calendar. You will need to drag and drop it onto the calendar again.
+                                </li>
                             </ul>
                         </li>
                         <li><strong>Permanently Deleting an Activity:</strong>
@@ -2083,6 +2090,9 @@
                     leaderResourcesContent.classList.toggle('collapsed'); // Toggle content visibility
                     leaderResourcesCollapseIcon.classList.toggle('collapsed'); // Toggle icon rotation
                 });
+                // Ensure leader resources are collapsed by default on load
+                leaderResourcesContent.classList.add('collapsed');
+                leaderResourcesCollapseIcon.classList.add('collapsed');
             } else {
                 console.warn("Leader resources toggle elements not found. Collapsible section may not function.");
             }
