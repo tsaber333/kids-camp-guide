@@ -84,13 +84,14 @@
         .calendar-grid {
             display: grid;
             /* 100px for time column + 7 activity columns */
-            grid-template-columns: 100px repeat(7, minmax(100px, 1fr)); /* Ensure minimum width for columns */
+            /* Adjusted minmax to allow columns to shrink more, forcing wrap */
+            grid-template-columns: 100px repeat(7, minmax(80px, 1fr)); /* Reduced min-width for activity columns */
             gap: 1px; /* Thin lines between cells */
             background-color: #e5e7eb; /* Light gray for grid lines */
             border: 1px solid #e5e7eb;
             border-radius: 0.5rem;
             overflow: hidden; /* Ensures rounded corners apply correctly */
-            min-width: max-content; /* Allow grid to expand to content width for scrolling */
+            /* Removed min-width: max-content; to allow grid to shrink and force wrapping */
         }
 
         .calendar-header, .calendar-time-slot, .calendar-slot {
@@ -126,7 +127,7 @@
             flex-direction: column; /* Stack dropped items vertically */
             gap: 0.25rem; /* Space between dropped items */
             position: relative; /* For positioning remove button */
-            overflow: hidden; /* Hide overflow for long text */
+            /* Removed overflow: hidden; to allow content to expand vertically */
             /* Removed text-overflow: ellipsis; and white-space: nowrap; */
             white-space: normal; /* Allow text to wrap naturally */
         }
@@ -171,12 +172,12 @@
             padding: 0.35rem 0.6rem; /* Slightly more padding */
             border-radius: 0.375rem; /* rounded-md */
             width: 100%;
-            overflow: hidden;
-            /* text-overflow: ellipsis; Removed for wrapping */
+            /* Removed overflow: hidden; */
+            /* Removed text-overflow: ellipsis; */
             white-space: normal; /* Allow text to wrap */
             cursor: grab; /* Indicate draggable */
             position: relative;
-            word-wrap: break-word; /* Ensure long words break if necessary */
+            word-break: break-word; /* Force words to break if they are too long for the container */
         }
 
         .scheduled-activity-item .remove-scheduled-activity {
@@ -257,6 +258,103 @@
                     </div>
                 </div>
             </section>
+
+            <!-- Leader Resources & Best Practices collapsible section - Moved Up -->
+            <section id="leader-resources" class="mb-8 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                <div class="flex justify-between items-center cursor-pointer" id="leader-resources-toggle">
+                    <h2 class="text-2xl font-bold text-teal-700 mb-4">Leader Resources & Best Practices</h2>
+                    <button class="text-stone-500 hover:text-teal-600 transition-colors">
+                        <span class="text-2xl font-bold collapse-icon">&#x25B6;</span> <!-- Right arrow icon -->
+                    </button>
+                </div>
+                <div id="leader-resources-content" class="collapsible-content collapsed">
+                    <p class="text-stone-600 mb-4">
+                        This section provides essential guidance to help you make the most of this interactive guide and ensure a successful, safe, and spiritually impactful activity time for your campers.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-bold text-teal-700 mb-2">Navigating This Guide</h3>
+                            <ul class="list-disc list-inside text-stone-700 space-y-2">
+                                <li><strong>Filtering Activities:</strong> Use the "Filter by Type," "Filter by Location," and "Filter by Materials" to quickly narrow down game options. Select "All" to see the full list again.</li>
+                                <li><strong>Viewing Details:</strong> Click on any activity card to open a detailed modal. This modal contains objectives, step-by-step instructions, a comprehensive materials list, crucial safety notes, and the "SuperCharged Application."</li>
+                                <li><strong>Material Check:</strong> Always review the "Materials Needed" section well in advance of your activity time to ensure all supplies are readily available.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-teal-700 mb-2">Leading Activities Effectively</h3>
+                            <ul class="list-disc list-inside text-stone-700 space-y-2">
+                                <li><strong>Safety First:</strong> Prioritize the "Safety Notes" for each game. Conduct a quick safety check of the play area and equipment before starting.</li>
+                                <li><strong>Clear Instructions:</strong> Explain game rules clearly and concisely. Demonstrate if possible. Encourage questions before starting.</li>
+                                <li><strong>Adapt & Modify:</strong> Feel free to adapt games to suit your group's size, age, energy levels, or available space.</li>
+                                <li><strong>Encourage Participation:</strong> Create an inclusive environment where every camper feels comfortable participating and trying their best.</li>
+                                <li><strong>Time Management:</strong> Keep an eye on the clock to ensure you have enough time for the activity itself and, crucially, for the debriefing.</li>
+                            </ul>
+                        </div>
+                        <div class="md:col-span-2">
+                            <h3 class="text-xl font-bold text-teal-700 mb-2">Maximizing the "SuperCharged Application"</h3>
+                            <p class="text-stone-700">
+                                The "SuperCharged Application" is key to connecting our activities with the spiritual growth of our campers. This section provides prompts and ideas to help you facilitate meaningful discussions after each game.
+                            </p>
+                            <ul class="list-disc list-inside text-stone-700 space-y-2 mt-2">
+                                <li><strong>Purpose:</strong> This is where we bridge the fun of the game to life lessons and Foursquare values.</li>
+                                <li><strong>Timing:</strong> Always debrief immediately after the game, while the experience is fresh in their minds.</li>
+                                <li><strong>Open-Ended Questions:</strong> Use the suggested questions as a starting point. Encourage honest sharing and active listening among campers.</li>
+                                <li><strong>Connect to Scripture/Values:</strong> Help campers see how the game's lessons relate to Bible principles or the Foursquare values (e.g., 'Jesus the Savior, Healer, Baptizer with the Holy Spirit, and Soon-Coming King').</li>
+                                <li><strong>Personal Reflection:</strong> Encourage campers to think about how they can apply these lessons in their daily lives.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Activity Management Instructions collapsible section - Moved Up -->
+            <section id="activity-management-instructions" class="mb-8 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                <div class="flex justify-between items-center cursor-pointer" id="activity-management-toggle">
+                    <h2 class="text-2xl font-bold text-teal-700 mb-4">Activity Management Instructions</h2>
+                    <button class="text-stone-500 hover:text-teal-600 transition-colors">
+                        <span class="text-2xl font-bold collapse-icon">&#x25B6;</span>
+                    </button>
+                </div>
+                <div id="activity-management-content" class="collapsible-content collapsed">
+                    <p class="text-stone-600 mb-4">
+                        This section explains how to add new activities to your guide and manage existing ones, including moving them to trash and permanently deleting them.
+                    </p>
+                    <ul class="list-disc list-inside text-stone-700 space-y-2">
+                        <li><strong>Adding a New Activity:</strong>
+                            <ul class="list-circle list-inside ml-4">
+                                <li>Click the "<span class="font-semibold text-emerald-700">Add New Activity</span>" card at the bottom of the "Find an Activity" section.</li>
+                                <li>Fill out the form with all required details (marked with *).</li>
+                                <li>Click "Add Activity" to save your new activity to the guide. It will appear in your activity list.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Moving an Activity to Trash (Soft Delete):</strong>
+                            <ul class="list-circle list-inside ml-4">
+                                <li>Click on any activity card to open its "Activity Details" modal.</li>
+                                <li>At the bottom of the modal, click the "<span class="font-semibold text-red-500">Move to Trash</span>" button.</li>
+                                <li>The activity will be removed from your main list but can still be restored later.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Viewing and Restoring Deleted Activities:</strong>
+                            <ul class="list-circle list-inside ml-4">
+                                <li>On the dashboard, click the "<span class="font-semibold text-red-500">View Deleted Activities</span>" button.</li>
+                                <li>A modal will appear showing all activities you've moved to trash.</li>
+                                <li>To bring an activity back to your main list, click its "<span class="font-semibold text-teal-500">Restore</span>" button.</li>
+                                <li>
+                                    <span class="font-semibold text-red-500">Important:</span>
+                                    If you restore an activity, it will appear back in the main list, but if it was previously scheduled on the calendar, it will *not* automatically reappear on the calendar. You will need to click and add it onto the calendar again.
+                                </li>
+                            </ul>
+                        </li>
+                        <li><strong>Permanently Deleting an Activity:</strong>
+                            <ul class="list-circle list-inside ml-4">
+                                <li>From the "View Deleted Activities" modal, locate the activity you wish to permanently remove.</li>
+                                <li>Click its "<span class="font-semibold text-red-500">Delete Permanently</span>" button.</li>
+                                <li>A confirmation dialog will appear. Confirm your choice to permanently remove the activity from the database. This action cannot be undone.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </section>
             
             <!-- Activity Finder section with filters and game grid -->
             <section id="activity-finder" class="flex-grow bg-white p-6 rounded-xl shadow-sm border border-stone-200 mb-8 overflow-y-auto">
@@ -330,103 +428,6 @@
                     <div class="calendar-grid">
                         <!-- Calendar grid will be dynamically generated here by JavaScript -->
                     </div>
-                </div>
-            </section>
-
-            <!-- Leader Resources & Best Practices collapsible section -->
-            <section id="leader-resources" class="mb-8 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-                <div class="flex justify-between items-center cursor-pointer" id="leader-resources-toggle">
-                    <h2 class="text-2xl font-bold text-teal-700 mb-4">Leader Resources & Best Practices</h2>
-                    <button class="text-stone-500 hover:text-teal-600 transition-colors">
-                        <span class="text-2xl font-bold collapse-icon">&#x25B6;</span> <!-- Right arrow icon -->
-                    </button>
-                </div>
-                <div id="leader-resources-content" class="collapsible-content collapsed">
-                    <p class="text-stone-600 mb-4">
-                        This section provides essential guidance to help you make the most of this interactive guide and ensure a successful, safe, and spiritually impactful activity time for your campers.
-                    </p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <h3 class="text-xl font-bold text-teal-700 mb-2">Navigating This Guide</h3>
-                            <ul class="list-disc list-inside text-stone-700 space-y-2">
-                                <li><strong>Filtering Activities:</strong> Use the "Filter by Type," "Filter by Location," and "Filter by Materials" to quickly narrow down game options. Select "All" to see the full list again.</li>
-                                <li><strong>Viewing Details:</strong> Click on any activity card to open a detailed modal. This modal contains objectives, step-by-step instructions, a comprehensive materials list, crucial safety notes, and the "SuperCharged Application."</li>
-                                <li><strong>Material Check:</strong> Always review the "Materials Needed" section well in advance of your activity time to ensure all supplies are readily available.</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-teal-700 mb-2">Leading Activities Effectively</h3>
-                            <ul class="list-disc list-inside text-stone-700 space-y-2">
-                                <li><strong>Safety First:</strong> Prioritize the "Safety Notes" for each game. Conduct a quick safety check of the play area and equipment before starting.</li>
-                                <li><strong>Clear Instructions:</strong> Explain game rules clearly and concisely. Demonstrate if possible. Encourage questions before starting.</li>
-                                <li><strong>Adapt & Modify:</strong> Feel free to adapt games to suit your group's size, age, energy levels, or available space.</li>
-                                <li><strong>Encourage Participation:</strong> Create an inclusive environment where every camper feels comfortable participating and trying their best.</li>
-                                <li><strong>Time Management:</strong> Keep an eye on the clock to ensure you have enough time for the activity itself and, crucially, for the debriefing.</li>
-                            </ul>
-                        </div>
-                        <div class="md:col-span-2">
-                            <h3 class="text-xl font-bold text-teal-700 mb-2">Maximizing the "SuperCharged Application"</h3>
-                            <p class="text-stone-700">
-                                The "SuperCharged Application" is key to connecting our activities with the spiritual growth of our campers. This section provides prompts and ideas to help you facilitate meaningful discussions after each game.
-                            </p>
-                            <ul class="list-disc list-inside text-stone-700 space-y-2 mt-2">
-                                <li><strong>Purpose:</strong> This is where we bridge the fun of the game to life lessons and Foursquare values.</li>
-                                <li><strong>Timing:</strong> Always debrief immediately after the game, while the experience is fresh in their minds.</li>
-                                <li><strong>Open-Ended Questions:</strong> Use the suggested questions as a starting point. Encourage honest sharing and active listening among campers.</li>
-                                <li><strong>Connect to Scripture/Values:</strong> Help campers see how the game's lessons relate to Bible principles or the Foursquare values (e.g., 'Jesus the Savior, Healer, Baptizer with the Holy Spirit, and Soon-Coming King').</li>
-                                <li><strong>Personal Reflection:</strong> Encourage campers to think about how they can apply these lessons in their daily lives.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Activity Management Instructions collapsible section -->
-            <section id="activity-management-instructions" class="mb-8 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-                <div class="flex justify-between items-center cursor-pointer" id="activity-management-toggle">
-                    <h2 class="text-2xl font-bold text-teal-700 mb-4">Activity Management Instructions</h2>
-                    <button class="text-stone-500 hover:text-teal-600 transition-colors">
-                        <span class="text-2xl font-bold collapse-icon">&#x25B6;</span>
-                    </button>
-                </div>
-                <div id="activity-management-content" class="collapsible-content collapsed">
-                    <p class="text-stone-600 mb-4">
-                        This section explains how to add new activities to your guide and manage existing ones, including moving them to trash and permanently deleting them.
-                    </p>
-                    <ul class="list-disc list-inside text-stone-700 space-y-2">
-                        <li><strong>Adding a New Activity:</strong>
-                            <ul class="list-circle list-inside ml-4">
-                                <li>Click the "<span class="font-semibold text-emerald-700">Add New Activity</span>" card at the bottom of the "Find an Activity" section.</li>
-                                <li>Fill out the form with all required details (marked with *).</li>
-                                <li>Click "Add Activity" to save your new activity to the guide. It will appear in your activity list.</li>
-                            </ul>
-                        </li>
-                        <li><strong>Moving an Activity to Trash (Soft Delete):</strong>
-                            <ul class="list-circle list-inside ml-4">
-                                <li>Click on any activity card to open its "Activity Details" modal.</li>
-                                <li>At the bottom of the modal, click the "<span class="font-semibold text-red-500">Move to Trash</span>" button.</li>
-                                <li>The activity will be removed from your main list but can still be restored later.</li>
-                            </ul>
-                        </li>
-                        <li><strong>Viewing and Restoring Deleted Activities:</strong>
-                            <ul class="list-circle list-inside ml-4">
-                                <li>On the dashboard, click the "<span class="font-semibold text-red-500">View Deleted Activities</span>" button.</li>
-                                <li>A modal will appear showing all activities you've moved to trash.</li>
-                                <li>To bring an activity back to your main list, click its "<span class="font-semibold text-teal-500">Restore</span>" button.</li>
-                                <li>
-                                    <span class="font-semibold text-red-500">Important:</span>
-                                    If you restore an activity, it will appear back in the main list, but if it was previously scheduled on the calendar, it will *not* automatically reappear on the calendar. You will need to click and add it onto the calendar again.
-                                </li>
-                            </ul>
-                        </li>
-                        <li><strong>Permanently Deleting an Activity:</strong>
-                            <ul class="list-circle list-inside ml-4">
-                                <li>From the "View Deleted Activities" modal, locate the activity you wish to permanently remove.</li>
-                                <li>Click its "<span class="font-semibold text-red-500">Delete Permanently</span>" button.</li>
-                                <li>A confirmation dialog will appear. Confirm your choice to permanently remove the activity from the database. This action cannot be undone.</li>
-                            </ul>
-                        </li>
-                    </ul>
                 </div>
             </section>
         </main>
@@ -2061,24 +2062,6 @@
                         showConfirmationModal(e.target.dataset.id); // Show confirmation before permanent delete
                     });
                 });
-            }
-
-            /**
-             * Restores a soft-deleted activity by setting its 'deleted' field to false.
-             * @param {string} gameId - The ID of the activity to restore.
-             */
-            async function restoreActivity(gameId) {
-                if (db) { 
-                    try {
-                        const activityRef = doc(db, `artifacts/${appId}/public/data/activities`, gameId);
-                        await updateDoc(activityRef, { deleted: false }); // Set deleted to false
-                        deletedActivitiesModal.classList.remove('active'); // Close trash modal after restore
-                        // The UI will automatically update via the onSnapshot listener
-                    } catch (error) {
-                        console.error("Error restoring activity:", error);
-                        // Handle error
-                    }
-                }
             }
 
             /**
