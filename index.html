@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">\
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* Base font and general layout */
         body { font-family: 'Inter', sans-serif; }
@@ -133,8 +133,8 @@
         }
 
         .calendar-slot.non-droppable {
-            background-color: #f5f5f4; /* stone-100 for non-droppable slots */
-            color: #57534e; /* stone-600 */
+            background-color: #e7e5e4; /* stone-200 for non-droppable slots */
+            color: #57534e; /* stone-700 */
             cursor: not-allowed;
             font-weight: 500;
         }
@@ -511,6 +511,35 @@
             measurementId: "G-LL8SZ9NW8L" // Optional
         };
 
+        /*
+         * IMPORTANT: FIREBASE SECURITY RULES
+         * To resolve the "Missing or insufficient permissions" error,
+         * you MUST deploy the following rules to your Firebase project.
+         *
+         * 1. Go to your Firebase project in the Firebase Console.
+         * 2. Navigate to "Firestore Database" -> "Rules" tab.
+         * 3. Replace the existing rules with the following code and click "Publish".
+         *
+         * rules_version = '2';
+         * service cloud.firestore {
+         * match /databases/{database}/documents {
+         * // Allow authenticated users to read and write to public data
+         * match /artifacts/{appId}/public/data/{collection=**} {
+         * allow read, write: if request.auth != null;
+         * }
+         *
+         * // Allow authenticated users to read and write to their own private data
+         * match /artifacts/{appId}/users/{userId}/{collection=**} {
+         * allow read, write: if request.auth != null && request.auth.uid == userId;
+         * }
+         *
+         * // Deny all other access by default
+         * match /{document=**} {
+         * allow read, write: if false;
+         * }
+         * }
+         * }
+         */
 
         // Initial games data - these will be loaded first, then merged with user-added data from Firestore.
         // This provides a baseline set of activities even if no user data is present or Firestore fails.
@@ -983,72 +1012,9 @@
             }
         ];
 
-        // Define the fixed schedule data
+        // Define the fixed schedule data for special spanning events only
         const fixedScheduleData = [
-            // TUESDAY
-            { day: 'TUES', timeSlot: '10:10-11:10', slotCategory: 'ROCKWALL', activityName: 'ROCKWALL' },
-            { day: 'TUES', timeSlot: '10:10-11:10', slotCategory: 'ARCHERY', activityName: 'ARCHERY' },
-            { day: 'TUES', timeSlot: '10:10-11:10', slotCategory: 'POOL', activityName: 'POOL' },
-            { day: 'TUES', timeSlot: '10:10-11:10', slotCategory: 'CREATION STATION', activityName: 'CREATION STATION' },
-            { day: 'TUES', timeSlot: '10:10-11:10', slotCategory: 'GAMES & CHILL', activityName: 'GAMES & CHILL' },
-
-            { day: 'TUES', timeSlot: '1:25-2:25', slotCategory: 'ROCKWALL', activityName: 'ROCKWALL' },
-            { day: 'TUES', timeSlot: '1:25-2:25', slotCategory: 'ARCHERY', activityName: 'ARCHERY' },
-            { day: 'TUES', timeSlot: '1:25-2:25', slotCategory: 'POOL', activityName: 'POOL' },
-            { day: 'TUES', timeSlot: '1:25-2:25', slotCategory: 'CREATION STATION', activityName: 'CREATION STATION' },
-            { day: 'TUES', timeSlot: '1:25-2:25', slotCategory: 'GAMES & CHILL', activityName: 'GAMES & CHILL' },
-
-            { day: 'TUES', timeSlot: '4:20-5:20', slotCategory: 'ROCKWALL', activityName: 'ROCKWALL' },
-            { day: 'TUES', timeSlot: '4:20-5:20', slotCategory: 'ARCHERY', activityName: 'ARCHERY' },
-            { day: 'TUES', timeSlot: '4:20-5:20', slotCategory: 'POOL', activityName: 'POOL' },
-            { day: 'TUES', timeSlot: '4:20-5:20', slotCategory: 'CREATION STATION', activityName: 'CREATION STATION' },
-            { day: 'TUES', timeSlot: '4:20-5:20', slotCategory: 'GAMES & CHILL', activityName: 'GAMES & CHILL' },
-
-            // WEDNESDAY
-            { day: 'WED', timeSlot: '10:10-11:10', slotCategory: 'ROCKWALL', activityName: 'ROCKWALL' },
-            { day: 'WED', timeSlot: '10:10-11:10', slotCategory: 'ARCHERY', activityName: 'ARCHERY' },
-            { day: 'WED', timeSlot: '10:10-11:10', slotCategory: 'POOL', activityName: 'POOL' },
-            { day: 'WED', timeSlot: '10:10-11:10', slotCategory: 'CREATION STATION', activityName: 'CREATION STATION' },
-            { day: 'WED', timeSlot: '10:10-11:10', slotCategory: 'GAMES & CHILL', activityName: 'GAMES & CHILL' },
-
-            { day: 'WED', timeSlot: '1:25-2:25', slotCategory: 'ROCKWALL', activityName: 'ROCKWALL' },
-            { day: 'WED', timeSlot: '1:25-2:25', slotCategory: 'ARCHERY', activityName: 'ARCHERY' },
-            { day: 'WED', timeSlot: '1:25-2:25', slotCategory: 'POOL', activityName: 'POOL' },
-            { day: 'WED', timeSlot: '1:25-2:25', slotCategory: 'CREATION STATION', activityName: 'CREATION STATION' },
-            { day: 'WED', timeSlot: '1:25-2:25', slotCategory: 'GAMES & CHILL', activityName: 'GAMES & CHILL' },
-
-            { day: 'WED', timeSlot: '4:20-5:20', slotCategory: 'ROCKWALL', activityName: 'ROCKWALL' },
-            { day: 'WED', timeSlot: '4:20-5:20', slotCategory: 'ARCHERY', activityName: 'ARCHERY' },
-            { day: 'WED', timeSlot: '4:20-5:20', slotCategory: 'POOL', activityName: 'POOL' },
-            { day: 'WED', timeSlot: '4:20-5:20', slotCategory: 'CREATION STATION', activityName: 'CREATION STATION' },
-            { day: 'WED', timeSlot: '4:20-5:20', slotCategory: 'GAMES & CHILL', activityName: 'GAMES & CHILL' },
-
-            // THURSDAY
-            { day: 'THUR', timeSlot: '10:10-11:10', slotCategory: 'ROCKWALL', activityName: 'ROCKWALL' },
-            { day: 'THUR', timeSlot: '10:10-11:10', slotCategory: 'ARCHERY', activityName: 'ARCHERY' },
-            { day: 'THUR', timeSlot: '10:10-11:10', slotCategory: 'POOL', activityName: 'POOL' },
-            { day: 'THUR', timeSlot: '10:10-11:10', slotCategory: 'CREATION STATION', activityName: 'CREATION STATION' },
-            { day: 'THUR', timeSlot: '10:10-11:10', slotCategory: 'GAMES & CHILL', activityName: 'GAMES & CHILL' },
-
-            { day: 'THUR', timeSlot: '1:25-2:25', slotCategory: 'ROCKWALL', activityName: 'ROCKWALL' },
-            { day: 'THUR', timeSlot: '1:25-2:25', slotCategory: 'ARCHERY', activityName: 'ARCHERY' },
-            { day: 'THUR', timeSlot: '1:25-2:25', slotCategory: 'POOL', activityName: 'POOL' },
-            { day: 'THUR', timeSlot: '1:25-2:25', slotCategory: 'CREATION STATION', activityName: 'CREATION STATION' },
-            { day: 'THUR', timeSlot: '1:25-2:25', slotCategory: 'GAMES & CHILL', activityName: 'GAMES & CHILL' },
-
-            { day: 'THUR', timeSlot: '4:20-5:20', slotCategory: 'ROCKWALL', activityName: 'ROCKWALL' },
-            { day: 'THUR', timeSlot: '4:20-5:20', slotCategory: 'ARCHERY', activityName: 'ARCHERY' },
-            { day: 'THUR', timeSlot: '4:20-5:20', slotCategory: 'POOL', activityName: 'POOL' },
-            { day: 'THUR', timeSlot: '4:20-5:20', slotCategory: 'CREATION STATION', activityName: 'CREATION STATION' },
-            { day: 'THUR', timeSlot: '4:20-5:20', slotCategory: 'GAMES & CHILL', activityName: 'GAMES & CHILL' },
-
-            // FRIDAY
-            { day: 'FRI', timeSlot: '10:10-11:10', slotCategory: 'ROCKWALL', activityName: 'ROCKWALL' },
-            { day: 'FRI', timeSlot: '10:10-11:10', slotCategory: 'ARCHERY', activityName: 'ARCHERY' },
-            { day: 'FRI', timeSlot: '10:10-11:10', slotCategory: 'POOL', activityName: 'POOL' },
-            { day: 'FRI', timeSlot: '10:10-11:10', slotCategory: 'CREATION STATION', activityName: 'CREATION STATION' },
-            { day: 'FRI', timeSlot: '10:10-11:10', slotCategory: 'GAMES & CHILL', activityName: 'GAMES & CHILL' },
-
+            // FRIDAY special events
             { day: 'FRI', timeSlot: '1:25-2:25', slotCategory: 'POINTS PALOOZA', activityName: 'POINTS PALOOZA', colspan: 7 }, // Special fixed event, spans all 7 activity columns
             { day: 'FRI', timeSlot: '4:20-5:20', slotCategory: 'CAMP CARNIVAL', activityName: 'CAMP CARNIVAL', colspan: 7 } // Special fixed event, spans all 7 activity columns
         ];
@@ -1189,7 +1155,7 @@
             const moveToTrashBtn = document.getElementById('move-to-trash-btn');
             const viewDeletedActivitiesBtn = document.getElementById('view-deleted-activities-btn');
             const deletedActivitiesModal = document.getElementById('deleted-activities-modal');
-            const closeDeletedActivitiesModalBtn = document.getElementById('close-deleted-activities-modal');
+            const closeDeletedActivitiesModalBtn = document.getElementById('close-deleted-activities-btn');
             const deletedActivitiesList = document.getElementById('deleted-activities-list');
             const deletedCountSpan = document.getElementById('deleted-count');
             const confirmationModal = document.getElementById('confirmation-modal');
@@ -1439,7 +1405,7 @@
                     // Determine card color based on activity type
                     const typeColor = game.type === 'Field Game' ? 'bg-sky-100 text-sky-800' : 'bg-amber-100 text-amber-800';
                     // Determine location icon
-                    const locationIcon = game.location === 'Outdoor' ? '☀️' : game.location === 'Indoor' ? '🏠' : '☀️/🏠';
+                    const locationIcon = game.location === 'Outdoor' ? '☀️' : game.location === 'Indoor' ? '🏠' : '☀️/�';
 
                     card.innerHTML = `
                         <div class="flex-grow">
@@ -1979,24 +1945,21 @@
                             cell.style.gridColumn = `span ${cellData.colspan}`;
                         }
 
-                        // Add droppable/non-droppable class for styling
                         if (cellData.isDroppable) {
                             cell.classList.add('droppable');
                         } else {
                             cell.classList.add('non-droppable');
-                            // Prepopulate fixed activities directly from fixedScheduleData
-                            const fixedEvent = fixedScheduleData.find(e => 
+                            // Check for special spanning events from fixedScheduleData
+                            const specialEvent = fixedScheduleData.find(e => 
                                 e.day === cellData.day && 
                                 e.timeSlot === cellData.timeSlot && 
                                 e.slotCategory === cellData.slotCategory
                             );
-                            if (fixedEvent) {
-                                cell.textContent = fixedEvent.activityName;
-                            } else if (cellData.slotCategory === 'POINTS PALOOZA' || cellData.slotCategory === 'CAMP CARNIVAL') {
-                                // For spanning cells, only display the name once
-                                if (cellData.colspan && cell.style.gridColumn.includes('span')) {
-                                    cell.textContent = cellData.slotCategory;
-                                }
+                            if (specialEvent) {
+                                cell.textContent = specialEvent.activityName;
+                            } else {
+                                // For regular fixed columns (ROCKWALL, ARCHERY, etc.), display their category name
+                                cell.textContent = cellData.slotCategory;
                             }
                         }
                     }
