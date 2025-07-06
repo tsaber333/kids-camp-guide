@@ -363,12 +363,12 @@
     </div>
 
 
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    // Add setDoc to the import list
-    import { getFirestore, collection, query, onSnapshot, doc, setDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-    
+    <script type="module">
+        // Firebase Imports
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, updateDoc, deleteDoc, getDocs, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
         // Global Firebase variables
         let app;
         let db;
@@ -701,7 +701,7 @@
                     "<strong>Game Play:</strong> The navigator is blindfolded and stands at the edge of the minefield. On 'Go!', the guides must use only verbal instructions (no touching, pointing, or physical contact!) to direct their blindfolded navigator through the minefield. The goal is to collect as many 'power-ups' as possible while avoiding touching any 'mines'. Once a power-up is found, the navigator must bring it back to their team's collection zone before seeking another.",
                     "<strong>Mine Penalty:</strong> If the navigator touches a 'mine', they must immediately stop. The guides must then verbally direct them back to the starting point of that specific segment of the minefield (or the beginning of the entire minefield, depending on desired difficulty) before they can continue their search.",
                     "<strong>Scoring:</strong> Teams earn points for each 'power-up' successfully collected and brought back to their collection zone. The game can be timed (e.g., 10-15 minutes), with the team collecting the most power-ups in that set time winning, or the first team to collect all designated power-ups winning. Rotate navigators within each team so everyone gets a chance to experience both roles.",
-                    "<strong>Guide Communication:</strong> Emphasize clear, concise, and calm verbal guidance. Guides should use directional words (e.g., 'take two steps forward', 'turn slightly left', 'mine on your right', 'power-up directly in front')."
+                    "<strong>Guide Communication:</strong> Emphasize clear, concise, and calm verbal guidance. Guides should use directional words (e.g., 'take two steps forward', 'turn slightly left', 'mine on your right', 'mine on your right')."
                 ],
                 materials: ["Cones (various)", "Bean Bags (10)", "Whistles (2)", "Blindfolds (or Bandanas - approx. 70)", "Laminated Bible Chapter Names (2 sets)", "Rubber Duckies (44)", "Fake Gold Coins (approx 130)", "Plastic Critters (2 large ziplocks)", "Wooden Blocks (32)", "Plastic Balls (2 bags)", "Laminated Foursquare Symbols/Values (suggested purchase)"],
                 safety: "Ensure the play area is completely clear of actual hazards (e.g., sharp objects, uneven ground). Use only soft 'mines' that won't cause injury if stepped on. Supervise closely to prevent collisions between blindfolded players or with static objects. Emphasize gentle, clear, and calm verbal guidance from the guides. No running for blindfolded players. Guides must ensure the path is clear before giving 'go ahead' commands.",
@@ -940,6 +940,51 @@
                             userId = null; // Explicitly set userId to null if auth fails
                         }
                     }
+                    // Attach the form submission listener here, after db is initialized and auth state is known
+                    // Use { once: true } to ensure the listener is only added once
+                    addActivityForm.addEventListener('submit', async (e) => {
+                        e.preventDefault(); // Prevent default form submission
+
+                        const formData = new FormData(e.target); // Get form data
+                        const newActivity = {
+                            name: formData.get('name'),
+                            type: formData.get('type'),
+                            location: formData.get('location'),
+                            objectives: formData.get('objectives'),
+                            safety: formData.get('safety'),
+                            supercharged: formData.get('supercharged'),
+                            // Collect all instruction values from dynamic textareas
+                            instructions: Array.from(document.querySelectorAll('#instructions-container textarea[name="instructions[]"]')).map(el => el.value).filter(val => val.trim() !== ''),
+                            // Collect all material values from dynamic inputs
+                            materials: Array.from(document.querySelectorAll('#materials-container input[name="materials[]"]')).map(el => el.value).filter(val => val.trim() !== ''),
+                            description: formData.get('objectives').substring(0, 100) + '...', // Use objectives as a short description
+                            deleted: false // New activities are not deleted by default
+                        };
+
+                        // Basic client-side validation
+                        if (!newActivity.name || !newActivity.type || !newActivity.location || !newActivity.objectives || !newActivity.safety || !newActivity.supercharged || newActivity.instructions.length === 0) {
+                            console.error("Validation failed: Please fill in all required fields (marked with *).");
+                            return;
+                        }
+
+                        try {
+                            // Check if Firestore is ready before attempting to save
+                            if (db) {
+                                // Add the new activity document to the public collection
+                                const docRef = await addDoc(collection(db, `artifacts/${appId}/public/data/activities`), newActivity);
+                                addActivityModal.classList.remove('active'); // Close the modal on success
+                                addActivityForm.reset(); // Reset the form
+                                // The onSnapshot listener will automatically update the UI with the new activity
+                            } else {
+                                console.error("Firestore not initialized. Activity not saved.");
+                                // Handle case where Firestore is not available (e.g., show error to user)
+                            }
+                        } catch (error) {
+                            console.error("Error adding document to Firestore: ", error);
+                            // Handle Firestore write error (e.g., show error message to user)
+                        }
+                    }, { once: true }); // Attach this listener only once
+
                     // Start listening for activities only after authentication is ready
                     listenForActivities();
                 });
@@ -1404,50 +1449,6 @@
             addInstructionBtn.addEventListener('click', addInstructionField);
             addMaterialBtn.addEventListener('click', addMaterialField);
             addRemoveEventListeners(); // Initial call to set up listeners for default fields
-
-            // Event listener for Add Activity form submission
-            addActivityForm.addEventListener('submit', async (e) => {
-                e.preventDefault(); // Prevent default form submission
-
-                const formData = new FormData(e.target); // Get form data
-                const newActivity = {
-                    name: formData.get('name'),
-                    type: formData.get('type'),
-                    location: formData.get('location'),
-                    objectives: formData.get('objectives'),
-                    safety: formData.get('safety'),
-                    supercharged: formData.get('supercharged'),
-                    // Collect all instruction values from dynamic textareas
-                    instructions: Array.from(document.querySelectorAll('#instructions-container textarea[name="instructions[]"]')).map(el => el.value).filter(val => val.trim() !== ''),
-                    // Collect all material values from dynamic inputs
-                    materials: Array.from(document.querySelectorAll('#materials-container input[name="materials[]"]')).map(el => el.value).filter(val => val.trim() !== ''),
-                    description: formData.get('objectives').substring(0, 100) + '...', // Use objectives as a short description
-                    deleted: false // New activities are not deleted by default
-                };
-
-                // Basic client-side validation
-                if (!newActivity.name || !newActivity.type || !newActivity.location || !newActivity.objectives || !newActivity.safety || !newActivity.supercharged || newActivity.instructions.length === 0) {
-                    console.error("Validation failed: Please fill in all required fields (marked with *).");
-                    return;
-                }
-
-                try {
-                    // Check if Firestore is ready before attempting to save
-                    if (db) {
-                        // Add the new activity document to the public collection
-                        const docRef = await addDoc(collection(db, `artifacts/${appId}/public/data/activities`), newActivity);
-                        addActivityModal.classList.remove('active'); // Close the modal on success
-                        addActivityForm.reset(); // Reset the form
-                        // The onSnapshot listener will automatically update the UI with the new activity
-                    } else {
-                        console.error("Firestore not initialized. Activity not saved.");
-                        // Handle case where Firestore is not available (e.g., show error to user)
-                    }
-                } catch (error) {
-                    console.error("Error adding document to Firestore: ", error);
-                    // Handle Firestore write error (e.g., show error message to user)
-                }
-            });
 
             // --- Soft Delete / Trash Can Logic ---
 
