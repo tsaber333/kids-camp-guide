@@ -56,7 +56,7 @@
         }
         .modal-content-scroll::-webkit-scrollbar-thumb:hover {
             background: #555;
-        }
+            }
 
         /* Collapsible section styles */
         .collapsible-content {
@@ -88,10 +88,6 @@
         <header class="text-center mb-12">
             <h1 class="text-4xl md:text-5xl font-bold text-teal-700">Foursquare Kids Camp</h1>
             <p class="mt-4 text-lg text-stone-600">Interactive Leader's Guide</p>
-            <!-- User ID display -->
-            <div class="mt-2 text-sm text-stone-600">
-                <span id="current-user-id">Loading user...</span>
-            </div>
         </header>
 
         <!-- Main content area -->
@@ -104,10 +100,16 @@
                         <p class="text-stone-600">
                             This guide is your central hub for planning and leading activities. Use the filters below to quickly find the perfect game for your next slot, whether you're on the field or need an indoor option for a rainy day. Each game card provides a full breakdown of instructions, materials, and key discussion points to connect with our camp's mission.
                         </p>
-                        <!-- Button to view deleted activities -->
-                        <button id="view-deleted-activities-btn" class="mt-4 bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 transition-colors text-sm">
-                            View Deleted Activities (<span id="deleted-count">0</span>)
-                        </button>
+                        <div class="flex flex-wrap gap-3 mt-4">
+                            <!-- Button to view deleted activities -->
+                            <button id="view-deleted-activities-btn" class="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 transition-colors text-sm">
+                                View Deleted Activities (<span id="deleted-count">0</span>)
+                            </button>
+                            <!-- Button to populate initial games -->
+                            <button id="populate-initial-games-btn" class="bg-emerald-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-emerald-600 transition-colors text-sm">
+                                Populate Initial Games
+                            </button>
+                        </div>
                     </div>
                     <!-- Doughnut chart for activity type distribution -->
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
@@ -365,18 +367,31 @@
         // Firebase Imports
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, updateDoc, deleteDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Global Firebase variables
         let app;
         let db;
         let auth;
-        let userId; // userId is used for authentication purposes
+        let userId; 
 
         // MANDATORY: Use __app_id and __firebase_config provided by the Canvas environment
         // These global variables are injected by the Canvas runtime.
+        // For local development or GitHub deployment, you MUST replace the placeholder
+        // firebaseConfig with your actual project's configuration from the Firebase Console.
+        // Go to Project settings -> Your apps -> Firebase SDK snippet -> Config
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+            // REPLACE THESE WITH YOUR ACTUAL FIREBASE PROJECT CONFIGURATION
+            apiKey: "AIzaSyCNMLCw5f1ajmGLHP9gnfzojcryUIufs6E",
+            authDomain: "kids-camp-guide.firebaseapp.com",
+            projectId: "kids-camp-guide",
+            storageBucket: "kids-camp-guide.firebasestorage.app",
+            messagingSenderId: "774110400277",
+            appId: "1:774110400277:web:7e3b65313073e3aacf631c",
+            measurementId: "G-LL8SZ9NW8L" // Optional
+        };
+
 
         // Initial games data - these will be loaded first, then merged with user-added data from Firestore.
         // This provides a baseline set of activities even if no user data is present or Firestore fails.
@@ -524,14 +539,14 @@
                 description: "Players link arms or hold onto pool noodles in rows, restricted to side-to-side movement like a foosball table. They must work together to kick a large ball into the opponent's goal.",
                 objectives: "Emphasizes coordination, teamwork, spatial awareness, and constant communication.",
                 generalInstructions: [
-                    "<strong>Setup:</strong> Create a large rectangular playing area (e.g., 30ft x 15ft) using cones or boundary markers. Inside this area, use ropes or pool noodles to create 3-4 parallel 'lanes' across the width of the field. Players will stand in these lanes, holding onto the rope/noodle, restricting them to only move horizontally within their lane. They cannot move forward or backward out of their designated lane. Ensure an equal number of players per lane, or adjust lane sizes accordingly. Place a goal (e.g., two cones spaced apart) at each end of the rectangle. The ball should be an inflatable beach ball or similar large, lightweight ball.",
-                    "<strong>Team Formation:</strong> Divide campers into two equal teams. Assign each player to a specific lane. Players in the same lane on opposing teams will face each other.",
+                    "<strong>Setup:</strong> Create a large rectangular playing area (e.g., 30ft x 15ft) using cones or boundary markers. Inside this area, use ropes or pool noodles to create 3-4 parallel 'lanes' across the width of the field. Players will stand in these lanes, holding onto the rope/noodle. Place a goal (e.g., two cones spaced apart) at each end of the rectangle. The ball should be an inflatable beach ball or similar large, lightweight ball.",
+                    "<strong>Team Formation:</strong> Divide campers into two equal teams. Assign each player to a specific lane. Players in the same lane on opposing teams will face each other. Players must hold onto a rope or pool noodle, restricting them to only move horizontally within their lane. They cannot move forward or backward out of their designated lane. Ensure an equal number of players per lane, or adjust lane sizes accordingly.",
                     "<strong>Game Start:</strong> Place the large inflatable ball in the center of the playing area. On the whistle, the game begins.",
                     "<strong>Game Play:</strong> Players must work together within their restricted horizontal movement to pass the ball to teammates in other lanes and eventually shoot it into the opponent's goal. Players can only use their feet to kick the ball. If the ball goes out of bounds, it is returned to the nearest boundary line and put back into play by the team that did not cause it to go out (e.g., a simple kick-in from the sideline).",
                     "<strong>Scoring:</strong> A point is scored when the ball successfully enters the opponent's goal. After a goal, the ball is returned to the center for a restart.",
                     "<strong>Winning:</strong> Play for a set time (e.g., 15-20 minutes) or until one team reaches a target score (e.g., 5-7 goals). The team with the most points at the end wins."
                 ],
-                materials: ["Pool Noodles (36)", "Inflatable Ball", "Rope (7 available)", "Cones (for goals and boundaries)", "Whistles (2)"],
+                materials: ["Pool Noodles (36)", "Inflatable Ball", "Cones (for goals and boundaries)", "Whistles (2)"],
                 safety: "Emphasize no excessive pulling or pushing on the ropes/noodles to prevent injury. Ensure the playing surface is even and free of obstacles. Supervise closely to prevent collisions, especially when players are moving quickly sideways. Remind players to be mindful of their teammates' positions and to avoid kicking too hard or at other players.",
                 supercharged: "In Human Foosball, we're all connected and have to move together to achieve our goal. This reminds us that in God's family, we are all connected, and we need to work together, communicate, and support each other to reach our spiritual goals. How can we better connect and communicate with others in our faith community?",
                 deleted: false
@@ -643,7 +658,7 @@
                 generalInstructions: [
                     "<strong>Setup:</strong> Place several small kiddie pools in a designated outdoor area. Fill each pool with water to a depth that allows treasures to be submerged but is safe for children. Submerge various 'treasures' at the bottom of the pools (e.g., fake gold coins, plastic critters, diving octopi, weighted plastic balls). Ensure the treasures are safe to handle, clean, and easily distinguishable by touch. Have blindfolds or bandanas ready.",
                     "<strong>Team Formation:</strong> Divide campers into teams. Each team will take turns sending one or two players to search the pools.",
-                    "<strong>Game Play (Option 1 - Blindfolded):</strong> One player from a team is blindfolded. They approach a pool and, guided verbally by their non-blindfolded teammates, attempt to find and retrieve as many treasures as possible within a set time limit (e.g., 60-90 seconds). The blindfolded player cannot see, relying entirely on their teammates' instructions. Teammates must stay outside the pool and can only use verbal commands (e.g., 'left a little', 'straight ahead', 'mine on your right').",
+                    "<strong>Game Play (Option 1 - Blindfolded):</strong> One player from a team is blindfolded. They approach a pool and, guided verbally by their non-blindfolded teammates, attempt to find and retrieve as many treasures as possible within a set time limit (e.g., 60-90 seconds). The blindfolded player cannot see, relying entirely on their teammates' instructions. Teammates must stay outside the pool and can only use verbal commands (e.g., 'left a little', 'straight ahead', 'mine on your right', 'mine on your right').",
                     "<strong>Game Play (Option 2 - Feet Only):</strong> Players are not blindfolded but must use only their feet/toes to search for and retrieve treasures from the bottom of the pool. No hands allowed. This can be done individually or as a relay.",
                     "<strong>Scoring:</strong> After the time limit, count the treasures collected by the player. The treasures are then returned to the pool for the next team. The team with the most treasures collected at the end wins. You can assign different point values to different types of treasures if desired.",
                     "<strong>Rotation:</strong> Teams rotate through the pools until all players have had a turn, or for a set number of rounds."
@@ -681,7 +696,7 @@
                 description: "Blindfolded players navigate a 'minefield' of soft obstacles, guided verbally by teammates to collect 'power-ups' representing Foursquare values.",
                 objectives: "Enhances trust, communication, active listening, teamwork, and reinforces camp values.",
                 generalInstructions: [
-                    "<strong>Setup:</strong> In an open indoor or outdoor area, scatter 'mines' (e.g., cones, bean bags, soft objects like small balls or crumpled paper) randomly across the space. These are obstacles to be avoided. Then, strategically place 'power-up' items (e.g., laminated Bible verses, rubber ducks, fake gold coins, small plastic critters, wooden blocks, small laminated pictures representing Foursquare values) throughout the minefield. Ensure power-ups are distinct from mines and easily identifiable by touch or by a quick verbal description from guides. Have blindfolds or bandanas ready.",
+                    "<strong>Setup:</strong> In an open indoor or outdoor area, scatter 'mines' (e.g., cones, bean bags, soft objects like small balls or crumpled paper) randomly across the space. These are obstacles to be avoided. Then, strategically place 'power-up' items (e.g., laminated Bible verses, rubber ducks, fake gold coins, plastic critters, wooden blocks, small laminated pictures representing Foursquare values) throughout the minefield. Ensure power-ups are distinct from mines and easily identifiable by touch or by a quick verbal description from guides. Have blindfolds or bandanas ready.",
                     "<strong>Team Formation:</strong> Divide campers into small teams (e.g., 3-5 campers per team). Each team will designate one player to be the 'navigator' (blindfolded) and the rest will be 'guides'. Teams should have a designated 'collection zone' for their power-ups.",
                     "<strong>Game Play:</strong> The navigator is blindfolded and stands at the edge of the minefield. On 'Go!', the guides must use only verbal instructions (no touching, pointing, or physical contact!) to direct their blindfolded navigator through the minefield. The goal is to collect as many 'power-ups' as possible while avoiding touching any 'mines'. Once a power-up is found, the navigator must bring it back to their team's collection zone before seeking another.",
                     "<strong>Mine Penalty:</strong> If the navigator touches a 'mine', they must immediately stop. The guides must then verbally direct them back to the starting point of that specific segment of the minefield (or the beginning of the entire minefield, depending on desired difficulty) before they can continue their search.",
@@ -746,7 +761,7 @@
                     "<strong>Presentation (5-10 minutes):</strong> Once the mural is complete (or time is up), gather the campers to view the entire masterpiece. Each team can briefly present their section, explaining what they depicted and why, and how it connects to the overall theme. Facilitate a discussion about the entire mural and what it represents.",
                     "<strong>Display:</strong> Find a prominent place to display the completed mural as a reminder of their collaborative efforts and the camp's themes. Take a photo for camp memories."
                 ],
-                materials: ["White Tarp (1)", "Construction Paper (various)", "Butcher Paper (suggested purchase)", "Washable Markers (various)", "Crayons (various)", "Sharpies (various)", "Black Paint (3 bottles)", "Pink Paint (2 bottles)", "Orange Paint (2 bottles)", "Blue Paint (1 bottle)", "Sponges (21½ bags)", "Glue Sticks (various)", "White Glue Bottles (11)", "Scissors (various)", "Plastic Critters (2 large ziplocks)", "Foam Beads (1 bag ziplocks)", "Yarn (various)", "CDs (17)", "Masking Tape (3 rolls)", "Laminated Bible Chapter Names (2 sets)", "Glitter (suggested purchase)", "Magazine cutouts (optional)"],
+                materials: ["White Tarp (1)", "Construction Paper (various)", "Butcher Paper (suggested purchase)", "Washable Markers (various)", "Crayons (various)", "Sharpies (various)", "Black Paint (3 bottles)", "Pink Paint (2 bottles)", "2 Orange Paint (2 bottles)", "Blue Paint (1 bottle)", "Sponges (21½ bags)", "Glue Sticks (various)", "White Glue Bottles (11)", "Scissors (various)", "Plastic Critters (2 large ziplocks)", "Foam Beads (1 bag ziplocks)", "Yarn (various)", "CDs (17)", "Masking Tape (3 rolls)", "Laminated Bible Chapter Names (2 sets)", "Glitter (suggested purchase)", "Magazine cutouts (optional)"],
                 safety: "Ensure adequate ventilation if using paints. Protect surfaces with drop cloths or newspaper. Supervise scissor and glue use carefully. Remind children not to put art supplies in their mouths. Have water and paper towels readily available for clean-up. Ensure walking paths around the mural are clear to prevent tripping over supplies.",
                 supercharged: "Creating a mural together shows us how each of us is a unique part of God's beautiful masterpiece, the Church. When we combine our individual talents and efforts, we can create something much bigger and more beautiful than we could alone. How can you use your unique gifts to contribute to God's 'masterpiece'?",
                 deleted: false
@@ -762,7 +777,7 @@
                     "<strong>Setup:</strong> Prepare a reference image or diagram of a simple structure (e.g., a specific block tower design, a pattern of stacked cups, a LEGO creation, a simple shape made of popsicle sticks). Ensure the structure is achievable with the provided materials and is not overly complex. Provide each team with an identical set of building materials (e.g., wooden blocks, plastic cups, LEGOs, popsicle sticks) and blindfolds or bandanas. Each team should have a designated building surface (e.g., a small table or clear floor space).",
                     "<strong>Team Formation:</strong> Divide campers into small teams (e.g., 3-5 players per team). For each round, designate one or two team members to be the 'builders' (who will be blindfolded) and the rest to be the 'guides'. Rotate roles in subsequent rounds.",
                     "<strong>Game Play:</strong> The builders are blindfolded and sit at their building area with the materials within reach. The guides stand a short distance away, where they can clearly see the reference image but *cannot* touch the materials, the blindfolded builders, or the structure being built. The guides must use only verbal instructions to direct the builders to construct the replica of the reference image.",
-                    "<strong>Communication Rules:</strong> Emphasize clear, concise, and specific instructions. Guides should describe shapes, colors, positions, and orientations precisely (e.g., 'Take the red square block', 'Place it on top of the green rectangle, centered', 'Rotate it 90 degrees clockwise'). Builders can ask clarifying questions (e.g., 'Do you mean the long side or the short side?'), but guides cannot use gestures or touch. If the structure falls or is built incorrectly, the team must correct it or restart that section.",
+                    "<strong>Communication Rules:</strong> Emphasize clear, concise, and specific instructions. Guides should describe shapes, colors, positions, and orientations precisely (e.g., 'Take the red square block', 'Place it on top of the green rectangle', 'Rotate it 90 degrees clockwise'). Builders can ask clarifying questions (e.g., 'Do you mean the long side or the short side?'), but guides cannot use gestures or touch. If the structure falls or is built incorrectly, the team must correct it or restart that section.",
                     "<strong>Winning:</strong> The first team to successfully build the structure exactly as shown in the reference image wins the round. You can play multiple rounds, rotating who is blindfolded and introducing new reference images for each round.",
                     "<strong>Variations:</strong> Increase difficulty by using more complex structures, limiting communication to only 'yes' or 'no' answers, or adding a strict time limit (e.g., 5-10 minutes per round)."
                 ],
@@ -873,7 +888,6 @@
             const materialsContainer = document.getElementById('materials-container');
             const addMaterialBtn = document.getElementById('add-material-btn');
             const loadingIndicator = document.getElementById('loading-indicator');
-            const userIdDisplay = document.getElementById('current-user-id'); // Get user ID display element
             const moveToTrashBtn = document.getElementById('move-to-trash-btn');
             const viewDeletedActivitiesBtn = document.getElementById('view-deleted-activities-btn');
             const deletedActivitiesModal = document.getElementById('deleted-activities-modal');
@@ -886,16 +900,27 @@
             const leaderResourcesToggle = document.getElementById('leader-resources-toggle');
             const leaderResourcesContent = document.getElementById('leader-resources-content');
             const collapseIcon = leaderResourcesToggle.querySelector('.collapse-icon');
+            const populateInitialGamesBtn = document.getElementById('populate-initial-games-btn');
+
 
             // Object to store current filter selections
             let currentFilters = { type: 'all', location: 'all', material: 'all' };
 
             // Initialize Firebase
             try {
-                // Check if Firebase configuration is provided by the Canvas environment
-                if (!firebaseConfig) {
-                    throw new Error("Firebase configuration not found. Ensure __firebase_config is provided.");
+                // Check if Firebase configuration is provided. If not, the default placeholder will be used.
+                if (!firebaseConfig.projectId || firebaseConfig.projectId === "YOUR_PROJECT_ID") {
+                    console.warn("Firebase configuration is using placeholder values. Please update firebaseConfig with your actual project details for full functionality on GitHub.");
+                    loadingIndicator.textContent = "Firebase not fully configured. Displaying initial activities only. Please check console for instructions.";
+                    // Fallback to initial games if Firebase config is not properly set
+                    allActivities = [...initialGamesData];
+                    renderGames();
+                    populateMaterialFilter();
+                    updateActivityChart();
+                    updateDeletedCount();
+                    return; // Exit early if config is not set
                 }
+
                 app = initializeApp(firebaseConfig); // Initialize Firebase app
                 db = getFirestore(app); // Get Firestore instance
                 auth = getAuth(app); // Get Auth instance
@@ -903,42 +928,16 @@
                 // Listen for authentication state changes
                 onAuthStateChanged(auth, async (user) => {
                     if (user) {
-                        // If user is already signed in (e.g., from a previous session)
-                        userId = user.uid; // Store user ID
-                        userIdDisplay.textContent = `User ID: ${userId}`; // Update UI
+                        // If user is already signed in (e.g., from a previous session or custom token)
+                        userId = user.uid; 
                     } else {
-                        let signedIn = false;
-                        // Attempt to sign in with a custom token provided by Canvas (if available)
-                        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                            try {
-                                await signInWithCustomToken(auth, __initial_auth_token);
-                                userId = auth.currentUser.uid;
-                                userIdDisplay.textContent = `User ID: ${userId}`; // Update UI
-                                signedIn = true;
-                            } catch (error) {
-                                // Log specific error for custom token if it fails
-                                if (error.code === 'auth/custom-token-mismatch') {
-                                    console.warn("Firebase custom token mismatch, attempting anonymous sign-in.");
-                                } else {
-                                    console.error("Firebase custom token authentication failed unexpectedly:", error);
-                                }
-                                // signedIn remains false, so it will proceed to anonymous sign-in
-                            }
-                        }
-
-                        // If custom token failed or was not present, attempt anonymous sign-in
-                        if (!signedIn) {
-                            try {
-                                await signInAnonymously(auth);
-                                userId = auth.currentUser.uid; // Store anonymous user ID
-                                userIdDisplay.textContent = `User ID: ${userId}`; // Update UI
-                                signedIn = true;
-                            } catch (anonError) {
-                                console.error("Firebase anonymous authentication failed, falling back to initial data only:", anonError);
-                                // If all authentication methods fail, Firebase will not be fully functional.
-                                userId = null; // Explicitly set userId to null if auth fails
-                                userIdDisplay.textContent = 'User ID: Not authenticated (offline mode)';
-                            }
+                        // If no user, attempt anonymous sign-in
+                        try {
+                            await signInAnonymously(auth);
+                            userId = auth.currentUser.uid; // Store anonymous user ID
+                        } catch (anonError) {
+                            console.error("Firebase anonymous authentication failed, falling back to initial data only:", anonError);
+                            userId = null; // Explicitly set userId to null if auth fails
                         }
                     }
                     // Start listening for activities only after authentication is ready
@@ -950,7 +949,6 @@
                 loadingIndicator.textContent = "Error loading activities. Please ensure Firebase config is correct and security rules are set up.";
                 // Fallback to initial games if Firebase init fails
                 userId = null; // Ensure userId is null if Firebase itself fails to initialize
-                userIdDisplay.textContent = 'User ID: Not authenticated (offline mode)';
                 allActivities = [...initialGamesData]; // Display initial games in offline mode
                 renderGames();
                 populateMaterialFilter(); // Ensure materials are populated even in offline mode
@@ -977,10 +975,6 @@
                 
                 // IMPORTANT CHANGE: Using a public collection for shared data
                 // This path allows all authenticated users to read/write to the same activity list.
-                // Ensure your Firebase Security Rules allow authenticated users to read/write to this path:
-                // match /artifacts/{appId}/public/data/{document=**} {
-                //   allow read, write: if request.auth != null;
-                // }
                 const activitiesCollectionRef = collection(db, `artifacts/${appId}/public/data/activities`);
                 const q = query(activitiesCollectionRef); // Create a query for the collection
 
@@ -1440,7 +1434,7 @@
                 try {
                     // Check if Firestore is ready before attempting to save
                     if (db) {
-                        // IMPORTANT CHANGE: Add the new activity document to the public collection
+                        // Add the new activity document to the public collection
                         const docRef = await addDoc(collection(db, `artifacts/${appId}/public/data/activities`), newActivity);
                         addActivityModal.classList.remove('active'); // Close the modal on success
                         addActivityForm.reset(); // Reset the form
@@ -1460,7 +1454,7 @@
             // Event listener for "Move to Trash" button in the Game Details Modal
             moveToTrashBtn.addEventListener('click', async (e) => {
                 const gameId = e.target.dataset.gameId; // Get the ID of the activity to delete
-                if (gameId && db) { // No need to check userId here as it's public data
+                if (gameId && db) { 
                     try {
                         // Get a reference to the activity document in the public collection
                         const activityRef = doc(db, `artifacts/${appId}/public/data/activities`, gameId);
@@ -1547,7 +1541,7 @@
              * @param {string} gameId - The ID of the activity to restore.
              */
             async function restoreActivity(gameId) {
-                if (db) { // No need to check userId here as it's public data
+                if (db) { 
                     try {
                         const activityRef = doc(db, `artifacts/${appId}/public/data/activities`, gameId);
                         await updateDoc(activityRef, { deleted: false }); // Set deleted to false
@@ -1571,7 +1565,7 @@
 
             // Event listener for confirming permanent deletion
             confirmPermanentDeleteBtn.addEventListener('click', async () => {
-                if (activityToDeleteId && db) { // No need to check userId here as it's public data
+                if (activityToDeleteId && db) { 
                     try {
                         // Delete the document permanently from Firestore
                         await deleteDoc(doc(db, `artifacts/${appId}/public/data/activities`, activityToDeleteId));
@@ -1606,6 +1600,41 @@
                 leaderResourcesContent.classList.toggle('collapsed'); // Toggle content visibility
                 collapseIcon.classList.toggle('collapsed'); // Toggle icon rotation
             });
+
+            // --- Populate Initial Games Logic ---
+            populateInitialGamesBtn.addEventListener('click', populateInitialGamesIfEmpty);
+
+            /**
+             * Populates Firestore with initialGamesData if the collection is empty.
+             * This function should only be called once.
+             */
+            async function populateInitialGamesIfEmpty() {
+                if (!db) {
+                    console.error("Firestore is not initialized. Cannot populate initial games.");
+                    return;
+                }
+
+                const activitiesCollectionRef = collection(db, `artifacts/${appId}/public/data/activities`);
+                try {
+                    // Check if the collection is empty
+                    const snapshot = await getDocs(activitiesCollectionRef);
+                    if (snapshot.empty) {
+                        console.log("Activities collection is empty. Populating with initial games...");
+                        for (const game of initialGamesData) {
+                            // Use setDoc with a specific ID to prevent duplicates if game.id is unique
+                            // If game.id is not guaranteed unique, addDoc is better.
+                            // For initial data, using setDoc with a predefined ID is fine.
+                            await setDoc(doc(activitiesCollectionRef, game.id), game);
+                        }
+                        console.log("Initial games populated successfully!");
+                        // The onSnapshot listener will automatically update the UI
+                    } else {
+                        console.log("Activities collection is not empty. Skipping initial game population.");
+                    }
+                } catch (error) {
+                    console.error("Error populating initial games:", error);
+                }
+            }
             
             // Initial render and chart update
             // This block ensures that some content is displayed immediately upon page load,
@@ -1613,6 +1642,8 @@
             // If Firebase initialization fails, this will be the final state of the data display.
             // If Firebase initializes successfully, the onSnapshot listener will then
             // trigger a re-render with the actual user data.
+            // The Firebase initialization logic now handles the initial display based on auth state.
+            // This 'if (!app)' block is now primarily a fallback if the *outer* try-catch for Firebase init fails.
             if (!app) { 
                 renderGames();
                 populateMaterialFilter();
