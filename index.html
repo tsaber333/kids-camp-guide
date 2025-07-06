@@ -154,12 +154,12 @@
             color: #065f46; /* emerald-800 */
             font-size: 0.875rem; /* text-sm - Increased for better visibility */
             font-weight: 600; /* font-semibold */
-            padding: 0.25rem 0.5rem;
+            padding: 0.35rem 0.6rem; /* Slightly more padding */
             border-radius: 0.375rem; /* rounded-md */
             width: 100%;
             overflow: hidden;
             text-overflow: ellipsis;
-            white-space: nowrap;
+            white-space: normal; /* Allow text to wrap */
             cursor: grab; /* Indicate draggable */
             position: relative;
         }
@@ -213,89 +213,90 @@
         </header>
 
         <!-- Main content area -->
-        <main>
-            <!-- Dashboard section with welcome message and activity overview chart -->
-            <section id="dashboard" class="mb-12">
-                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-center">
-                    <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-                        <h2 class="text-2xl font-bold text-teal-700 mb-2">Welcome, Camp Leaders!</h2>
-                        <p class="text-stone-600">
-                            This guide is your central hub for planning and leading activities. Use the filters below to quickly find the perfect game for your next slot, whether you're on the field or need an indoor option for a rainy day. Each game card provides a full breakdown of instructions, materials, and key discussion points to connect with our camp's mission.
-                        </p>
-                        <div class="flex flex-wrap gap-3 mt-4">
-                            <!-- Button to view deleted activities -->
-                            <button id="view-deleted-activities-btn" class="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 transition-colors text-sm">
-                                View Deleted Activities (<span id="deleted-count">0</span>)
-                            </button>
-                            <!-- Button to populate initial games -->
-                            <button id="populate-initial-games-btn" class="bg-emerald-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-emerald-600 transition-colors text-sm">
-                                Populate Initial Games
-                            </button>
-                        </div>
-                    </div>
-                    <!-- Doughnut chart for activity type distribution -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-                        <h3 class="text-xl font-bold text-center text-teal-700 mb-4">Activity Overview</h3>
-                        <div class="chart-container" style="height: 150px; max-width: 150px;">
-                            <canvas id="activityTypeChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Leader Resources & Best Practices collapsible section -->
-            <section id="leader-resources" class="mb-12 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-                <div class="flex justify-between items-center cursor-pointer" id="leader-resources-toggle">
-                    <h2 class="text-2xl font-bold text-teal-700 mb-4">Leader Resources & Best Practices</h2>
-                    <button class="text-stone-500 hover:text-teal-600 transition-colors">
-                        <span class="text-2xl font-bold collapse-icon">&#9660;</span> <!-- Down arrow icon -->
-                    </button>
-                </div>
-                <div id="leader-resources-content" class="collapsible-content">
-                    <p class="text-stone-600 mb-4">
-                        This section provides essential guidance to help you make the most of this interactive guide and ensure a successful, safe, and spiritually impactful activity time for your campers.
-                    </p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <h3 class="text-xl font-bold text-teal-700 mb-2">Navigating This Guide</h3>
-                            <ul class="list-disc list-inside text-stone-700 space-y-2">
-                                <li><strong>Filtering Activities:</strong> Use the "Filter by Type," "Filter by Location," and "Filter by Materials" to quickly narrow down game options. Select "All" to see the full list again.</li>
-                                <li><strong>Viewing Details:</strong> Click on any activity card to open a detailed modal. This modal contains objectives, step-by-step instructions, a comprehensive materials list, crucial safety notes, and the "SuperCharged Application."</li>
-                                <li><strong>Material Check:</strong> Always review the "Materials Needed" section well in advance of your activity time to ensure all supplies are readily available.</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-teal-700 mb-2">Leading Activities Effectively</h3>
-                            <ul class="list-disc list-inside text-stone-700 space-y-2">
-                                <li><strong>Safety First:</strong> Prioritize the "Safety Notes" for each game. Conduct a quick safety check of the play area and equipment before starting.</li>
-                                <li><strong>Clear Instructions:</strong> Explain game rules clearly and concisely. Demonstrate if possible. Encourage questions before starting.</li>
-                                <li><strong>Adapt & Modify:</strong> Feel free to adapt games to suit your group's size, age, energy levels, or available space.</li>
-                                <li><strong>Encourage Participation:</strong> Create an inclusive environment where every camper feels comfortable participating and trying their best.</li>
-                                <li><strong>Time Management:</strong> Keep an eye on the clock to ensure you have enough time for the activity itself and, crucially, for the debriefing.</li>
-                            </ul>
-                        </div>
-                        <div class="md:col-span-2">
-                            <h3 class="text-xl font-bold text-teal-700 mb-2">Maximizing the "SuperCharged Application"</h3>
-                            <p class="text-stone-700">
-                                The "SuperCharged Application" is key to connecting our activities with the spiritual growth of our campers. This section provides prompts and ideas to help you facilitate meaningful discussions after each game.
+        <main class="lg:flex lg:gap-8">
+            <!-- Left Column: Activity Finder -->
+            <div class="lg:w-1/2 flex flex-col">
+                <!-- Dashboard section with welcome message and activity overview chart -->
+                <section id="dashboard" class="mb-8 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-center">
+                        <div class="lg:col-span-2">
+                            <h2 class="text-2xl font-bold text-teal-700 mb-2">Welcome, Camp Leaders!</h2>
+                            <p class="text-stone-600">
+                                This guide is your central hub for planning and leading activities. Use the filters below to quickly find the perfect game for your next slot, whether you're on the field or need an indoor option for a rainy day. Each game card provides a full breakdown of instructions, materials, and key discussion points to connect with our camp's mission.
                             </p>
-                            <ul class="list-disc list-inside text-stone-700 space-y-2 mt-2">
-                                <li><strong>Purpose:</strong> This is where we bridge the fun of the game to life lessons and Foursquare values.</li>
-                                <li><strong>Timing:</strong> Always debrief immediately after the game, while the experience is fresh in their minds.</li>
-                                <li><strong>Open-Ended Questions:</strong> Use the suggested questions as a starting point. Encourage honest sharing and active listening among campers.</li>
-                                <li><strong>Connect to Scripture/Values:</strong> Help campers see how the game's lessons relate to Bible principles or the Foursquare values (e.g., 'Jesus the Savior, Healer, Baptizer with the Holy Spirit, and Soon-Coming King').</li>
-                                <li><strong>Personal Reflection:</strong> Encourage campers to think about how they can apply these lessons in their daily lives.</li>
-                            </ul>
+                            <div class="flex flex-wrap gap-3 mt-4">
+                                <!-- Button to view deleted activities -->
+                                <button id="view-deleted-activities-btn" class="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 transition-colors text-sm">
+                                    View Deleted Activities (<span id="deleted-count">0</span>)
+                                </button>
+                                <!-- Button to populate initial games -->
+                                <button id="populate-initial-games-btn" class="bg-emerald-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-emerald-600 transition-colors text-sm">
+                                    Populate Initial Games
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Doughnut chart for activity type distribution -->
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                            <h3 class="text-xl font-bold text-center text-teal-700 mb-4">Activity Overview</h3>
+                            <div class="chart-container" style="height: 150px; max-width: 150px;">
+                                <canvas id="activityTypeChart"></canvas>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            
-            <!-- Activity Finder section with filters and game grid -->
-            <section id="activity-finder">
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200 mb-8">
+                </section>
+
+                <!-- Leader Resources & Best Practices collapsible section -->
+                <section id="leader-resources" class="mb-8 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                    <div class="flex justify-between items-center cursor-pointer" id="leader-resources-toggle">
+                        <h2 class="text-2xl font-bold text-teal-700 mb-4">Leader Resources & Best Practices</h2>
+                        <button class="text-stone-500 hover:text-teal-600 transition-colors">
+                            <span class="text-2xl font-bold collapse-icon">&#9660;</span> <!-- Down arrow icon -->
+                        </button>
+                    </div>
+                    <div id="leader-resources-content" class="collapsible-content">
+                        <p class="text-stone-600 mb-4">
+                            This section provides essential guidance to help you make the most of this interactive guide and ensure a successful, safe, and spiritually impactful activity time for your campers.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h3 class="text-xl font-bold text-teal-700 mb-2">Navigating This Guide</h3>
+                                <ul class="list-disc list-inside text-stone-700 space-y-2">
+                                    <li><strong>Filtering Activities:</strong> Use the "Filter by Type," "Filter by Location," and "Filter by Materials" to quickly narrow down game options. Select "All" to see the full list again.</li>
+                                    <li><strong>Viewing Details:</strong> Click on any activity card to open a detailed modal. This modal contains objectives, step-by-step instructions, a comprehensive materials list, crucial safety notes, and the "SuperCharged Application."</li>
+                                    <li><strong>Material Check:</strong> Always review the "Materials Needed" section well in advance of your activity time to ensure all supplies are readily available.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-teal-700 mb-2">Leading Activities Effectively</h3>
+                                <ul class="list-disc list-inside text-stone-700 space-y-2">
+                                    <li><strong>Safety First:</strong> Prioritize the "Safety Notes" for each game. Conduct a quick safety check of the play area and equipment before starting.</li>
+                                    <li><strong>Clear Instructions:</strong> Explain game rules clearly and concisely. Demonstrate if possible. Encourage questions before starting.</li>
+                                    <li><strong>Adapt & Modify:</strong> Feel free to adapt games to suit your group's size, age, energy levels, or available space.</li>
+                                    <li><strong>Encourage Participation:</strong> Create an inclusive environment where every camper feels comfortable participating and trying their best.</li>
+                                    <li><strong>Time Management:</strong> Keep an eye on the clock to ensure you have enough time for the activity itself and, crucially, for the debriefing.</li>
+                                </ul>
+                            </div>
+                            <div class="md:col-span-2">
+                                <h3 class="text-xl font-bold text-teal-700 mb-2">Maximizing the "SuperCharged Application"</h3>
+                                <p class="text-stone-700">
+                                    The "SuperCharged Application" is key to connecting our activities with the spiritual growth of our campers. This section provides prompts and ideas to help you facilitate meaningful discussions after each game.
+                                </p>
+                                <ul class="list-disc list-inside text-stone-700 space-y-2 mt-2">
+                                    <li><strong>Purpose:</strong> This is where we bridge the fun of the game to life lessons and Foursquare values.</li>
+                                    <li><strong>Timing:</strong> Always debrief immediately after the game, while the experience is fresh in their minds.</li>
+                                    <li><strong>Open-Ended Questions:</strong> Use the suggested questions as a starting point. Encourage honest sharing and active listening among campers.</li>
+                                    <li><strong>Connect to Scripture/Values:</strong> Help campers see how the game's lessons relate to Bible principles or the Foursquare values (e.g., 'Jesus the Savior, Healer, Baptizer with the Holy Spirit, and Soon-Coming King').</li>
+                                    <li><strong>Personal Reflection:</strong> Encourage campers to think about how they can apply these lessons in their daily lives.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Activity Finder section with filters and game grid -->
+                <section id="activity-finder" class="flex-grow bg-white p-6 rounded-xl shadow-sm border border-stone-200 mb-8 lg:mb-0 overflow-y-auto" style="max-height: calc(100vh - 200px);">
                     <h2 class="text-2xl font-bold text-teal-700 mb-4">Find an Activity</h2>
-                    <div class="flex flex-wrap gap-4 items-center">
+                    <div class="flex flex-wrap gap-4 items-center mb-6">
                         <!-- Type filters (Field Game, Team Time) -->
                         <div>
                             <label class="font-bold text-stone-700">Filter by Type:</label>
@@ -324,23 +325,48 @@
                             </select>
                         </div>
                     </div>
-                </div>
 
-                <!-- Grid to display activity cards -->
-                <div id="game-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Loading indicator for activities -->
-                    <div id="loading-indicator" class="col-span-full text-center text-stone-500 text-lg py-8">Loading activities...</div>
-                </div>
-            </section>
+                    <!-- Grid to display activity cards -->
+                    <div id="game-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-6">
+                        <!-- Loading indicator for activities -->
+                        <div id="loading-indicator" class="col-span-full text-center text-stone-500 text-lg py-8">Loading activities...</div>
+                    </div>
+                </section>
+            </div>
 
-            <!-- Camp Schedule Calendar Section -->
-            <section id="camp-schedule" class="mt-12 mb-12 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-                <h2 class="text-2xl font-bold text-teal-700 mb-4">Camp Schedule</h2>
-                <div id="calendar-grid-container" class="calendar-grid">
-                    <!-- Calendar grid will be dynamically generated here by JavaScript -->
-                </div>
-                <p class="text-sm text-stone-600 mt-4">Drag 'Field Games' into FIELD slots and 'Team Time' activities into TEAM TIME slots.</p>
-            </section>
+            <!-- Right Column: Camp Schedule Calendar Section -->
+            <div class="lg:w-1/2 flex flex-col">
+                <section id="camp-schedule" class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                    <h2 class="text-2xl font-bold text-teal-700 mb-4">Camp Schedule</h2>
+                    
+                    <!-- Calendar Instructions Collapsible Section -->
+                    <div id="calendar-instructions" class="mb-6 bg-stone-50 p-4 rounded-lg border border-stone-200">
+                        <div class="flex justify-between items-center cursor-pointer" id="calendar-instructions-toggle">
+                            <h3 class="text-xl font-bold text-teal-700">How to Use the Schedule</h3>
+                            <button class="text-stone-500 hover:text-teal-600 transition-colors">
+                                <span class="text-xl font-bold collapse-icon">&#9660;</span>
+                            </button>
+                        </div>
+                        <div id="calendar-instructions-content" class="collapsible-content collapsed">
+                            <ul class="list-disc list-inside text-stone-700 space-y-2 mt-4">
+                                <li><strong>Drag & Drop Activities:</strong> To schedule an activity, simply drag a game card from the "Find an Activity" list on the left into an empty, white slot on the calendar.</li>
+                                <li><strong>Slot Types:</strong>
+                                    <ul class="list-circle list-inside ml-4">
+                                        <li><span class="font-semibold text-teal-700">White Slots:</span> These are 'droppable' slots. You can drag a "Field Game" into a "FIELD" slot, and a "Team Time" activity into a "TEAM TIME" slot.</li>
+                                        <li><span class="font-semibold text-stone-700">Gray Slots:</span> These slots are 'non-droppable' and are already pre-assigned with specific teams or are blocked out. You cannot drag activities into these.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Remove Scheduled Activities:</strong> To remove an activity you've scheduled, hover over the activity name in the calendar slot and click the small 'x' button that appears.</li>
+                                <li><strong>Real-time Updates:</strong> Any changes you make to the schedule (adding or removing activities) will be saved automatically and updated in real-time.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div id="calendar-grid-container" class="calendar-grid">
+                        <!-- Calendar grid will be dynamically generated here by JavaScript -->
+                    </div>
+                </section>
+            </div>
         </main>
     </div>
 
@@ -703,7 +729,7 @@
                 objectives: "Emphasizes coordination, teamwork, spatial awareness, and constant communication.",
                 generalInstructions: [
                     "<strong>Setup:</strong> Create a large rectangular playing area (e.g., 30ft x 15ft) using cones or boundary markers. Inside this area, use ropes or pool noodles to create 3-4 parallel 'lanes' across the width of the field. Players will stand in these lanes, holding onto the rope/noodle. Place a goal (e.g., two cones spaced apart) at each end of the rectangle. The ball should be an inflatable beach ball or similar large, lightweight ball.",
-                    "<strong>Team Formation:</strong> Divide campers into two equal teams. Assign each player to a specific lane. Players in the same lane on opposing teams will face each other. Players must hold onto a rope or pool noodle, restricting them to only move horizontally within their lane. They cannot move forward or backward out of their designated lane. Ensure an equal number of players per lane, or adjust lane sizes accordingly.",
+                    "<strong>Team Formation:</strong> Divide campers into equal teams. Assign each player to a specific lane. Players in the same lane on opposing teams will face each other. Players must hold onto a rope or pool noodle, restricting them to only move horizontally within their lane. They cannot move forward or backward out of their designated lane. Ensure an equal number of players per lane, or adjust lane sizes accordingly.",
                     "<strong>Game Start:</strong> Place the large inflatable ball in the center of the playing area. On the whistle, the game begins.",
                     "<strong>Game Play:</strong> Players must work together within their restricted horizontal movement to pass the ball to teammates in other lanes and eventually shoot it into the opponent's goal. Players can only use their feet to kick the ball. If the ball goes out of bounds, it is returned to the nearest boundary line and put back into play by the team that did not cause it to go out (e.g., a simple kick-in from the sideline).",
                     "<strong>Scoring:</strong> A point is scored when the ball successfully enters the opponent's goal. After a goal, the ball is returned to the center for a restart.",
@@ -1292,9 +1318,12 @@
             const cancelPermanentDeleteBtn = document.getElementById('cancel-permanent-delete-btn');
             const leaderResourcesToggle = document.getElementById('leader-resources-toggle');
             const leaderResourcesContent = document.getElementById('leader-resources-content');
-            const collapseIcon = leaderResourcesToggle.querySelector('.collapse-icon');
+            const leaderResourcesCollapseIcon = leaderResourcesToggle.querySelector('.collapse-icon');
             const populateInitialGamesBtn = document.getElementById('populate-initial-games-btn');
             const calendarGridContainer = document.getElementById('calendar-grid-container');
+            const calendarInstructionsToggle = document.getElementById('calendar-instructions-toggle');
+            const calendarInstructionsContent = document.getElementById('calendar-instructions-content');
+            const calendarInstructionsCollapseIcon = calendarInstructionsToggle.querySelector('.collapse-icon');
 
 
             // Object to store current filter selections
@@ -2006,14 +2035,25 @@
 
             // --- Leader Resources Collapsible Logic ---
             // Ensure these elements exist before adding listeners
-            if (leaderResourcesToggle && leaderResourcesContent && collapseIcon) {
+            if (leaderResourcesToggle && leaderResourcesContent && leaderResourcesCollapseIcon) {
                 leaderResourcesToggle.addEventListener('click', () => {
                     leaderResourcesContent.classList.toggle('collapsed'); // Toggle content visibility
-                    collapseIcon.classList.toggle('collapsed'); // Toggle icon rotation
+                    leaderResourcesCollapseIcon.classList.toggle('collapsed'); // Toggle icon rotation
                 });
             } else {
                 console.warn("Leader resources toggle elements not found. Collapsible section may not function.");
             }
+
+            // --- Calendar Instructions Collapsible Logic ---
+            if (calendarInstructionsToggle && calendarInstructionsContent && calendarInstructionsCollapseIcon) {
+                calendarInstructionsToggle.addEventListener('click', () => {
+                    calendarInstructionsContent.classList.toggle('collapsed'); // Toggle content visibility
+                    calendarInstructionsCollapseIcon.classList.toggle('collapsed'); // Toggle icon rotation
+                });
+            } else {
+                console.warn("Calendar instructions toggle elements not found. Collapsible section may not function.");
+            }
+
 
             // --- Populate Initial Games Logic ---
             // Ensure button exists before adding listener
