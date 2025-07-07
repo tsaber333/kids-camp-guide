@@ -33,7 +33,7 @@
         }
 
         /* Card entry animation */
-        .card-enter {
+        .card-enter {\
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.3s ease-out, transform 0.3s ease-out;
@@ -329,7 +329,16 @@
                             <ul class="list-circle list-inside ml-4">
                                 <li>Click the "<span class="font-semibold text-emerald-700">Add New Activity</span>" card at the bottom of the "Find an Activity" section.</li>
                                 <li>Fill out the form with all required details (marked with *).</li>
+                                <li>Choose between "General Instructions" (a list of steps) or "Station-Based Instructions" (for activities with multiple distinct stations, like "Minute to Win It Mayhem").</li>
                                 <li>Click "Add Activity" to save your new activity to the guide. It will appear in your activity list.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Editing an Existing Activity:</strong>
+                            <ul class="list-circle list-inside ml-4">
+                                <li>Click on any activity card to open its "Activity Details" modal.</li>
+                                <li>At the bottom of the modal, click the "<span class="font-semibold text-blue-500">Edit Activity</span>" button.</li>
+                                <li>The "Add/Edit Activity" form will open, pre-filled with the activity's current information.</li>
+                                <li>Make your desired changes and click "Save Changes" to update the activity.</li>
                             </ul>
                         </li>
                         <li><strong>Moving an Activity to Trash (Soft Delete):</strong>
@@ -449,7 +458,11 @@
             </div>
             <div id="modal-content" class="p-4 sm:p-6 modal-text-content">
             </div>
-            <div class="p-4 sm:p-6 border-t border-stone-200 flex justify-end">
+            <div class="p-4 sm:p-6 border-t border-stone-200 flex justify-end gap-3">
+                <!-- Button to edit an activity -->
+                <button id="edit-activity-btn" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors text-sm">
+                    Edit Activity
+                </button>
                 <!-- Button to soft-delete an activity -->
                 <button id="move-to-trash-btn" class="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 transition-colors text-sm">
                     Move to Trash
@@ -458,16 +471,19 @@
         </div>
     </div>
 
-    <!-- Add Activity Modal (form for creating new activities) -->
-    <div id="add-activity-modal" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 items-center justify-center p-4">
+    <!-- Add/Edit Activity Modal (form for creating new activities) -->
+    <div id="activity-form-modal" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto modal-content-scroll">
             <div class="sticky top-0 bg-white p-4 sm:p-6 border-b border-stone-200 flex justify-between items-center">
-                <h2 class="text-2xl sm:text-3xl font-bold text-teal-700">Add New Activity</h2>
-                <button id="close-add-activity-modal" class="text-stone-500 hover:text-red-600 transition-colors">
+                <h2 id="activity-form-modal-title" class="text-2xl sm:text-3xl font-bold text-teal-700">Add New Activity</h2>
+                <button id="close-activity-form-modal" class="text-stone-500 hover:text-red-600 transition-colors">
                     <span class="text-2xl font-bold">&times;</span>
                 </button>
             </div>
-            <form id="add-activity-form" class="p-4 sm:p-6 space-y-6">
+            <form id="activity-form" class="p-4 sm:p-6 space-y-6">
+                <!-- Hidden input for activity ID (for editing) -->
+                <input type="hidden" id="activity-id" name="id">
+
                 <!-- Activity Name Input -->
                 <div>
                     <label for="activity-name" class="block text-stone-700 font-bold mb-2">Activity Name <span class="text-red-500">*</span></label>
@@ -514,17 +530,51 @@
                     <textarea id="objectives" name="objectives" rows="3" required class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
                 </div>
 
-                <!-- Dynamic Instructions Input -->
+                <!-- Instruction Type Selection -->
                 <div>
-                    <label class="block text-stone-700 font-bold mb-2">Instructions <span class="text-red-500">*</span></label>
-                    <div id="instructions-container" class="space-y-3">
+                    <label class="block text-stone-700 font-bold mb-2">Instruction Type <span class="text-red-500">*</span></label>
+                    <div class="flex flex-wrap gap-4">
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="instruction-type" value="general" class="form-radio text-teal-600" checked>
+                            <span class="ml-2 text-stone-700">General Instructions</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="instruction-type" value="station" class="form-radio text-teal-600">
+                            <span class="ml-2 text-stone-700">Station-Based Instructions</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Dynamic General Instructions Input -->
+                <div id="general-instructions-section">
+                    <label class="block text-stone-700 font-bold mb-2">General Instructions <span class="text-red-500">*</span></label>
+                    <div id="general-instructions-container" class="space-y-3">
                         <!-- Initial instruction field, more added by JS -->
                         <div class="instruction-item flex items-center gap-2">
-                            <textarea name="instructions[]" rows="2" required class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., Setup: Divide a large outdoor field..."></textarea>
+                            <textarea name="generalInstructions[]" rows="2" required class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., Overall Setup: Designate 5-7 distinct stations..."></textarea>
                             <button type="button" class="remove-instruction-btn text-red-500 hover:text-red-700 text-xl font-bold">&times;</button>
                         </div>
                     </div>
-                    <button type="button" id="add-instruction-btn" class="mt-3 bg-stone-200 text-stone-700 py-2 px-4 rounded-md hover:bg-stone-300 transition-colors">Add Instruction Step</button>
+                    <button type="button" id="add-general-instruction-btn" class="mt-3 bg-stone-200 text-stone-700 py-2 px-4 rounded-md hover:bg-stone-300 transition-colors">Add General Instruction Step</button>
+                </div>
+
+                <!-- Dynamic Station Instructions Input -->
+                <div id="station-instructions-section" class="hidden">
+                    <label class="block text-stone-700 font-bold mb-2">Station Instructions <span class="text-red-500">*</span></label>
+                    <div id="station-instructions-container" class="space-y-4 border p-4 rounded-md border-stone-300">
+                        <!-- Initial station field, more added by JS -->
+                        <div class="station-item border-b pb-4 mb-4 last:border-b-0 last:pb-0 last:mb-0">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="font-semibold text-stone-700">Station Details</h4>
+                                <button type="button" class="remove-station-btn text-red-500 hover:text-red-700 text-xl font-bold">&times;</button>
+                            </div>
+                            <label class="block text-stone-700 text-sm font-medium mb-1">Station Title</label>
+                            <input type="text" name="stationTitles[]" required class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500 mb-2" placeholder="e.g., Station 1: Balloon Defying Gravity">
+                            <label class="block text-stone-700 text-sm font-medium mb-1">Station Content</label>
+                            <textarea name="stationContents[]" rows="4" required class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., Setup: Clear an open space..."></textarea>
+                        </div>
+                    </div>
+                    <button type="button" id="add-station-instruction-btn" class="mt-3 bg-stone-200 text-stone-700 py-2 px-4 rounded-md hover:bg-stone-300 transition-colors">Add Station</button>
                 </div>
 
                 <!-- Dynamic Materials Input -->
@@ -554,7 +604,7 @@
 
                 <!-- Submit Button -->
                 <div class="flex justify-end">
-                    <button type="submit" class="bg-teal-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-teal-700 transition-colors">Add Activity</button>
+                    <button type="submit" id="activity-form-submit-btn" class="bg-teal-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-teal-700 transition-colors">Add Activity</button>
                 </div>
             </form>
         </div>
@@ -661,14 +711,12 @@
                 location: "Both",
                 description: "A high-energy circuit of 60-second challenges. Teams rotate through various stations, accumulating points by completing diverse tasks that test skill, speed, and coordination.",
                 objectives: "Fosters individual skill development, quick thinking, coordination, and team encouragement.",
-                generalInstructions: [
-                    "<strong>Overall Setup:</strong> Designate 5-7 distinct stations in your field or indoor space. Each station will host a unique Minute to Win It challenge. Ensure ample space between stations for safety and clear boundaries for each challenge area. Have a central timer (leader with a stopwatch and whistle) to signal start and stop for all stations simultaneously.",
-                    "<strong>Team Formation:</strong> Divide campers into small teams (e.g., 4-6 campers per team). Assign each team a starting station.",
-                    "<strong>Overall Game Play:</strong> On the first whistle, all teams begin their challenge at their assigned station. They have exactly 60 seconds to complete as much of the challenge as possible. A designated station leader will oversee each challenge, explain rules, ensure fair play, and record points.",
-                    "<strong>Rotation:</strong> After 60 seconds, a second whistle signals the end of the round. Teams stop immediately, and station leaders tally points. Teams then quickly and safely rotate to the next designated station. This continues until all teams have visited all stations.",
-                    "<strong>Overall Scoring:</strong> Points are awarded per station based on the specific challenge's scoring method. Station leaders record points for their team. A central scorekeeper compiles total points at the end. The team with the highest total points wins."
-                ],
+                generalInstructions: [], // Empty for this game as it uses station instructions
                 stationInstructions: [
+                    {
+                        title: "Overall Setup",
+                        content: `Designate 5-7 distinct stations in your field or indoor space. Each station will host a unique Minute to Win It challenge. Ensure ample space between stations for safety and clear boundaries for each challenge area. Have a central timer (leader with a stopwatch and whistle) to signal start and stop for all stations simultaneously. Divide campers into small teams (e.g., 4-6 campers per team). Assign each team a starting station. On the first whistle, all teams begin their challenge at their assigned station. They have exactly 60 seconds to complete as much of the challenge as possible. A designated station leader will oversee each challenge, explain rules, ensure fair play, and record points. After 60 seconds, a second whistle signals the end of the round. Teams stop immediately, and station leaders tally points. Teams then quickly and safely rotate to the next designated station. This continues until all teams have visited all stations. Points are awarded per station based on the specific challenge's scoring method. Station leaders record points for their team. A central scorekeeper compiles total points at the end. The team with the highest total points wins.`
+                    },
                     {
                         title: "Station 1: Balloon Defying Gravity",
                         content: `
@@ -732,7 +780,7 @@
                                 <li><strong>Setup:</strong> Each player needs a popsicle stick and six dice. Have a flat, stable surface for players to stand or sit.</li>
                                 <li><strong>Goal:</strong> Balance all six dice on the end of a popsicle stick held in their mouth.</li>
                                 <li><strong>How to Play:</strong> On 'Go!', each player places one end of a popsicle stick in their mouth. They then attempt to stack all six dice, one by one, on the other end of the popsicle stick using only their hands. The dice must remain balanced for a count of 3 seconds.</li>
-                                <li><strong>Scoring:</strong> The first player to successfully balance all six dice for 3 seconds wins that round for their team. If no one balances all six, the player with the most dice balanced at the end of 60 seconds wins. You can award points based on the number of dice balanced (e.g., 1 point per die).</li>
+                                <li><strong>Scoring:</strong> The first player to successfully balance all six dice for 3 seconds wins that station's points. If no one balances all six, the player with the most dice balanced at the end of 60 seconds wins. You can award points based on the number of dice balanced (e.g., 1 point per die).</li>
                             </ul>
                         `
                     }
@@ -764,6 +812,7 @@
                     "<strong>Course Progression:</strong> The relay continues with teammates completing segments in sequence. If a player fails a segment (e.g., steps off the balance beam, misses the target toss), they must restart that segment until successful.",
                     "<strong>Winning:</strong> The first team to have all its members successfully complete the entire obstacle course wins. Emphasize teamwork and encouragement throughout."
                 ],
+                stationInstructions: [], // Empty for this game as it uses general instructions
                 materials: ["Pool Noodles (36)", "Inflatable Balls (3)", "Cones (various)", "Hula Hoops (25)", "Bean Bags (10)", "Wooden Blocks (32)", "Buckets (various)", "Tennis Balls (50+)", "Frisbees (26)", "Masking Tape or Rope", "White Tarp (1)"],
                 safety: "Clear the play area of any tripping hazards. Emphasize safe running, crawling, and proper equipment handling. Close supervision is essential, especially during balance tasks or segments that involve climbing/crawling. Ensure obstacles are stable and won't tip over.",
                 supercharged: "Just like navigating an obstacle course requires teamwork and perseverance, our faith journey often presents challenges that we can overcome with God's help and the support of our community. Each obstacle represents a hurdle, and with every step, we learn to trust God more and rely on each other. What 'obstacles' in your life can you ask God and your friends to help you navigate?",
@@ -784,6 +833,7 @@
                     "<strong>Capturing the Flag:</strong> To win, a player must sneak into the opponent's territory, reach their 'flag' (bucket of water), soak a sponge in it, and then carry that soaked sponge back to their own territory without being tagged. If they are tagged while carrying the soaked sponge, they go to jail, and the sponge is returned to the opponent's flag bucket. The sponge must be carried, not thrown, once soaked.",
                     "<strong>Winning:</strong> The first team to successfully capture the opponent's 'flag' (soaked sponge) and bring it back to their own side wins the round. Play multiple rounds for best of three or five."
                 ],
+                stationInstructions: [],
                 materials: ["Water Guns (14)", "Sponges (21½ bags)", "Large Buckets (various)", "Cones", "Kiddie Pools (for water refills)", "Whistles (2)"],
                 safety: "Strict rule: Aim water only at the body, never at faces or heads. Emphasize no running with water guns pointed at others. Supervise water refills to prevent slipping hazards. Ensure the playing field is free of obstacles that could cause trips. Remind players to be aware of their surroundings and not to run into others.",
                 supercharged: "In Capture the Flag, we work together to achieve a common goal, just like in our faith, we are part of God's team, working to spread His love and truth. Sometimes we need to be strategic, sometimes we need to rescue others, and sometimes we need to protect what's important. How can we be good teammates for God's kingdom?",
@@ -804,6 +854,7 @@
                     "<strong>Scoring:</strong> A point is scored when the ball successfully enters the opponent's goal. After a goal, the ball is returned to the center for a restart.",
                     "<strong>Winning:</strong> Play for a set time (e.g., 15-20 minutes) or until one team reaches a target score (e.g., 5-7 goals). The team with the most points at the end wins."
                 ],
+                stationInstructions: [],
                 materials: ["Pool Noodles (36)", "Inflatable Ball", "Cones (for goals and boundaries)", "Whistles (2)"],
                 safety: "Emphasize no excessive pulling or pushing on the ropes/noodles to prevent injury. Ensure the playing surface is even and free of obstacles. Supervise closely to prevent collisions, especially when players are moving quickly sideways. Remind players to be mindful of their teammates' positions and to avoid kicking too hard or at other players.",
                 supercharged: "In Human Foosball, we're all connected and have to move together to achieve our goal. This reminds us that in God's family, we are all connected, and we need to work together, communicate, and support each other to reach our spiritual goals. How can we better connect and communicate with others in our faith community?",
@@ -824,6 +875,7 @@
                     "<strong>Moving Markers (if grid is full):</strong> If the grid becomes full (all 9 squares have markers) and no one has three in a row, players can then choose to move one of their *existing* markers from one square to another *empty* square to try and get three in a row. They still must run to the grid, move the marker, and run back to tag. They cannot move an opponent's marker.",
                     "<strong>Winning:</strong> The game continues until one team successfully gets three of their markers in a row (horizontally, vertically, or diagonally). The first team to achieve this wins the round. Play multiple rounds for best of three or five."
                 ],
+                stationInstructions: [],
                 materials: ["Masking Tape or Rope", "Frisbees (26)", "Bean Bags (10)", "Plastic Balls (2 bags)", "Cones (various)", "Whistles (2)", "Stopwatch (1)"],
                 safety: "Ensure the play area is clear of tripping hazards. Emphasize safe running and avoiding collisions, especially when multiple players are moving near the grid. Remind children to place markers gently and not to throw them at others. Ensure players do not interfere with opponents' turns.",
                 supercharged: "In Human Tic-Tac-Toe, we need to think ahead and work together to achieve our goal. This is like our spiritual walk, where we need to be strategic in how we live our lives for God, making wise choices and working with others in the Body of Christ to advance His kingdom. How can we be more intentional in our daily choices to honor God?",
@@ -843,6 +895,7 @@
                     "<strong>Scoring:</strong> Points are awarded for each pin/cup knocked down (e.g., 1 point per pin). A perfect strike (all 10 pins on the first roll) can earn bonus points (e.g., 15 points). A spare (all 10 pins on two rolls) can earn a slightly smaller bonus (e.g., 12 points). Keep score on a whiteboard or large paper. After a player's turn, the pins are reset.",
                     "<strong>Winning:</strong> Play for a set number of rounds (e.g., 5-10 rounds per team) or until a target score is reached. The team with the most points at the end wins."
                 ],
+                stationInstructions: [],
                 materials: ["Bowling Ball (1)", "Bowling Pins (10)", "Plastic Cups (100)", "Inflatable Balls (3)", "Masking Tape", "Cones", "Scoreboard (1)", "Pencils", "Cardstock Paper", "Whistles (2)", "Stopwatch (1)"],
                 safety: "Ensure the rolling area is clear and dry to prevent slipping. Remind children to roll, not throw, the ball, and to keep it low to the ground. Supervise closely to ensure children are not in the ball's path, especially when pins are being reset. Designate clear 'return' paths for the ball and ensure players wait until the ball is stationary before approaching the pins.",
                 supercharged: "Bowling requires focus and aiming for a target. In our spiritual lives, we are called to 'aim' for God's purposes, staying focused on Him and His will. Even if we miss sometimes, we get another chance, just like in bowling. What are some spiritual targets you can aim for this week?",
@@ -862,6 +915,7 @@
                     "<strong>Scoring:</strong> Points are tallied for successful hits on targets. Projectiles must hit or land inside the target to count. A designated scorekeeper records points for each team.",
                     "<strong>Winning:</strong> The game continues for a set time (e.g., 20-30 minutes) or until all players have had a predetermined number of turns. The team with the highest total score at the end wins."
                 ],
+                stationInstructions: [],
                 materials: ["Sling Shots (4)", "Tennis Balls (50+)", "Plastic Balls (2 bags)", "Bean Bags (10)", "Cotton Balls (suggested purchase)", "Large Buckets (various)", "Laundry Baskets (11)", "Tiny Garbage Cans (9)", "Cones", "Hula Hoops (25)", "Scoreboard (1)", "Pencils", "Cardstock Paper", "Whistles (2)", "Stopwatch (1)"],
                 safety: "<strong>Strict Rules:</strong> Emphasize aiming ONLY at designated targets, NEVER at people or animals. Ensure a clear safety zone around targets and behind the shooter where no one should stand. Projectiles MUST be soft and harmless. Supervise closely to ensure proper and safe use of slingshots and projectiles. Collect projectiles promptly to prevent tripping hazards. Ensure no one walks in front of the shooter.",
                 supercharged: "Just like we aim for targets with the slingshot, in our faith, we aim to live lives that honor God and hit the mark of His calling. Sometimes it takes practice and patience. What are some ways we can practice aiming for God's will in our daily lives?",
@@ -882,6 +936,7 @@
                     "<strong>Optional: Deflectors:</strong> For an added challenge, leaders can hold pool noodles to act as deflectors, making it harder to hit targets. Ensure deflectors are held safely and do not interfere with the throwing motion.",
                     "<strong>Winning:</strong> The game continues for a set time (e.g., 20-30 minutes) or until all players have had a predetermined number of turns. The team with the most points at the end wins."
                 ],
+                stationInstructions: [],
                 materials: ["Sponges (21½ bags)", "Bean Bags (10)", "Large Buckets (various)", "Laundry Baskets (11)", "Tiny Garbage Cans (9)", "Cones", "Hula Hoops (25)", "Scoreboard (1)", "Pencils", "Cardstock Paper", "Whistles (2)", "Stopwatch (1)", "Pool Noodles (36)"],
                 safety: "Ensure the throwing area is clear of obstacles. Remind children to throw gently, only at designated targets, and never at people. Supervise closely to ensure safe throwing and retrieval of projectiles. Ensure no one walks in front of the thrower.",
                 supercharged: "Tossing a sponge at a target requires focus and a steady hand. In life, we are called to be 'on target' with God's will, using our gifts to serve others with precision and care. When we aim to serve God, we can make a big impact. What are some ways you can 'hit the target' by serving others this week?",
@@ -901,6 +956,7 @@
                     "<strong>Scoring:</strong> A point is scored when: <br> - The ball hits the ground on the opponent's side of the net (within bounds). <br> - The ball goes out of bounds. <br> - A team drops the ball (fails to catch it on their sheet). <br> - The ball hits the net and doesn't go over. <br> The team that scores the point gets to serve the ball for the next round.",
                     "<strong>Winning:</strong> Play to a predetermined score (e.g., first to 15 points, winning by 2) or for a set time limit (e.g., 15-20 minutes). The team with the most points at the end wins."
                 ],
+                stationInstructions: [],
                 materials: ["Bed sheets (2 large - suggested camp supply)", "Inflatable Balls (3)", "Rope (7 available)", "Masking Tape (3 rolls)", "Cones (various)", "Whistles (2)"],
                 safety: "Ensure players are spaced out around the sheet to avoid collisions and accidental hitting. Remind children to hold the sheet firmly and not to let go suddenly. Ensure the playing area is clear of obstacles. Supervise closely to prevent excessive pulling or tugging on the sheet that could cause falls. Emphasize that players should not swing the sheet at other players.",
                 supercharged: "Bed Sheet Volleyball shows us how important it is to work together, communicate, and support each other. Just like everyone holding the sheet has a role, every person in God's family has a unique role to play, and we need each other to succeed. How can you better support your friends and family in their faith journeys?",
@@ -921,6 +977,7 @@
                     "<strong>Scoring:</strong> After the time limit, count the treasures collected by the player. The treasures are then returned to the pool for the next team. The team with the most treasures collected at the end wins. You can assign different point values to different types of treasures if desired.",
                     "<strong>Rotation:</strong> Teams rotate through the pools until all players have had a turn, or for a set number of rounds."
                 ],
+                stationInstructions: [],
                 materials: ["Small Kiddie Pools (4)", "Fake Gold Coins (approx 130)", "Plastic Critters (2 large ziplocks)", "Small Plastic Dinosaurs (30)", "Diving Octopi (1 set of 6)", "Blindfolds (or Bandanas - approx. 70)", "Whistles (2)", "Stopwatch (1)"],
                 safety: "Ensure pools are on a flat, stable surface to prevent tipping. Supervise children closely around water to prevent splashing into eyes or accidental falls. Remind children not to push or splash excessively. Ensure all submerged 'treasures' are clean, smooth, and safe to handle. Emphasize calm and clear communication for blindfolded players to avoid disorientation.",
                 supercharged: "Searching for treasure reminds us of seeking God's truth and wisdom. Sometimes it feels like we're blindfolded, but God provides guides (like the Holy Spirit and wise mentors) to help us find the precious truths hidden in His Word. What 'treasures' (truths) have you found in the Bible lately?",
@@ -941,6 +998,7 @@
                     "<strong>Presentation (5-7 minutes per team):</strong> After the building time, each team presents their invention to the larger group. They should explain: <br> 1. The problem they addressed. <br> 2. How their invention works and what it does. <br> 3. What materials they used and why. <br> 4. Perform their jingle/slogan. <br> Encourage questions from other teams after each presentation.",
                     "<strong>Judging/Awards:</strong> Leaders can award points or fun prizes for categories such as: Most Creative Invention, Best Teamwork, Funniest Jingle, Most Practical Solution, Best Presentation, etc."
                 ],
+                stationInstructions: [],
                 materials: ["Cardboard Boxes (2)", "Popsicle Sticks (various)", "Rubber Bands (various)", "Plastic Critters (2 large ziplocks)", "Foam Beads (1 bag ziplocks)", "Yarn (various)", "CDs (17)", "Skewers (various)", "Toothpicks (500)", "Plastic Cups (100)", "Wooden Blocks (32)", "Construction Paper (various)", "Washable Markers (various)", "Glue Sticks (various)", "White Glue Bottles (11)", "Scissors (various)", "Stopwatch (1)", "Masking Tape", "Scotch Tape", "Aluminum Foil (suggested purchase)"],
                 safety: "Ensure all mystery box items are safe for children to handle. Supervise the use of scissors and glue carefully. Remind children not to put small items in their mouths. Ensure the building area is tidy to prevent tripping hazards. Emphasize that inventions should be demonstrated safely and not used to hit or harm others.",
                 supercharged: "This challenge reminds us that God has given us creativity and problem-solving skills. He wants us to use our minds and talents to find solutions, just like we invented things today. How can you use your creativity to solve problems or bless others in your life?",
@@ -961,6 +1019,7 @@
                     "<strong>Scoring:</strong> Teams earn points for each 'power-up' successfully collected and brought back to their collection zone. The game can be timed (e.g., 10-15 minutes), with the team collecting the most power-ups in that set time winning, or the first team to collect all designated power-ups winning. Rotate navigators within each team so everyone gets a chance to experience both roles.",
                     "<strong>Guide Communication:</strong> Emphasize clear, concise, and calm verbal guidance. Guides should use directional words (e.g., 'take two steps forward', 'turn slightly left', 'mine on your right', 'mine on your right').'"
                 ],
+                stationInstructions: [],
                 materials: ["Cones (various)", "Bean Bags (10)", "Whistles (2)", "Blindfolds (or Bandanas - approx. 70)", "Laminated Bible Chapter Names (2 sets)", "Rubber Duckies (44)", "Fake Gold Coins (approx 130)", "Plastic Critters (2 large ziplocks)", "Wooden Blocks (32)", "Plastic Balls (2 bags)", "Laminated Foursquare Symbols/Values (suggested purchase)"],
                 safety: "Ensure the play area is completely clear of actual hazards (e.g., sharp objects, uneven ground). Use only soft 'mines' that won't cause injury if stepped on. Supervise closely to prevent collisions between blindfolded players or with static objects. Emphasize gentle, clear, and calm verbal guidance from the guides. No running for blindfolded players. Guides must ensure the path is clear before giving 'go ahead' commands.",
                 supercharged: "Navigating the minefield blindfolded teaches us to trust and listen to our guides. In life, God is our ultimate guide, and we can trust His Word and the wisdom of those He places in our lives. The 'power-ups' represent the spiritual blessings and truths we find when we follow His guidance. What 'treasures' (truths) have you found in the Bible lately?",
@@ -979,6 +1038,7 @@
                     "<strong>Game Play:</strong> Teams collaboratively work to decode their message. They must use the provided key or their own logic to figure out the code. Encourage discussion and collaboration within the team. Once a message is decoded, they show it to a leader to verify. If correct, the leader provides the next encrypted message or clue. If incorrect, the leader can give a small hint (e.g., 'check your second word') and send them back to try again.",
                     "<strong>Winning:</strong> The game continues until all messages are decoded, leading to a final message (e.g., 'You have unlocked the secret of teamwork!') or a small 'treasure' (e.g., a bag of fake gold coins, a small treat). The first team to successfully decode all messages wins."
                 ],
+                stationInstructions: [],
                 materials: ["ABC Beads (3 sets)", "Colored Beads (3 sets)", "Pencils (various)", "Pens (3)", "Cardstock Paper (50)", "Construction Paper (various)", "Washable Markers (various)", "Sticky Notes (various)", "Laminated Bible Chapter Names (2 sets)", "Small Metal Cups (6)", "Plastic Critters (2 large ziplocks)", "Clipboards (4)", "Stopwatch (1)", "Envelopes"],
                 safety: "Ensure all materials are safe for children to handle. Keep the area organized to prevent clutter. Remind children not to put small items in their mouths. Emphasize fair play and not peeking at other teams' solutions.",
                 supercharged: "Decoding messages requires careful thought and teamwork, just like understanding God's Word requires us to study and seek His truth together. The 'secrets' we uncover in the Bible reveal more about God's plan and love for us. What 'messages' is God speaking to you through His Word right now?",
@@ -999,6 +1059,7 @@
                     "<strong>Scoring:</strong> Points are awarded based on performance in the chosen challenges (e.g., furthest distance in feet/meters, most accurate shots, most projectiles in the bucket). Keep a clear score for each team on a scoreboard.",
                     "<strong>Winning:</strong> The team with the highest total score across all challenges wins. Celebrate all efforts, regardless of score."
                 ],
+                stationInstructions: [],
                 materials: ["Popsicle Sticks (various)", "Rubber Bands (various)", "Plastic Spoons (36)", "Plastic Cups (100)", "Small Plastic Balls (2 bags)", "Cotton Balls (suggested purchase)", "Paper Clips (suggested purchase)", "Clay (suggested purchase)", "Glue Sticks (various)", "White Glue Bottles (11)", "Scissors (various)", "Stopwatch (1)", "Measuring Tape (suggested purchase)", "Cones (for marking lines/targets)", "Buckets (various)", "Hula Hoops (25)"],
                 safety: "Emphasize aiming only at designated targets, never at people. Projectiles should always be soft and harmless. Supervise the building process carefully, especially when using scissors or glue. Ensure the launching area is clear and that no one is standing in the path of projectiles. Remind children not to 'overload' or misuse the catapults in a dangerous way.",
                 supercharged: "Building and launching catapults teaches us about design, precision, and cause-and-effect. In our faith, we are called to be intentional in our actions, knowing that our efforts, when guided by God, can have a far-reaching impact. What 'impact' do you want to make for God's kingdom, and what steps can you take to 'launch' into that purpose?",
@@ -1019,6 +1080,7 @@
                     "<strong>Presentation (5-10 minutes):</strong> Once the mural is complete (or time is up), gather the campers to view the entire masterpiece. Each team can briefly present their section, explaining what they depicted and why, and how it's connects to the overall theme. Facilitate a discussion about the entire mural and what it represents.",
                     "<strong>Display:</strong> Find a prominent place to display the completed mural as a reminder of their collaborative efforts and the camp's themes. Take a photo for camp memories."
                 ],
+                stationInstructions: [],
                 materials: ["White Tarp (1)", "Construction Paper (various)", "Butcher Paper (suggested purchase)", "Washable Markers (various)", "Crayons (various)", "Sharpies (various)", "Black Paint (3 bottles)", "Pink Paint (2 bottles)", "2 Orange Paint (2 bottles)", "Blue Paint (1 bottle)", "Sponges (21½ bags)", "Glue Sticks (various)", "White Glue Bottles (11)", "Scissors (various)", "Plastic Critters (2 large ziplocks)", "Foam Beads (1 bag ziplocks)", "Yarn (various)", "CDs (17)", "Masking Tape (3 rolls)", "Laminated Bible Chapter Names (2 sets)", "Glitter (suggested purchase)", "Magazine cutouts (optional)"],
                 safety: "Ensure adequate ventilation if using paints. Protect surfaces with drop cloths or newspaper. Supervise scissor and glue use carefully. Remind children not to put art supplies in their mouths. Have water and paper towels readily available for clean-up. Ensure walking paths around the mural are clear to prevent tripping over supplies.",
                 supercharged: "Creating a mural together shows us how each of us is a unique part of God's beautiful masterpiece, the Church. When we combine our individual talents and efforts, we can create something much bigger and more beautiful than we could alone. How can you use your unique gifts to contribute to God's 'masterpiece'?",
@@ -1039,6 +1101,7 @@
                     "<strong>Winning:</strong> The first team to successfully build the structure exactly as shown in the reference image wins the round. You can play multiple rounds, rotating who is blindfolded and introducing new reference images for each round.",
                     "<strong>Variations:</strong> Increase difficulty by using more complex structures, limiting communication to only 'yes' or 'no' answers, or adding a strict time limit (e.g., 5-10 minutes per round)."
                 ],
+                stationInstructions: [],
                 materials: ["Wooden Blocks (32)", "Plastic Cups (100)", "LEGOs (suggested purchase)", "Bandanas (approx. 70)", "Blindfolds (suggested purchase)", "Cardstock Paper (50)", "Popsicle Sticks (various)", "Stopwatch (1)", "Whistles (2)"],
                 safety: "Ensure the building area is clear and safe to prevent tripping or bumping into objects. Remind children to be gentle with the materials and each other. Supervise closely to ensure blindfolded players are safe and not frustrated. Provide clear boundaries for the guides to prevent them from interfering physically. All building materials must be safe and non-toxic.",
                 supercharged: "This challenge teaches us about the importance of clear communication and trust. Just as the blindfolded builder trusts their teammates, we can trust God's guidance for our lives, even when we can't see the path ahead. And like the guides, we are called to communicate God's truth clearly to others. How can you practice trusting God more and communicating His truth to those around you?",
@@ -1059,6 +1122,7 @@
                     "<strong>Alternating Turns:</strong> Teams alternate turns.",
                     "<strong>Winning:</strong> The game continues for a set time (e.g., 20-30 minutes) or until all prompts have been used. The team with the most points at the end wins. Encourage good sportsmanship and cheering for all participants."
                 ],
+                stationInstructions: [],
                 materials: ["Paper (various)", "Pencils (various)", "Pens (3)", "Washable Markers (various)", "Buckets (various)", "Red Basket (1)", "Scoreboard (1)", "Whistles (2)", "Stopwatch (1)"],
                 safety: "Ensure ample space for acting to prevent collisions or falls. Remind children to be mindful of their surroundings and not to get too wild with their movements. Emphasize respectful guessing and sportsmanship. No physical contact between actors and guessers.",
                 supercharged: "Charades reminds us that we can communicate powerful messages in many ways, not just with words. God speaks to us through His creation, through His Spirit, and through the actions of others. How can you 'act out' God's love to someone this week without saying a word?",
@@ -1077,6 +1141,7 @@
                     "<strong>Scoring:</strong> Keep score on a whiteboard or large paper. You can assign different point values for different categories or difficulty levels (e.g., 1 point for easy, 2 for medium, 3 for hard).",
                     "<strong>Winning:</strong> The game continues for a set number of rounds (e.g., 10-15 questions) or a predetermined time limit (e.g., 30 minutes). The team with the most points at the end wins. Encourage good sportsmanship and cheering for all participants, regardless of score."
                 ],
+                stationInstructions: [],
                 materials: ["Paper (various)", "Pencils (various)", "Pens (3)", "Washable Markers (various)", "Scoreboard (1)", "Small Metal Cups (6)", "Flash Cards (60)", "Whistles (2)", "Stopwatch (1)", "Sound device (e.g., phone/speaker for 'guess the sound' if applicable)", "Pre-recorded sounds (if using 'Guess the Sound')"],
                 safety: "Ensure the area is clear and organized. Remind children to be respectful when others are answering and to wait for their turn to buzz in. No pushing or shoving to get to the buzzer. Ensure the volume for sound clips is appropriate and not too loud.",
                 supercharged: "Trivia challenges our knowledge, just as studying the Bible helps us grow in our understanding of God and His truth. The more we learn about Him, the better equipped we are to live for Him. What new things did you learn about God or the Foursquare Church today?",
@@ -1097,6 +1162,7 @@
                     "<strong>Scoring:</strong> Points are awarded based on performance in the chosen challenges (e.g., furthest distance in feet/meters, most accurate shots, most projectiles in the bucket). Keep a clear score for each team on a scoreboard.",
                     "<strong>Winning:</strong> The team with the highest total score across all challenges wins. Celebrate all efforts, regardless of score."
                 ],
+                stationInstructions: [],
                 materials: ["Popsicle Sticks (various)", "Rubber Bands (various)", "Plastic Spoons (36)", "Plastic Cups (100)", "Small Plastic Balls (2 bags)", "Cotton Balls (suggested purchase)", "Paper Clips (suggested purchase)", "Clay (suggested purchase)", "Glue Sticks (various)", "White Glue Bottles (11)", "Scissors (various)", "Stopwatch (1)", "Measuring Tape (suggested purchase)", "Cones (for marking lines/targets)", "Buckets (various)", "Hula Hoops (25)"],
                 safety: "Emphasize aiming only at designated targets, never at people. Projectiles should always be soft and harmless. Supervise the building process carefully, especially when using scissors or glue. Ensure the launching area is clear and that no one is standing in the path of projectiles. Remind children not to 'overload' or misuse the catapults in a dangerous way.",
                 supercharged: "Building and launching catapults teaches us about design, precision, and cause-and-effect. In our faith, we are called to be intentional in our actions, knowing that our efforts, when guided by God, can have a far-reaching impact. What 'impact' do you want to make for God's kingdom, and what steps can you take to 'launch' into that purpose?",
@@ -1115,6 +1181,7 @@
                     "<strong>Checkers Rules:</strong> <br> - Pieces move diagonally forward one square at a time. <br> - To capture an opponent's piece, a player must jump over it diagonally to an empty square immediately beyond. The captured piece is removed from the board and goes to the capturing team's 'holding area'. <br> - If a player reaches the opponent's back row, their piece is 'crowned' (e.g., another piece is placed on top of it, or they wear a special hat/sash), and it can then move both forward and backward diagonally. <br> - Players *must* take a jump if one is available. If multiple jumps are available, they can choose which one to take. <br> - No jumping over your own pieces. <br> - Pieces cannot move backward unless crowned.",
                     "<strong>Winning:</strong> The game ends when one team has captured all of the opponent's pieces, or when the opponent has no legal moves left. The team that successfully eliminates or blocks the other team wins the round. Play multiple rounds for a tournament format, ensuring all teams get a chance to play."
                 ],
+                stationInstructions: [],
                 materials: ["Giant Checkers Game (at Parkside - assume available)", "Cones (various)", "Whistles (2)", "Stopwatch (1)", "Small hats/sashes (for 'crowned' pieces - suggested purchase)"],
                 safety: "Ensure players move carefully on the board, especially when jumping over other players (if campers are pieces). Remind children to not run, push, or shove. Supervise closely to ensure fair play and prevent any accidental falls. Ensure the board surface is non-slip. Clearly communicate rules regarding physical contact and safe movement.",
                 supercharged: "Playing giant checkers teaches us about strategy and foresight. In our faith, we are called to be wise and thoughtful, making choices that align with God's plan. Sometimes we need to sacrifice something small for a bigger victory, just like moving a checker piece. How can you be more strategic in your walk with God?",
@@ -1365,14 +1432,29 @@
             const modalTitle = document.getElementById('modal-title');
             const modalContent = document.getElementById('modal-content');
             const closeModalBtn = document.getElementById('close-modal');
+            const editActivityBtn = document.getElementById('edit-activity-btn'); // New: Edit button
             const typeFilters = document.getElementById('type-filters');
             const locationFilters = document.getElementById('location-filters');
             const materialFilterSelect = document.getElementById('material-filter-select');
-            const addActivityModal = document.getElementById('add-activity-modal');
-            const closeAddActivityModalBtn = document.getElementById('close-add-activity-modal');
-            const addActivityForm = document.getElementById('add-activity-form');
-            const instructionsContainer = document.getElementById('instructions-container');
-            const addInstructionBtn = document.getElementById('add-instruction-btn');
+            
+            // Renamed/repurposed modal and form elements for Add/Edit functionality
+            const activityFormModal = document.getElementById('activity-form-modal');
+            const activityFormModalTitle = document.getElementById('activity-form-modal-title');
+            const closeActivityFormModalBtn = document.getElementById('close-activity-form-modal');
+            const activityForm = document.getElementById('activity-form');
+            const activityIdInput = document.getElementById('activity-id'); // Hidden input for ID
+            const activityFormSubmitBtn = document.getElementById('activity-form-submit-btn'); // Submit button
+            
+            const generalInstructionsSection = document.getElementById('general-instructions-section');
+            const generalInstructionsContainer = document.getElementById('general-instructions-container');
+            const addGeneralInstructionBtn = document.getElementById('add-general-instruction-btn');
+            
+            const stationInstructionsSection = document.getElementById('station-instructions-section');
+            const stationInstructionsContainer = document.getElementById('station-instructions-container');
+            const addStationInstructionBtn = document.getElementById('add-station-instruction-btn');
+            
+            const instructionTypeRadios = document.querySelectorAll('input[name="instruction-type"]');
+
             const materialsContainer = document.getElementById('materials-container');
             const addMaterialBtn = document.getElementById('add-material-btn');
             const loadingIndicator = document.getElementById('loading-indicator');
@@ -1440,46 +1522,79 @@
                     }
                     // Attach the form submission listener here, after db is initialized and auth state is known
                     // Use { once: true } to ensure the listener is only added once
-                    addActivityForm.addEventListener('submit', async (e) => {
+                    activityForm.addEventListener('submit', async (e) => {
                         e.preventDefault(); // Prevent default form submission
 
                         const formData = new FormData(e.target); // Get form data
-                        const newActivity = {
+                        const activityId = formData.get('id'); // Get the ID for edit operations
+
+                        // Determine instruction type and collect data accordingly
+                        const instructionType = formData.get('instruction-type');
+                        let generalInstructions = [];
+                        let stationInstructions = [];
+
+                        if (instructionType === 'general') {
+                            generalInstructions = Array.from(document.querySelectorAll('#general-instructions-container textarea[name="generalInstructions[]"]')).map(el => el.value).filter(val => val.trim() !== '');
+                        } else if (instructionType === 'station') {
+                            const stationTitles = Array.from(document.querySelectorAll('#station-instructions-container input[name="stationTitles[]"]')).map(el => el.value);
+                            const stationContents = Array.from(document.querySelectorAll('#station-instructions-container textarea[name="stationContents[]"]')).map(el => el.value);
+                            
+                            // Combine titles and contents into an array of objects
+                            stationInstructions = stationTitles.map((title, index) => ({
+                                title: title,
+                                content: stationContents[index] || ''
+                            })).filter(station => station.title.trim() !== '' || station.content.trim() !== ''); // Filter out empty stations
+                        }
+
+                        const activityData = {
                             name: formData.get('name'),
                             type: formData.get('type'),
                             location: formData.get('location'),
                             objectives: formData.get('objectives'),
                             safety: formData.get('safety'),
                             supercharged: formData.get('supercharged'),
-                            // Collect all instruction values from dynamic textareas
-                            instructions: Array.from(document.querySelectorAll('#instructions-container textarea[name="instructions[]"]')).map(el => el.value).filter(val => val.trim() !== ''),
-                            // Collect all material values from dynamic inputs
                             materials: Array.from(document.querySelectorAll('#materials-container input[name="materials[]"]')).map(el => el.value).filter(val => val.trim() !== ''),
                             description: formData.get('objectives').substring(0, 100) + '...', // Use objectives as a short description
-                            deleted: false // New activities are not deleted by default
+                            deleted: false, // New/edited activities are not deleted
+                            generalInstructions: generalInstructions, // Save general instructions
+                            stationInstructions: stationInstructions // Save station instructions
                         };
 
-                        // Basic client-side validation
-                        if (!newActivity.name || !newActivity.type || !newActivity.location || !newActivity.objectives || !newActivity.safety || !newActivity.supercharged || newActivity.instructions.length === 0) {
+                        // Basic client-side validation for required fields
+                        if (!activityData.name || !activityData.type || !activityData.location || !activityData.objectives || !activityData.safety || !activityData.supercharged) {
                             console.error("Validation failed: Please fill in all required fields (marked with *).");
+                            return;
+                        }
+                        // Validate instructions based on type
+                        if (instructionType === 'general' && activityData.generalInstructions.length === 0) {
+                            console.error("Validation failed: Please add at least one general instruction step.");
+                            return;
+                        }
+                        if (instructionType === 'station' && activityData.stationInstructions.length === 0) {
+                            console.error("Validation failed: Please add at least one station instruction.");
                             return;
                         }
 
                         try {
-                            // Check if Firestore is ready before attempting to save
                             if (db) {
-                                // Add the new activity document to the public collection
-                                const docRef = await addDoc(collection(db, `artifacts/${appId}/public/data/activities`), newActivity);
-                                addActivityModal.classList.remove('active'); // Close the modal on success
-                                addActivityForm.reset(); // Reset the form
-                                // The onSnapshot listener will automatically update the UI with the new activity
+                                if (activityId) {
+                                    // Edit existing activity
+                                    const activityRef = doc(db, `artifacts/${appId}/public/data/activities`, activityId);
+                                    await updateDoc(activityRef, activityData);
+                                    console.log("Activity updated successfully!");
+                                } else {
+                                    // Add new activity
+                                    const docRef = await addDoc(collection(db, `artifacts/${appId}/public/data/activities`), activityData);
+                                    console.log("Activity added successfully with ID: ", docRef.id);
+                                }
+                                activityFormModal.classList.remove('active'); // Close the modal on success
+                                activityForm.reset(); // Reset the form
+                                // The onSnapshot listener will automatically update the UI
                             } else {
-                                console.error("Firestore not initialized. Activity not saved.");
-                                // Handle case where Firestore is not available (e.g., show error to user)
+                                console.error("Firestore not initialized. Activity not saved/updated.");
                             }
                         } catch (error) {
-                            console.error("Error adding document to Firestore: ", error);
-                            // Handle Firestore write error (e.g., show error message to user)
+                            console.error("Error saving/updating document to Firestore: ", error);
                         }
                     }, { once: true }); // Attach this listener only once
 
@@ -1688,13 +1803,7 @@
 
                 // Add click listener to the "Add New Activity" card
                 addActivityCard.addEventListener('click', () => {
-                    addActivityModal.classList.add('active'); // Show the add activity modal
-                    addActivityForm.reset(); // Reset the form when opening
-                    // Ensure there's at least one instruction and material field when opening the form
-                    instructionsContainer.innerHTML = ''; // Clear existing
-                    materialsContainer.innerHTML = ''; // Clear existing
-                    addInstructionField(); // Add one default instruction field
-                    addMaterialField(); // Add one default material field
+                    openActivityFormModal(); // Open modal for adding
                 });
             }
 
@@ -1758,40 +1867,43 @@
                 
                 let instructionsContent = '';
 
-                // Prioritize generalInstructions, then fallback to instructions array
-                const instructionsToRender = game.generalInstructions && Array.isArray(game.generalInstructions) && game.generalInstructions.length > 0
-                    ? game.generalInstructions
-                    : (game.instructions && Array.isArray(game.instructions) && game.instructions.length > 0 ? game.instructions : []);
-
-                if (instructionsToRender.length > 0) {
+                // Render general instructions if available
+                if (game.generalInstructions && Array.isArray(game.generalInstructions) && game.generalInstructions.length > 0) {
                     instructionsContent += `
                         <div>
-                            <h4 class="text-lg font-bold text-teal-700 mb-2">⚙️ Instructions</h4>
+                            <h4 class="text-lg font-bold text-teal-700 mb-2">⚙️ General Instructions</h4>
                             <ol class="list-decimal list-inside space-y-2 text-stone-700">
-                                ${instructionsToRender.map(step => `<li>${step}</li>`).join('')}
+                                ${game.generalInstructions.map(step => `<li>${step}</li>`).join('')}
                             </ol>
                         </div>
                     `;
-                } else {
-                    instructionsContent += `<div><h4 class="text-lg font-bold text-teal-700 mb-2">⚙️ Instructions</h4><p class="text-stone-700">No instructions available.</p></div>`;
                 }
 
                 // Render station-specific instructions if available
                 if (game.stationInstructions && Array.isArray(game.stationInstructions) && game.stationInstructions.length > 0) {
+                    // Add a header for general instructions if both types are present
+                    if (instructionsContent !== '') {
+                        instructionsContent += `<div class="mt-6"><h4 class="text-lg font-bold text-teal-700 mb-2">Stations Breakdown</h4></div>`;
+                    } else {
+                        instructionsContent += `<div><h4 class="text-lg font-bold text-teal-700 mb-2">⚙️ Station Instructions</h4></div>`;
+                    }
                     instructionsContent += `
-                        <div class="mt-6">
-                            <h4 class="text-lg font-bold text-teal-700 mb-2">Stations Breakdown</h4>
-                            <div class="space-y-4">
-                                ${game.stationInstructions.map(station => `
-                                    <div class="bg-stone-50 p-4 rounded-lg border border-stone-200">
-                                        <h5 class="text-md font-semibold text-teal-600 mb-2">${station.title || 'Untitled Station'}</h5>
-                                        ${station.content || '<p class="text-stone-700">No content for this station.</p>'}
-                                    </div>
-                                `).join('')}
-                            </div>
+                        <div class="space-y-4">
+                            ${game.stationInstructions.map(station => `
+                                <div class="bg-stone-50 p-4 rounded-lg border border-stone-200">
+                                    <h5 class="text-md font-semibold text-teal-600 mb-2">${station.title || 'Untitled Station'}</h5>
+                                    ${station.content || '<p class="text-stone-700">No content for this station.</p>'}
+                                </div>
+                            `).join('')}
                         </div>
                     `;
                 }
+
+                // If neither instruction type is present
+                if (instructionsContent === '') {
+                    instructionsContent += `<div><h4 class="text-lg font-bold text-teal-700 mb-2">⚙️ Instructions</h4><p class="text-stone-700">No instructions available.</p></div>`;
+                }
+
 
                 // Populate modal content
                 modalContent.innerHTML = `
@@ -1818,6 +1930,7 @@
                     </div>
                 `;
                 moveToTrashBtn.dataset.gameId = gameId; // Set the game ID on the trash button for later use
+                editActivityBtn.dataset.gameId = gameId; // Set the game ID on the edit button
                 modal.classList.add('active'); // Show the modal
             }
 
@@ -1923,41 +2036,168 @@
                 }
             }
             
-            // --- Add Activity Modal Logic ---
+            // --- Add/Edit Activity Modal Logic ---
 
-            // Close Add Activity Modal via 'X' button
-            closeAddActivityModalBtn.addEventListener('click', () => {
-                addActivityModal.classList.remove('active');
-            });
-            // Close Add Activity Modal via outside click on the overlay
-            addActivityModal.addEventListener('click', (e) => {
-                if (e.target === addActivityModal) {
-                    addActivityModal.classList.remove('active');
+            // Event listener for the "Edit Activity" button in the Game Details Modal
+            editActivityBtn.addEventListener('click', (e) => {
+                const gameId = e.target.dataset.gameId;
+                const gameToEdit = allActivities.find(g => g.id === gameId);
+                if (gameToEdit) {
+                    openActivityFormModal(gameToEdit); // Open modal for editing
+                    modal.classList.remove('active'); // Close the details modal
                 }
             });
 
             /**
-             * Adds a new instruction input field to the Add Activity form.
+             * Opens the activity form modal, either for adding a new activity
+             * or editing an existing one.
+             * @param {Object} [activityToEdit=null] - The activity object to edit. If null, opens for adding.
              */
-            function addInstructionField() {
+            function openActivityFormModal(activityToEdit = null) {
+                activityForm.reset(); // Always reset the form first
+
+                // Set modal title and submit button text
+                if (activityToEdit) {
+                    activityFormModalTitle.textContent = 'Edit Activity';
+                    activityFormSubmitBtn.textContent = 'Save Changes';
+                    activityIdInput.value = activityToEdit.id; // Set hidden ID for editing
+
+                    // Populate form fields with activity data
+                    document.getElementById('activity-name').value = activityToEdit.name || '';
+                    document.querySelector(`input[name="type"][value="${activityToEdit.type}"]`).checked = true;
+                    document.querySelector(`input[name="location"][value="${activityToEdit.location}"]`).checked = true;
+                    document.getElementById('objectives').value = activityToEdit.objectives || '';
+                    document.getElementById('safety-notes').value = activityToEdit.safety || '';
+                    document.getElementById('supercharged-app').value = activityToEdit.supercharged || '';
+
+                    // Populate materials
+                    materialsContainer.innerHTML = ''; // Clear existing
+                    if (activityToEdit.materials && activityToEdit.materials.length > 0) {
+                        activityToEdit.materials.forEach(material => addMaterialField(material));
+                    } else {
+                        addMaterialField(); // Add one empty field if no materials
+                    }
+
+                    // Populate instructions based on type
+                    generalInstructionsContainer.innerHTML = ''; // Clear existing
+                    stationInstructionsContainer.innerHTML = ''; // Clear existing
+
+                    if (activityToEdit.generalInstructions && activityToEdit.generalInstructions.length > 0) {
+                        document.querySelector('input[name="instruction-type"][value="general"]').checked = true;
+                        generalInstructionsSection.classList.remove('hidden');
+                        stationInstructionsSection.classList.add('hidden');
+                        activityToEdit.generalInstructions.forEach(instruction => addGeneralInstructionField(instruction));
+                    } else if (activityToEdit.stationInstructions && activityToEdit.stationInstructions.length > 0) {
+                        document.querySelector('input[name="instruction-type"][value="station"]').checked = true;
+                        generalInstructionsSection.classList.add('hidden');
+                        stationInstructionsSection.classList.remove('hidden');
+                        activityToEdit.stationInstructions.forEach(station => addStationInstructionField(station.title, station.content));
+                    } else {
+                        // Default to general instructions if neither is present
+                        document.querySelector('input[name="instruction-type"][value="general"]').checked = true;
+                        generalInstructionsSection.classList.remove('hidden');
+                        stationInstructionsSection.classList.add('hidden');
+                        addGeneralInstructionField();
+                    }
+
+                } else {
+                    // Reset for adding new activity
+                    activityFormModalTitle.textContent = 'Add New Activity';
+                    activityFormSubmitBtn.textContent = 'Add Activity';
+                    activityIdInput.value = ''; // Clear hidden ID
+                    document.querySelector('input[name="instruction-type"][value="general"]').checked = true; // Default to general
+                    generalInstructionsSection.classList.remove('hidden');
+                    stationInstructionsSection.classList.add('hidden');
+                    generalInstructionsContainer.innerHTML = '';
+                    stationInstructionsContainer.innerHTML = '';
+                    materialsContainer.innerHTML = '';
+                    addGeneralInstructionField(); // Add one default general instruction
+                    addMaterialField(); // Add one default material field
+                }
+
+                activityFormModal.classList.add('active'); // Show the modal
+            }
+
+
+            // Close Add/Edit Activity Modal via 'X' button
+            closeActivityFormModalBtn.addEventListener('click', () => {
+                activityFormModal.classList.remove('active');
+            });
+            // Close Add/Edit Activity Modal via outside click on the overlay
+            activityFormModal.addEventListener('click', (e) => {
+                if (e.target === activityFormModal) {
+                    activityFormModal.classList.remove('active');
+                }
+            });
+
+            // Event listener for instruction type radio buttons
+            instructionTypeRadios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    if (radio.value === 'general') {
+                        generalInstructionsSection.classList.remove('hidden');
+                        stationInstructionsSection.classList.add('hidden');
+                        // Ensure at least one field if switching to general and it's empty
+                        if (generalInstructionsContainer.children.length === 0) {
+                            addGeneralInstructionField();
+                        }
+                    } else {
+                        generalInstructionsSection.classList.add('hidden');
+                        stationInstructionsSection.classList.remove('hidden');
+                        // Ensure at least one field if switching to station and it's empty
+                        if (stationInstructionsContainer.children.length === 0) {
+                            addStationInstructionField();
+                        }
+                    }
+                });
+            });
+
+            /**
+             * Adds a new general instruction input field to the Add Activity form.
+             * @param {string} [value=''] - The initial value for the textarea.
+             */
+            function addGeneralInstructionField(value = '') {
                 const div = document.createElement('div');
                 div.className = 'instruction-item flex items-center gap-2';
                 div.innerHTML = `
-                    <textarea name="instructions[]" rows="2" required class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., Setup: Divide a large outdoor field..."></textarea>
+                    <textarea name="generalInstructions[]" rows="2" required class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., Overall Setup: Designate 5-7 distinct stations...">${value}</textarea>
                     <button type="button" class="remove-instruction-btn text-red-500 hover:text-red-700 text-xl font-bold">&times;</button>
                 `;
-                instructionsContainer.appendChild(div);
+                generalInstructionsContainer.appendChild(div);
                 addRemoveEventListeners(); // Re-add listeners for new dynamic fields
             }
 
             /**
-             * Adds a new material input field to the Add Activity form.
+             * Adds a new station instruction input field to the Add Activity form.
+             * @param {string} [title=''] - The initial title for the station.
+             * @param {string} [content=''] - The initial content for the station.
              */
-            function addMaterialField() {
+            function addStationInstructionField(title = '', content = '') {
+                const div = document.createElement('div');
+                div.className = 'station-item border-b pb-4 mb-4 last:border-b-0 last:pb-0 last:mb-0';
+                div.innerHTML = `
+                    <div class="flex justify-between items-center mb-2">
+                        <h4 class="font-semibold text-stone-700">Station Details</h4>
+                        <button type="button" class="remove-station-btn text-red-500 hover:text-red-700 text-xl font-bold">&times;</button>
+                    </div>
+                    <label class="block text-stone-700 text-sm font-medium mb-1">Station Title</label>
+                    <input type="text" name="stationTitles[]" required class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500 mb-2" placeholder="e.g., Station 1: Balloon Defying Gravity" value="${title}">
+                    <label class="block text-stone-700 text-sm font-medium mb-1">Station Content</label>
+                    <textarea name="stationContents[]" rows="4" required class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., Setup: Clear an open space...">${content}</textarea>
+                `;
+                stationInstructionsContainer.appendChild(div);
+                addRemoveEventListeners(); // Re-add listeners for new dynamic fields
+            }
+
+
+            /**
+             * Adds a new material input field to the Add Activity form.
+             * @param {string} [value=''] - The initial value for the input.
+             */
+            function addMaterialField(value = '') {
                 const div = document.createElement('div');
                 div.className = 'material-item flex items-center gap-2';
                 div.innerHTML = `
-                    <input type="text" name="materials[]" class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., Water Guns (14)">
+                    <input type="text" name="materials[]" class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., Water Guns (14)" value="${value}">
                     <button type="button" class="remove-material-btn text-red-500 hover:text-red-700 text-xl font-bold">&times;</button>
                 `;
                 materialsContainer.appendChild(div);
@@ -1969,12 +2209,25 @@
              * for instruction and material fields.
              */
             function addRemoveEventListeners() {
-                // For instruction fields
+                // For general instruction fields
                 document.querySelectorAll('.remove-instruction-btn').forEach(button => {
                     button.onclick = (e) => {
-                        // Ensure at least one instruction field remains
-                        if (instructionsContainer.children.length > 1) {
+                        // Ensure at least one instruction field remains if general instructions are active
+                        if (document.querySelector('input[name="instruction-type"][value="general"]').checked && generalInstructionsContainer.children.length > 1) {
                             e.target.closest('.instruction-item').remove();
+                        } else if (document.querySelector('input[name="instruction-type"][value="general"]').checked) {
+                            console.warn("Cannot remove the last general instruction field.");
+                        }
+                    };
+                });
+                // For station instruction fields
+                document.querySelectorAll('.remove-station-btn').forEach(button => {
+                    button.onclick = (e) => {
+                        // Ensure at least one station field remains if station instructions are active
+                        if (document.querySelector('input[name="instruction-type"][value="station"]').checked && stationInstructionsContainer.children.length > 1) {
+                            e.target.closest('.station-item').remove();
+                        } else if (document.querySelector('input[name="instruction-type"][value="station"]').checked) {
+                            console.warn("Cannot remove the last station instruction field.");
                         }
                     };
                 });
@@ -1990,8 +2243,9 @@
             }
 
             // Event listeners for adding new instruction/material fields
-            addInstructionBtn.addEventListener('click', addInstructionField);
-            addMaterialBtn.addEventListener('click', addMaterialField);
+            addGeneralInstructionBtn.addEventListener('click', () => addGeneralInstructionField());
+            addStationInstructionBtn.addEventListener('click', () => addStationInstructionField());
+            addMaterialBtn.addEventListener('click', () => addMaterialField());
             addRemoveEventListeners(); // Initial call to set up listeners for default fields
 
             // --- Soft Delete / Trash Can Logic ---
@@ -2079,6 +2333,24 @@
                         showConfirmationModal(e.target.dataset.id); // Show confirmation before permanent delete
                     });
                 });
+            }
+
+            /**
+             * Restores a soft-deleted activity by setting its 'deleted' field to false.
+             * @param {string} gameId - The ID of the activity to restore.
+             */
+            async function restoreActivity(gameId) {
+                if (gameId && db) {
+                    try {
+                        const activityRef = doc(db, `artifacts/${appId}/public/data/activities`, gameId);
+                        await updateDoc(activityRef, { deleted: false });
+                        console.log(`Activity ${gameId} restored.`);
+                        deletedActivitiesModal.classList.remove('active'); // Close the modal
+                        // UI updates via onSnapshot
+                    } catch (error) {
+                        console.error("Error restoring activity:", error);
+                    }
+                }
             }
 
             /**
