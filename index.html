@@ -670,37 +670,7 @@
             appId: "1:774110400277:web:7e3b65313073e3aacf631c",
             measurementId: "G-LL8SZ9NW8L" // Optional
         };
-
-        /*
-         * IMPORTANT: FIREBASE SECURITY RULES
-         * To resolve the "Missing or insufficient permissions" error,
-         * you MUST deploy the following rules to your Firebase project.
-         *
-         * 1. Go to your Firebase project in the Firebase Console.
-         * 2. Navigate to "Firestore Database" -> "Rules" tab.
-         * 3. Replace the existing rules with the following code and click "Publish".
-         *
-         * rules_version = '2';
-         * service cloud.firestore {
-         * match /databases/{database}/documents {
-         * // Allow authenticated users to read and write to public data
-         * match /artifacts/{appId}/public/data/{collection=**} {
-         * allow read, write: if request.auth != null;
-         * }
-         *
-         * // Allow authenticated users to read and write to their own private data
-         * match /artifacts/{appId}/users/{userId}/{collection=**} {
-         * allow read, write: if request.auth != null && request.auth.uid == userId;
-         * }
-         *
-         * // Deny all other access by default
-         * match /{document=**} {
-         * allow read, write: if false;
-         * }
-         * }
-         * }
-         */
-
+        
         // Initial games data - these will be loaded first, then merged with user-added data from Firestore.
         // This provides a baseline set of activities even if no user data is present or Firestore fails.
         const initialGamesData = [
