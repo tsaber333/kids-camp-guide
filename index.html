@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">\
     <style>
         /* Base font and general layout */
         body { font-family: 'Inter', sans-serif; }
@@ -1396,6 +1396,7 @@
             const activityManagementToggle = document.getElementById('activity-management-toggle');
             const activityManagementContent = document.getElementById('activity-management-content');
             const activityManagementCollapseIcon = activityManagementToggle.querySelector('.collapse-icon');
+            const addActivityCard = document.getElementById('add-activity-card'); // Get reference to the add activity card
 
 
             // Object to store current filter selections
@@ -1639,7 +1640,7 @@
                     // Determine card color based on activity type
                     const typeColor = game.type === 'Field Game' ? 'bg-sky-100 text-sky-800' : 'bg-amber-100 text-amber-800';
                     // Determine location icon
-                    const locationIcon = game.location === 'Outdoor' ? '☀️' : game.location === 'Indoor' ? '🏠' : '☀️/�';
+                    const locationIcon = game.location === 'Outdoor' ? '☀️' : game.location === 'Indoor' ? '🏠' : '☀️/🏠';
 
                     card.innerHTML = `
                         <div class="flex-grow">
@@ -1684,6 +1685,17 @@
                     <p class="text-emerald-600 text-sm mt-2">Create a custom activity for your camp!</p>
                 `;
                 gameGrid.appendChild(addActivityCard);
+
+                // Add click listener to the "Add New Activity" card
+                addActivityCard.addEventListener('click', () => {
+                    addActivityModal.classList.add('active'); // Show the add activity modal
+                    addActivityForm.reset(); // Reset the form when opening
+                    // Ensure there's at least one instruction and material field when opening the form
+                    instructionsContainer.innerHTML = ''; // Clear existing
+                    materialsContainer.innerHTML = ''; // Clear existing
+                    addInstructionField(); // Add one default instruction field
+                    addMaterialField(); // Add one default material field
+                });
             }
 
             /**
