@@ -7,6 +7,7 @@
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E⛺%3C/text%3E%3C/svg%3E" type="image/svg+xml">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> <!-- Marked.js for Markdown parsing -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -280,19 +281,19 @@
                         <div>
                             <h3 class="text-xl font-bold text-teal-700 mb-2">Navigating This Guide</h3>
                             <ul class="list-disc list-inside text-stone-700 space-y-2">
-                                <li><strong>Filtering Activities:</strong> Use the "Filter by Type," "Filter by Location," and "Filter by Materials" to quickly narrow down game options. Select "All" to see the full list again.</li>
-                                <li><strong>Viewing Details:</strong> Click on any activity card to open a detailed modal. This modal contains objectives, step-by-step instructions, a comprehensive materials list, crucial safety notes, and the "SuperCharged Application."</li>
-                                <li><strong>Material Check:</strong> Always review the "Materials Needed" section well in advance of your activity time to ensure all supplies are readily available.</li>
+                                <li>**Filtering Activities:** Use the "Filter by Type," "Filter by Location," and "Filter by Materials" to quickly narrow down game options. Select "All" to see the full list again.</li>
+                                <li>**Viewing Details:** Click on any activity card to open a detailed modal. This modal contains objectives, step-by-step instructions, a comprehensive materials list, crucial safety notes, and the "SuperCharged Application."</li>
+                                <li>**Material Check:** Always review the "Materials Needed" section well in advance of your activity time to ensure all supplies are readily available.</li>
                             </ul>
                         </div>
                         <div>
                             <h3 class="text-xl font-bold text-teal-700 mb-2">Leading Activities Effectively</h3>
                             <ul class="list-disc list-inside text-stone-700 space-y-2">
-                                <li><strong>Safety First:</strong> Prioritize the "Safety Notes" for each game. Conduct a quick safety check of the play area and equipment before starting.</li>
-                                <li><strong>Clear Instructions:</strong> Explain game rules clearly and concisely. Demonstrate if possible. Encourage questions before starting.</li>
-                                <li><strong>Adapt & Modify:</strong> Feel free to adapt games to suit your group's size, age, energy levels, or available space.</li>
-                                <li><strong>Encourage Participation:</strong> Create an inclusive environment where every camper feels comfortable participating and trying their best.</li>
-                                <li><strong>Time Management:</strong> Keep an eye on the clock to ensure you have enough time for the activity itself and, crucially, for the debriefing.</li>
+                                <li>**Safety First:** Prioritize the "Safety Notes" for each game. Conduct a quick safety check of the play area and equipment before starting.</li>
+                                <li>**Clear Instructions:** Explain game rules clearly and concisely. Demonstrate if possible. Encourage questions before starting.</li>
+                                <li>**Adapt & Modify:** Feel free to adapt games to suit your group's size, age, energy levels, or available space.</li>
+                                <li>**Encourage Participation:** Create an inclusive environment where every camper feels comfortable participating and trying their best.</li>
+                                <li>**Time Management:** Keep an eye on the clock to ensure you have enough time for the activity itself and, crucially, for the debriefing.</li>
                             </ul>
                         </div>
                         <div class="md:col-span-2">
@@ -301,11 +302,11 @@
                                 The "SuperCharged Application" is key to connecting our activities with the spiritual growth of our campers. This section provides prompts and ideas to help you facilitate meaningful discussions after each game.
                             </p>
                             <ul class="list-disc list-inside text-stone-700 space-y-2 mt-2">
-                                <li><strong>Purpose:</strong> This is where we bridge the fun of the game to life lessons and Foursquare values.</li>
-                                <li><strong>Timing:</strong> Always debrief immediately after the game, while the experience is fresh in their minds.</li>
-                                <li><strong>Open-Ended Questions:</strong> Use the suggested questions as a starting point. Encourage honest sharing and active listening among campers.</li>
-                                <li><strong>Connect to Scripture/Values:</strong> Help campers see how the game's lessons relate to Bible principles or the Foursquare values (e.g., 'Jesus the Savior, Healer, Baptizer with the Holy Spirit, and Soon-Coming King').</li>
-                                <li><strong>Personal Reflection:</strong> Encourage campers to think about how they can apply these lessons in their daily lives.</li>
+                                <li>**Purpose:** This is where we bridge the fun of the game to life lessons and Foursquare values.</li>
+                                <li>**Timing:** Always debrief immediately after the game, while the experience is fresh in their minds.</li>
+                                <li>**Open-Ended Questions:** Use the suggested questions as a starting point. Encourage honest sharing and active listening among campers.</li>
+                                <li>**Connect to Scripture/Values:** Help campers see how the game's lessons relate to Bible principles or the Foursquare values (e.g., 'Jesus the Savior, Healer, Baptizer with the Holy Spirit, and Soon-Coming King').</li>
+                                <li>**Personal Reflection:** Encourage campers to think about how they can apply these lessons in their daily lives.</li>
                             </ul>
                         </div>
                     </div>
@@ -325,44 +326,44 @@
                         This section explains how to add new activities to your guide and manage existing ones, including moving them to trash and permanently deleting them.
                     </p>
                     <ul class="list-disc list-inside text-stone-700 space-y-2">
-                        <li><strong>Adding a New Activity:</strong>
+                        <li>**Adding a New Activity:**
                             <ul class="list-circle list-inside ml-4">
-                                <li>Click the "<span class="font-semibold text-emerald-700">Add New Activity</span>" card at the bottom of the "Find an Activity" section.</li>
+                                <li>Click the "**Add New Activity**" card at the bottom of the "Find an Activity" section.</li>
                                 <li>Fill out the form with all required details (marked with *).</li>
                                 <li>Choose between "General Instructions" (a list of steps) or "Station-Based Instructions" (for activities with multiple distinct stations, like "Minute to Win It Mayhem").</li>
                                 <li>Click "Add Activity" to save your new activity to the guide. It will appear in your activity list.</li>
                             </ul>
                         </li>
-                        <li><strong>Editing an Existing Activity:</strong>
+                        <li>**Editing an Existing Activity:**
                             <ul class="list-circle list-inside ml-4">
                                 <li>Click on any activity card to open its "Activity Details" modal.</li>
-                                <li>At the bottom of the modal, click the "<span class="font-semibold text-blue-500">Edit Activity</span>" button.</li>
+                                <li>At the bottom of the modal, click the "**Edit Activity**" button.</li>
                                 <li>The "Add/Edit Activity" form will open, pre-filled with the activity's current information.</li>
                                 <li>Make your desired changes and click "Save Changes" to update the activity.</li>
                             </ul>
                         </li>
-                        <li><strong>Moving an Activity to Trash (Soft Delete):</strong>
+                        <li>**Moving an Activity to Trash (Soft Delete):**
                             <ul class="list-circle list-inside ml-4">
                                 <li>Click on any activity card to open its "Activity Details" modal.</li>
-                                <li>At the bottom of the modal, click the "<span class="font-semibold text-red-500">Move to Trash</span>" button.</li>
+                                <li>At the bottom of the modal, click the "**Move to Trash**" button.</li>
                                 <li>The activity will be removed from your main list but can still be restored later.</li>
                             </ul>
                         </li>
-                        <li><strong>Viewing and Restoring Deleted Activities:</strong>
+                        <li>**Viewing and Restoring Deleted Activities:**
                             <ul class="list-circle list-inside ml-4">
-                                <li>On the dashboard, click the "<span class="font-semibold text-red-500">View Deleted Activities</span>" button.</li>
+                                <li>On the dashboard, click the "**View Deleted Activities**" button.</li>
                                 <li>A modal will appear showing all activities you've moved to trash.</li>
-                                <li>To bring an activity back to your main list, click its "<span class="font-semibold text-teal-500">Restore</span>" button.</li>
+                                <li>To bring an activity back to your main list, click its "**Restore**" button.</li>
                                 <li>
-                                    <span class="font-semibold text-red-500">Important:</span>
+                                    **Important:**
                                     If you restore an activity, it will appear back in the main list, but if it was previously scheduled on the calendar, it will *not* automatically reappear on the calendar. You will need to click and add it onto the calendar again.
                                 </li>
                             </ul>
                         </li>
-                        <li><strong>Permanently Deleting an Activity:</strong>
+                        <li>**Permanently Deleting an Activity:**
                             <ul class="list-circle list-inside ml-4">
                                 <li>From the "View Deleted Activities" modal, locate the activity you wish to permanently remove.</li>
-                                <li>Click its "<span class="font-semibold text-red-500">Delete Permanently</span>" button.</li>
+                                <li>Click its "**Delete Permanently**" button.</li>
                                 <li>A confirmation dialog will appear. Confirm your choice to permanently remove the activity from the database. This action cannot be undone.</li>
                             </ul>
                         </li>
@@ -424,16 +425,16 @@
                     </div>
                     <div id="calendar-instructions-content" class="collapsible-content collapsed">
                         <ul class="list-disc list-inside text-stone-700 space-y-2 mt-4">
-                            <li><strong>Select an Activity:</strong> Click on any activity card in the "Find an Activity" section above to select it. The selected card will be highlighted with a green border.</li>
-                            <li><strong>Add to Schedule:</strong> Once an activity is selected, the calendar slots will change color to guide you:
+                            <li>**Select an Activity:** Click on any activity card in the "Find an Activity" section above to select it. The selected card will be highlighted with a green border.</li>
+                            <li>**Add to Schedule:** Once an activity is selected, the calendar slots will change color to guide you:
                                 <ul class="list-circle list-inside ml-4 mt-2">
                                     <li><span class="font-semibold text-emerald-700">Green Highlighted Slots:</span> These are valid 'addable' slots where the selected activity can be placed (e.g., a "Field Game" into a "FIELD" slot, or a "Team Time" activity into a "TEAM TIME" slot). Click on a green slot to add the activity.</li>
                                     <li><span class="font-semibold text-red-700">Red Highlighted Slots:</span> These slots are 'invalid' for the currently selected activity type. You cannot add the activity here.</li>
                                     <li><span class="font-semibold text-stone-700">Gray Slots:</span> These slots are 'non-addable' and are already pre-assigned with specific teams or are blocked out. You cannot add activities into these.</li>
                                 </ul>
                             </li>
-                            <li><strong>Remove Scheduled Activities:</strong> To remove an activity you've scheduled, hover over the activity name in the calendar slot and click the small 'x' button that appears.</li>
-                            <li><strong>Real-time Updates:</strong> Any changes you make to the schedule (adding or removing activities) will be saved automatically and updated in real-time.</li>
+                            <li>**Remove Scheduled Activities:** To remove an activity you've scheduled, hover over the activity name in the calendar slot and click the small 'x' button that appears.</li>
+                            <li>**Real-time Updates:** Any changes you make to the schedule (adding or removing activities) will be saved automatically and updated in real-time.</li>
                         </ul>
                     </div>
                 </div>
@@ -527,7 +528,7 @@
                 <!-- Objectives Textarea -->
                 <div>
                     <label for="objectives" class="block text-stone-700 font-bold mb-2">Objectives <span class="text-red-500">*</span></label>
-                    <textarea id="objectives" name="objectives" rows="3" required class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
+                    <textarea id="objectives" name="objectives" rows="3" required class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., Fosters individual skill development, quick thinking, coordination... (Markdown supported)"></textarea>
                 </div>
 
                 <!-- Instruction Type Selection -->
@@ -551,7 +552,7 @@
                     <div id="general-instructions-container" class="space-y-3">
                         <!-- Initial instruction field, more added by JS -->
                         <div class="instruction-item flex items-center gap-2">
-                            <textarea name="generalInstructions[]" rows="2" required class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., Overall Setup: Designate 5-7 distinct stations..."></textarea>
+                            <textarea name="generalInstructions[]" rows="2" required class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., **Overall Setup:** Designate 5-7 distinct stations... (Markdown supported)"></textarea>
                             <button type="button" class="remove-instruction-btn text-red-500 hover:text-red-700 text-xl font-bold">&times;</button>
                         </div>
                     </div>
@@ -571,7 +572,7 @@
                             <label class="block text-stone-700 text-sm font-medium mb-1">Station Title</label>
                             <input type="text" name="stationTitles[]" required class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500 mb-2" placeholder="e.g., Station 1: Balloon Defying Gravity">
                             <label class="block text-stone-700 text-sm font-medium mb-1">Station Content</label>
-                            <textarea name="stationContents[]" rows="4" required class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., Setup: Clear an open space..."></textarea>
+                            <textarea name="stationContents[]" rows="4" required class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., Setup: Clear an open space... (Markdown supported)"></textarea>
                         </div>
                     </div>
                     <button type="button" id="add-station-instruction-btn" class="mt-3 bg-stone-200 text-stone-700 py-2 px-4 rounded-md hover:bg-stone-300 transition-colors">Add Station</button>
@@ -593,13 +594,13 @@
                 <!-- Safety Notes Textarea -->
                 <div>
                     <label for="safety-notes" class="block text-stone-700 font-bold mb-2">Safety Notes <span class="text-red-500">*</span></label>
-                    <textarea id="safety-notes" name="safety" rows="3" required class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
+                    <textarea id="safety-notes" name="safety" rows="3" required class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., Ensure ample space between stations to prevent collisions... (Markdown supported)"></textarea>
                 </div>
 
                 <!-- SuperCharged Application Textarea -->
                 <div>
                     <label for="supercharged-app" class="block text-stone-700 font-bold mb-2">SuperCharged Application <span class="text-red-500">*</span></label>
-                    <textarea id="supercharged-app" name="supercharged" rows="3" required class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
+                    <textarea id="supercharged-app" name="supercharged" rows="3" required class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., Minute to Win It games challenge us to use our unique skills... (Markdown supported)"></textarea>
                 </div>
 
                 <!-- Submit Button -->
@@ -675,16 +676,30 @@
          * IMPORTANT: FIREBASE SECURITY RULES
          * To resolve the "Missing or insufficient permissions" error,
          * you MUST deploy the following rules to your Firebase project.
-         *
          * 1. Go to your Firebase project in the Firebase Console.
          * 2. Navigate to "Firestore Database" -> "Rules" tab.
          * 3. Replace the existing rules with the following code and click "Publish".
          *
          * rules_version = '2';
-         * service cloud.firestore {\n         * match /databases/{database}/documents {\n         * // Allow authenticated users to read and write to public data
-         * match /artifacts/{appId}/public/data/{collection=**} {\n         * allow read, write: if request.auth != null;\n         * }\n         *\n         * // Allow authenticated users to read and write to their own private data
-         * match /artifacts/{appId}/users/{userId}/{collection=**} {\n         * allow read, write: if request.auth != null && request.auth.uid == userId;\n         * }\n         *\n         * // Deny all other access by default
-         * match /{document=**} {\n         * allow read, write: if false;\n         * }\n         * }\n         * }\n         */
+         * service cloud.firestore {
+         * match /databases/{database}/documents {
+         * // Allow authenticated users to read and write to public data
+         * match /artifacts/{appId}/public/data/{collection=**} {
+         * allow read, write: if request.auth != null;
+         * }
+         *
+         * // Allow authenticated users to read and write to their own private data
+         * match /artifacts/{appId}/users/{userId}/{collection=**} {
+         * allow read, write: if request.auth != null && request.auth.uid == userId;
+         * }
+         *
+         * // Deny all other access by default
+         * match /{document=**} {
+         * allow read, write: if false;
+         * }
+         * }
+         * }
+         */
 
         // Initial games data - these will be loaded first, then merged with user-added data from Firestore.
         // This provides a baseline set of activities even if no user data is present or Firestore fails.
@@ -705,68 +720,56 @@
                     {
                         title: "Station 1: Balloon Defying Gravity",
                         content: `
-                            <ul>
-                                <li><strong>Setup:</strong> Clear an open space. Have 1-2 balloons per player ready.</li>
-                                <li><strong>Goal:</strong> Keep a balloon from touching the ground for a full minute.</li>
-                                <li><strong>How to Play:</strong> Each player gets a balloon. On 'Go!', players must keep their balloon in the air using any body part EXCEPT their hands (no holding!). The balloon must continually be moving.</li>
-                                <li><strong>Scoring:</strong> 1 point for every 5 seconds a balloon stays airborne without hands (e.g., 12 points for a full minute). If a balloon touches the ground, that player is out for the remainder of the 60 seconds, or they can restart with a new balloon for a penalty (e.g., -5 points).</li>
-                                <li><strong>Challenge Up:</strong> For more agile kids, allow only one hand, no hands at all, or add more than one balloon per player.</li>
-                            </ul>
+- **Setup:** Clear an open space. Have 1-2 balloons per player ready.
+- **Goal:** Keep a balloon from touching the ground for a full minute.
+- **How to Play:** Each player gets a balloon. On 'Go!', players must keep their balloon in the air using any body part EXCEPT their hands (no holding!). The balloon must continually be moving.
+- **Scoring:** 1 point for every 5 seconds a balloon stays airborne without hands (e.g., 12 points for a full minute). If a balloon touches the ground, that player is out for the remainder of the 60 seconds, or they can restart with a new balloon for a penalty (e.g., -5 points).
+- **Challenge Up:** For more agile kids, allow only one hand, no hands at all, or add more than one balloon per player.
                         `
                     },
                     {
                         title: "Station 2: Fun Pong",
                         content: `
-                            <ul>
-                                <li><strong>Setup:</strong> Set up 10 plastic cups in a triangle formation at one end of a table. Fill them partially with water for stability. Mark a 'throwing line' at the opposite end of the table (approx. 5-10 feet away). Have a basket of ping pong balls ready.</li>
-                                <li><strong>Goal:</strong> Get as many ping pong balls into cups as possible in one minute.</li>
-                                <li><strong>How to Play:</strong> Players stand at the throwing line and try to toss ping pong balls into the cups. Players can retrieve their own balls or have a helper.</li>
-                                <li><strong>Scoring:</strong> 1 point for each ball that successfully lands and stays in a cup. For an extra challenge, remove each cup a ball sinks into, making options smaller.</li>
-                            </ul>
+- **Setup:** Set up 10 plastic cups in a triangle formation at one end of a table. Fill them partially with water for stability. Mark a 'throwing line' at the opposite end of the table (approx. 5-10 feet away). Have a basket of ping pong balls ready.
+- **Goal:** Get as many ping pong balls into cups as possible in one minute.
+- **How to Play:** Players stand at the throwing line and try to toss ping pong balls into the cups. Players can retrieve their own balls or have a helper.
+- **Scoring:** 1 point for each ball that successfully lands and stays in a cup. For an extra challenge, remove each cup a ball sinks into, making options smaller.
                         `
                     },
                     {
                         title: "Station 3: Rubber Band Shooting Gallery",
                         content: `
-                            <ul>
-                                <li><strong>Setup:</strong> Arrange 5-10 empty soda cans (or plastic bottles, small plastic cups) on a raised surface (e.g., a bench, small table) at varying distances. Mark a 'shooting line' 10-15 feet away. Provide a supply of rubber bands.</li>
-                                <li><strong>Goal:</strong> Knock down as many cans as possible in one minute using rubber bands.</li>
-                                <li><strong>How to Play:</strong> Players stand at the throwing line and fling rubber bands at the cans. They can shoot as quickly as they can reload.</li>
-                                <li><strong>Scoring:</strong> 1 point for each can knocked completely off the surface. Cans are reset after each player's turn or after 60 seconds for the next team.</li>
-                            </ul>
+- **Setup:** Arrange 5-10 empty soda cans (or plastic bottles, small plastic cups) on a raised surface (e.g., a bench, small table) at varying distances. Mark a 'shooting line' 10-15 feet away. Provide a supply of rubber bands.
+- **Goal:** Knock down as many cans as possible in one minute using rubber bands.
+- **How to Play:** Players stand at the throwing line and fling rubber bands at the cans. They can shoot as quickly as they can reload.
+- **Scoring:** 1 point for each can knocked completely off the surface. Cans are reset after each player's turn or after 60 seconds for the next team.
                         `
                     },
                     {
                         title: "Station 4: Sponge Run",
                         content: `
-                            <ul>
-                                <li><strong>Setup:</strong> Place a kiddie pool filled with water at one end of the designated area. Place an empty large bucket at the opposite end (approx. 20-30 feet away). Have a supply of sponges next to the kiddie pool.</li>
-                                <li><strong>Goal:</strong> Transfer as much water as possible from the kiddie pool to the empty bucket using a sponge on their head, in one minute.</li>
-                                <li><strong>How to Play:</strong> Players soak a sponge in the kiddie pool, place it on their head, and run across the yard to the empty bucket. They then squeeze the water from the sponge into the bucket and run back for another sponge. They cannot hold the sponge with their hands while running.</li>
-                                <li><strong>Scoring:</strong> The team whose bucket has the most water (measure with a marked line or by volume) at the end of the minute wins that station's points. You can award points based on volume (e.g., 1 point per inch of water).</li>
-                            </ul>
+- **Setup:** Place a kiddie pool filled with water at one end of the designated area. Place an empty large bucket at the opposite end (approx. 20-30 feet away). Have a supply of sponges next to the kiddie pool.
+- **Goal:** Transfer as much water as possible from the kiddie pool to the empty bucket using a sponge on their head, in one minute.
+- **How to Play:** Players soak a sponge in the kiddie pool, place it on their head, and run across the yard to the empty bucket. They then squeeze the water from the sponge into the bucket and run back for another sponge. They cannot hold the sponge with their hands while running.
+- **Scoring:** The team whose bucket has the most water (measure with a marked line or by volume) at the end of the minute wins that station's points. You can award points based on volume (e.g., 1 point per inch of water).
                         `
                     },
                     {
                         title: "Station 5: Frisbee Dunk",
                         content: `
-                            <ul>
-                                <li><strong>Setup:</strong> Place 3-4 kiddie pools (or large buckets/laundry baskets) at different distances from a throwing line (e.g., 10ft, 15ft, 20ft, 25ft). Assign different point values to each pool based on difficulty (e.g., closest = 5 points, furthest = 20 points). Have a supply of frisbees.</li>
-                                <li><strong>Goal:</strong> Throw and 'dunk' frisbees into the pools for points in one minute.</li>
-                                <li><strong>How to Play:</strong> Players stand at the throwing line and try to toss frisbees into the pools. Each player gets a set number of throws or can throw continuously for the minute.</li>
-                                <li><strong>Scoring:</strong> Points are awarded based on the value of the pool the frisbee lands in. Frisbees must land completely inside the pool to count.</li>
-                            </ul>
+- **Setup:** Place 3-4 kiddie pools (or large buckets/laundry baskets) at different distances from a throwing line (e.g., 10ft, 15ft, 20ft, 25ft). Assign different point values to each pool based on difficulty (e.g., closest = 5 points, furthest = 20 points). Have a supply of frisbees.
+- **Goal:** Throw and 'dunk' frisbees into the pools for points in one minute.
+- **How to Play:** Players stand at the throwing line and try to toss frisbees into the pools. Each player gets a set number of throws or can throw continuously for the minute.
+- **Scoring:** Points are awarded based on the value of the pool the frisbee lands in. Frisbees must land completely inside the pool to count.
                         `
                     },
                     {
                         title: "Station 6: Dice Balance",
                         content: `
-                            <ul>
-                                <li><strong>Setup:</strong> Each player needs a popsicle stick and six dice. Have a flat, stable surface for players to stand or sit.</li>
-                                <li><strong>Goal:</strong> Balance all six dice on the end of a popsicle stick held in their mouth.</li>
-                                <li><strong>How to Play:</strong> On 'Go!', each player places one end of a popsicle stick in their mouth. They then attempt to stack all six dice, one by one, on the other end of the popsicle stick using only their hands. The dice must remain balanced for a count of 3 seconds.</li>
-                                <li><strong>Scoring:</strong> The first player to successfully balance all six dice for 3 seconds wins that station's points. If no one balances all six, the player with the most dice balanced at the end of 60 seconds wins. You can award points based on the number of dice balanced (e.g., 1 point per die).</li>
-                            </ul>
+- **Setup:** Each player needs a popsicle stick and six dice. Have a flat, stable surface for players to stand or sit.
+- **Goal:** Balance all six dice on the end of a popsicle stick held in their mouth.
+- **How to Play:** On 'Go!', each player places one end of a popsicle stick in their mouth. They then attempt to stack all six dice, one by one, on the other end of the popsicle stick using only their hands. The dice must remain balanced for a count of 3 seconds.
+- **Scoring:** The first player to successfully balance all six dice for 3 seconds wins that station's points. If no one balances all six, the player with the most dice balanced at the end of 60 seconds wins. You can award points based on the number of dice balanced (e.g., 1 point per die).
                         `
                     }
                 ],
@@ -783,19 +786,17 @@
                 description: "Teams navigate a custom-built obstacle course combining various physical challenges in a relay format, emphasizing speed, agility, and teamwork.",
                 objectives: "Enhances speed, coordination, collaborative problem-solving, and teamwork.",
                 generalInstructions: [
-                    "<strong>Overall Setup:</strong> Design and construct an obstacle course using available equipment. Aim for 3-5 distinct segments that require different movements (e.g., crawling under pool noodles, weaving through cones, jumping over hula hoops, balancing on a line, throwing a bean bag into a bucket). Ensure the course is clearly marked and safe. Example segments:",
-                    "<ul>",
-                    "<li><strong>Crawl Tunnel:</strong> Drape a tarp over two chairs or low obstacles to create a tunnel to crawl through.</li>",
-                    "<li><strong>Cone Weave:</strong> Place 5-7 cones in a zig-zag pattern for players to weave around.</li>",
-                    "<li><strong>Hula Hoop Hop:</strong> Lay 5-7 hula hoops on the ground in a line or zig-zag for players to hop into each one.</li>",
-                    "<li><strong>Balance Beam:</strong> Lay a long rope or masking tape line on the ground for players to walk across without stepping off.</li>",
-                    "<li><strong>Target Toss:</strong> Place a bucket or laundry basket a short distance away for players to throw a bean bag into.</li>",
-                    "</ul>",
-                    "<strong>Team Formation:</strong> Divide campers into equal teams. Have each team line up single-file behind a designated starting line.",
-                    "<strong>Relay Start:</strong> On the 'Go!' signal, the first team member from each team begins navigating the first segment of the obstacle course.",
-                    "<strong>Segment Completion & Tag:</strong> Once a player completes a segment, they must perform a designated 'tag' (e.g., high-five, tap on the shoulder) to the next teammate in line. The next teammate then proceeds through their assigned segment. For longer courses, you may have players complete the entire course before tagging the next teammate.",
-                    "<strong>Course Progression:</strong> The relay continues with teammates completing segments in sequence. If a player fails a segment (e.g., steps off the balance beam, misses the target toss), they must restart that segment until successful.",
-                    "<strong>Winning:</strong> The first team to have all its members successfully complete the entire obstacle course wins. Emphasize teamwork and encouragement throughout."
+                    "**Overall Setup:** Design and construct an obstacle course using available equipment. Aim for 3-5 distinct segments that require different movements (e.g., crawling under pool noodles, weaving through cones, jumping over hula hoops, balancing on a line, throwing a bean bag into a bucket). Ensure the course is clearly marked and safe. Example segments:",
+                    "- **Crawl Tunnel:** Drape a tarp over two chairs or low obstacles to create a tunnel to crawl through.",
+                    "- **Cone Weave:** Place 5-7 cones in a zig-zag pattern for players to weave around.",
+                    "- **Hula Hoop Hop:** Lay 5-7 hula hoops on the ground in a line or zig-zag for players to hop into each one.",
+                    "- **Balance Beam:** Lay a long rope or masking tape line on the ground for players to walk across without stepping off.",
+                    "- **Target Toss:** Place a bucket or laundry basket a short distance away for players to throw a bean bag into.",
+                    "**Team Formation:** Divide campers into equal teams. Have each team line up single-file behind a designated starting line.",
+                    "**Relay Start:** On the 'Go!' signal, the first team member from each team begins navigating the first segment of the obstacle course.",
+                    "**Segment Completion & Tag:** Once a player completes a segment, they must perform a designated 'tag' (e.g., high-five, tap on the shoulder) to the next teammate in line. The next teammate then proceeds through their assigned segment. For longer courses, you may have players complete the entire course before tagging the next teammate.",
+                    "**Course Progression:** The relay continues with teammates completing segments in sequence. If a player fails a segment (e.g., steps off the balance beam, misses the target toss), they must restart that segment until successful.",
+                    "**Winning:** The first team to have all its members successfully complete the entire obstacle course wins. Emphasize teamwork and encouragement throughout."
                 ],
                 stationInstructions: [], // Empty for this game as it uses general instructions
                 materials: ["Pool Noodles (36)", "Inflatable Balls (3)", "Cones (various)", "Hula Hoops (25)", "Bean Bags (10)", "Wooden Blocks (32)", "Buckets (various)", "Tennis Balls (50+)", "Frisbees (26)", "Masking Tape or Rope", "White Tarp (1)"],
@@ -811,16 +812,16 @@
                 description: "A refreshing twist on the classic game. Teams use water guns and sponges to tag opponents while trying to capture the other team's 'flag'—a bucket of water.",
                 objectives: "Enhances strategic thinking, teamwork, agility, and communication.",
                 generalInstructions: [
-                    "<strong>Setup:</strong> Divide a large outdoor field into two distinct halves using cones or natural boundaries. Place a large, clearly visible bucket of water (the 'flag') deep within each team's territory. Set up a 'jail' area for each team, clearly marked (e.g., a small square of cones). Ensure there are water refill stations for water guns near the boundaries.",
-                    "<strong>Team Formation:</strong> Divide campers into two equal teams. Provide each player with a water gun and/or a small sponge.",
-                    "<strong>Tagging Rules:</strong> Players are 'tagged' if they are hit by water from an opponent's water gun or touched by a soaked sponge thrown by an opponent. Once tagged, a player must immediately go to the opposing team's designated 'jail' area. Players cannot be tagged while in their own 'jail' or while returning from 'jail' to their own territory after being freed.",
-                    "<strong>Jail Break:</strong> A player in 'jail' can be freed if a teammate tags them without being tagged themselves. Once freed, they can re-enter the game. Only one player can be freed at a time by a single rescuer.",
-                    "<strong>Capturing the Flag:</strong> To win, a player must sneak into the opponent's territory, reach their 'flag' (bucket of water), soak a sponge in it, and then carry that soaked sponge back to their own territory without being tagged. If they are tagged while carrying the soaked sponge, they go to jail, and the sponge is returned to the opponent's flag bucket. The sponge must be carried, not thrown, once soaked.",
-                    "<strong>Winning:</strong> The first team to successfully capture the opponent's 'flag' (soaked sponge) and bring it back to their own side wins the round. Play multiple rounds for best of three or five."
+                    "**Setup:** Divide a large outdoor field into two distinct halves using cones or natural boundaries. Place a large, clearly visible bucket of water (the 'flag') deep within each team's territory. Set up a 'jail' area for each team, clearly marked (e.g., a small square of cones). Ensure there are water refill stations for water guns near the boundaries.",
+                    "**Team Formation:** Divide campers into two equal teams. Provide each player with a water gun and/or a small sponge.",
+                    "**Tagging Rules:** Players are 'tagged' if they are hit by water from an opponent's water gun or touched by a soaked sponge thrown by an opponent. Once tagged, a player must immediately go to the opposing team's designated 'jail' area. Players cannot be tagged while in their own 'jail' or while returning from 'jail' to their own territory after being freed.",
+                    "**Jail Break:** A player in 'jail' can be freed if a teammate tags them without being tagged themselves. Once freed, they can re-enter the game. Only one player can be freed at a time by a single rescuer.",
+                    "**Capturing the Flag:** To win, a player must sneak into the opponent's territory, reach their 'flag' (bucket of water), soak a sponge in it, and then carry that soaked sponge back to their own territory without being tagged. If they are tagged while carrying the soaked sponge, they go to jail, and the sponge is returned to the opponent's flag bucket. The sponge must be carried, not thrown, once soaked.",
+                    "**Winning:** The first team to successfully capture the opponent's 'flag' (soaked sponge) and bring it back to their own side wins the round. Play multiple rounds for best of three or five."
                 ],
                 stationInstructions: [],
                 materials: ["Water Guns (14)", "Sponges (21½ bags)", "Large Buckets (various)", "Cones", "Kiddie Pools (for water refills)", "Whistles (2)"],
-                safety: "Strict rule: Aim water only at the body, never at faces or heads. Emphasize no running with water guns pointed at others. Supervise water refills to prevent slipping hazards. Ensure the playing field is free of obstacles that could cause trips. Remind players to be aware of their surroundings and not to run into others.",
+                safety: "**Strict rule:** Aim water only at the body, never at faces or heads. Emphasize no running with water guns pointed at others. Supervise water refills to prevent slipping hazards. Ensure the playing field is free of obstacles that could cause trips. Remind players to be aware of their surroundings and not to run into others.",
                 supercharged: "In Capture the Flag, we work together to achieve a common goal, just like in our faith, we are part of God's team, working to spread His love and truth. Sometimes we need to be strategic, sometimes we need to rescue others, and sometimes we need to protect what's important. How can we be good teammates for God's kingdom?",
                 deleted: false
             },
@@ -832,12 +833,12 @@
                 description: "Players link arms or hold onto pool noodles in rows, restricted to side-to-side movement like a foosball table. They must work together to kick a large ball into the opponent's goal.",
                 objectives: "Emphasizes coordination, teamwork, spatial awareness, and constant communication.",
                 generalInstructions: [
-                    "<strong>Setup:</strong> Create a large rectangular playing area (e.g., 30ft x 15ft) using cones or boundary markers. Inside this area, use ropes or pool noodles to create 3-4 parallel 'lanes' across the width of the field. Players will stand in these lanes, holding onto the rope/noodle. Place a goal (e.g., two cones spaced apart) at each end of the rectangle. The ball should be an inflatable beach ball or similar large, lightweight ball.",
-                    "<strong>Team Formation:</strong> Divide campers into equal teams. Assign each player to a specific lane. Players in the same lane on opposing teams will face each other. Players must hold onto a rope or pool noodle, restricting them to only move horizontally within their lane. They cannot move forward or backward out of their designated lane. Ensure an equal number of players per lane, or adjust lane sizes accordingly.",
-                    "<strong>Game Start:</strong> Place the large inflatable ball in the center of the playing area. On the whistle, the game begins.",
-                    "<strong>Game Play:</strong> Players must work together within their restricted horizontal movement to pass the ball to teammates in other lanes and eventually shoot it into the opponent's goal. Players can only use their feet to kick the ball. If the ball goes out of bounds, it is returned to the nearest boundary line and put back into play by the team that did not cause it to go out (e.g., a simple kick-in from the sideline).",
-                    "<strong>Scoring:</strong> A point is scored when the ball successfully enters the opponent's goal. After a goal, the ball is returned to the center for a restart.",
-                    "<strong>Winning:</strong> Play for a set time (e.g., 15-20 minutes) or until one team reaches a target score (e.g., 5-7 goals). The team with the most points at the end wins."
+                    "**Setup:** Create a large rectangular playing area (e.g., 30ft x 15ft) using cones or boundary markers. Inside this area, use ropes or pool noodles to create 3-4 parallel 'lanes' across the width of the field. Players will stand in these lanes, holding onto the rope/noodle. Place a goal (e.g., two cones spaced apart) at each end of the rectangle. The ball should be an inflatable beach ball or similar large, lightweight ball.",
+                    "**Team Formation:** Divide campers into equal teams. Assign each player to a specific lane. Players in the same lane on opposing teams will face each other. Players must hold onto a rope or pool noodle, restricting them to only move horizontally within their lane. They cannot move forward or backward out of their designated lane. Ensure an equal number of players per lane, or adjust lane sizes accordingly.",
+                    "**Game Start:** Place the large inflatable ball in the center of the playing area. On the whistle, the game begins.",
+                    "**Game Play:** Players must work together within their restricted horizontal movement to pass the ball to teammates in other lanes and eventually shoot it into the opponent's goal. Players can only use their feet to kick the ball. If the ball goes out of bounds, it is returned to the nearest boundary line and put back into play by the team that did not cause it to go out (e.g., a simple kick-in from the sideline).",
+                    "**Scoring:** A point is scored when the ball successfully enters the opponent's goal. After a goal, the ball is returned to the center for a restart.",
+                    "**Winning:** Play for a set time (e.g., 15-20 minutes) or until one team reaches a target score (e.g., 5-7 goals). The team with the most points at the end wins."
                 ],
                 stationInstructions: [],
                 materials: ["Pool Noodles (36)", "Inflatable Ball", "Cones (for goals and boundaries)", "Whistles (2)"],
@@ -853,12 +854,12 @@
                 description: "Transforms tic-tac-toe into a dynamic team relay. Teams race to place markers on a giant grid, aiming for three in a row.",
                 objectives: "Enhances speed, strategic thinking, teamwork, and coordination.",
                 generalInstructions: [
-                    "<strong>Setup:</strong> Use masking tape, rope, or cones to create a large 3x3 tic-tac-toe grid on the floor or ground (e.g., each square 3ft x 3ft). Designate a clear start line about 15-20 feet away from the grid. Ensure enough space around the grid for players to run.",
-                    "<strong>Team Formation:</strong> Divide campers into two equal teams (Team X and Team O). Provide each team with a distinct set of 5-6 markers (e.g., Team X uses frisbees, Team O uses bean bags). Each team lines up single-file behind their respective start line.",
-                    "<strong>Relay Start:</strong> On 'Go!', the first player from Team X runs from their start line to the tic-tac-toe grid. They place one of their team's markers into any empty square on the grid. After placing the marker, they run back and 'tag' (e.g., high-five) to the next teammate in line.",
-                    "<strong>Alternating Turns:</strong> Immediately after Team X's player tags their teammate, the first player from Team O runs to the grid, places their marker in an empty square, and runs back to tag their next teammate. Teams alternate turns in this relay fashion.",
-                    "<strong>Moving Markers (if grid is full):</strong> If the grid becomes full (all 9 squares have markers) and no one has three in a row, players can then choose to move one of their *existing* markers from one square to another *empty* square to try and get three in a row. They still must run to the grid, move the marker, and run back to tag. They cannot move an opponent's marker.",
-                    "<strong>Winning:</strong> The game continues until one team successfully gets three of their markers in a row (horizontally, vertically, or diagonally). The first team to achieve this wins the round. Play multiple rounds for best of three or five."
+                    "**Setup:** Use masking tape, rope, or cones to create a large 3x3 tic-tac-toe grid on the floor or ground (e.g., each square 3ft x 3ft). Designate a clear start line about 15-20 feet away from the grid. Ensure enough space around the grid for players to run.",
+                    "**Team Formation:** Divide campers into two equal teams (Team X and Team O). Provide each team with a distinct set of 5-6 markers (e.g., Team X uses frisbees, Team O uses bean bags). Each team lines up single-file behind their respective start line.",
+                    "**Relay Start:** On 'Go!', the first player from Team X runs from their start line to the tic-tac-toe grid. They place one of their team's markers into any empty square on the grid. After placing the marker, they run back and 'tag' (e.g., high-five) to the next teammate in line.",
+                    "**Alternating Turns:** Immediately after Team X's player tags their teammate, the first player from Team O runs to the grid, places their marker in an empty square, and runs back to tag their next teammate. Teams alternate turns in this relay fashion.",
+                    "**Moving Markers (if grid is full):** If the grid becomes full (all 9 squares have markers) and no one has three in a row, players can then choose to move one of their *existing* markers from one square to another *empty* square to try and get three in a row. They still must run to the grid, move the marker, and run back to tag. They cannot move an opponent's marker.",
+                    "**Winning:** The game continues until one team successfully gets three of their markers in a row (horizontally, vertically, or diagonally). The first team to achieve this wins the round. Play multiple rounds for best of three or five."
                 ],
                 stationInstructions: [],
                 materials: ["Masking Tape or Rope", "Frisbees (26)", "Bean Bags (10)", "Plastic Balls (2 bags)", "Cones (various)", "Whistles (2)", "Stopwatch (1)"],
@@ -874,11 +875,11 @@
                 description: "Classic bowling game indoors. Teams roll a bowling ball or inflatable ball to knock down pins or stacked plastic cups.",
                 objectives: "Enhances aim, strategy, and teamwork.",
                 generalInstructions: [
-                    "<strong>Setup:</strong> Choose a long, clear indoor space (e.g., gym, large hall). At one end, set up 10 bowling pins in a standard triangle formation (1-2-3-4 formation), or stack 10 plastic cups in a pyramid (4-3-2-1 formation). Mark a clear 'rolling line' about 15-20 feet away from the pins using masking tape. Ensure there is enough space for the ball to roll and for players to stand safely.",
-                    "<strong>Team Formation:</strong> Divide campers into small teams (e.g., 3-5 players per team). Each team will take turns bowling.",
-                    "<strong>Game Play:</strong> A player from the first team stands behind the rolling line and rolls the bowling ball (or inflatable ball) towards the pins/cups. They get two rolls per turn, just like in traditional bowling, to knock down as many as possible. Players must remain behind the rolling line until the ball has stopped.",
-                    "<strong>Scoring:</strong> Points are awarded for each pin/cup knocked down (e.g., 1 point per pin). A perfect strike (all 10 pins on the first roll) can earn bonus points (e.g., 15 points). A spare (all 10 pins on two rolls) can earn a slightly smaller bonus (e.g., 12 points). Keep score on a whiteboard or large paper. After a player's turn, the pins are reset.",
-                    "<strong>Winning:</strong> Play for a set number of rounds (e.g., 5-10 rounds per team) or until a target score is reached. The team with the most points at the end wins."
+                    "**Setup:** Choose a long, clear indoor space (e.g., gym, large hall). At one end, set up 10 bowling pins in a standard triangle formation (1-2-3-4 formation), or stack 10 plastic cups in a pyramid (4-3-2-1 formation). Mark a clear 'rolling line' about 15-20 feet away from the pins using masking tape. Ensure there is enough space for the ball to roll and for players to stand safely.",
+                    "**Team Formation:** Divide campers into small teams (e.g., 3-5 players per team). Each team will take turns bowling.",
+                    "**Game Play:** A player from the first team stands behind the rolling line and rolls the bowling ball (or inflatable ball) towards the pins/cups. They get two rolls per turn, just like in traditional bowling, to knock down as many as possible. Players must remain behind the rolling line until the ball has stopped.",
+                    "**Scoring:** Points are awarded for each pin/cup knocked down (e.g., 1 point per pin). A perfect strike (all 10 pins on the first roll) can earn bonus points (e.g., 15 points). A spare (all 10 pins on two rolls) can earn a slightly smaller bonus (e.g., 12 points). Keep score on a whiteboard or large paper. After a player's turn, the pins are reset.",
+                    "**Winning:** Play for a set number of rounds (e.g., 5-10 rounds per team) or until a target score is reached. The team with the most points at the end wins."
                 ],
                 stationInstructions: [],
                 materials: ["Bowling Ball (1)", "Bowling Pins (10)", "Plastic Cups (100)", "Inflatable Balls (3)", "Masking Tape", "Cones", "Scoreboard (1)", "Pencils", "Cardstock Paper", "Whistles (2)", "Stopwatch (1)"],
@@ -894,15 +895,15 @@
                 description: "Teams test aim and precision using slingshots to launch projectiles at targets for points.",
                 objectives: "Enhances aim, precision, teamwork, and coordination.",
                 generalInstructions: [
-                    "<strong>Setup:</strong> Designate a clear 'shooting line' using tape or cones. Set up various targets at different distances from the shooting line, assigning different point values to each target (e.g., closer targets = 5 points, medium = 10 points, furthest/smallest = 20 points). Targets can include buckets, laundry baskets, hula hoops laid flat, or stacked plastic cups. Ensure a clear and safe backstop behind the targets to contain projectiles. Provide each team with a slingshot and a supply of soft, safe projectiles (e.g., tennis balls, plastic balls, crumpled paper, small clay balls).",
-                    "<strong>Team Formation:</strong> Divide campers into small teams (e.g., 3-5 players per team). Each team will take turns shooting.",
-                    "<strong>Game Play:</strong> Teams send one player at a time to the shooting line. The player uses the slingshot to launch a projectile at the targets. They get a set number of shots per turn (e.g., 3-5 shots). After shooting, the player retrieves their projectiles (if safe to do so and not interfering with other players) and returns to tag the next player in line. Only one player should be at the shooting line at a time.",
-                    "<strong>Scoring:</strong> Points are tallied for successful hits on targets. Projectiles must hit or land inside the target to count. A designated scorekeeper records points for each team.",
-                    "<strong>Winning:</strong> The game continues for a set time (e.g., 20-30 minutes) or until all players have had a predetermined number of turns. The team with the highest total score at the end wins."
+                    "**Setup:** Designate a clear 'shooting line' using tape or cones. Set up various targets at different distances from the shooting line, assigning different point values to each target (e.g., closer targets = 5 points, medium = 10 points, furthest/smallest = 20 points). Targets can include buckets, laundry baskets, hula hoops laid flat, or stacked plastic cups. Ensure a clear and safe backstop behind the targets to contain projectiles. Provide each team with a slingshot and a supply of soft, safe projectiles (e.g., tennis balls, plastic balls, crumpled paper, small clay balls).",
+                    "**Team Formation:** Divide campers into small teams (e.g., 3-5 players per team). Each team will take turns shooting.",
+                    "**Game Play:** Teams send one player at a time to the shooting line. The player uses the slingshot to launch a projectile at the targets. They get a set number of shots per turn (e.g., 3-5 shots). After shooting, the player retrieves their projectiles (if safe to do so and not interfering with other players) and returns to tag the next player in line. Only one player should be at the shooting line at a time.",
+                    "**Scoring:** Points are tallied for successful hits on targets. Projectiles must hit or land inside the target to count. A designated scorekeeper records points for each team.",
+                    "**Winning:** The game continues for a set time (e.g., 20-30 minutes) or until all players have had a predetermined number of turns. The team with the highest total score at the end wins."
                 ],
                 stationInstructions: [],
                 materials: ["Sling Shots (4)", "Tennis Balls (50+)", "Plastic Balls (2 bags)", "Bean Bags (10)", "Cotton Balls (suggested purchase)", "Large Buckets (various)", "Laundry Baskets (11)", "Tiny Garbage Cans (9)", "Cones", "Hula Hoops (25)", "Scoreboard (1)", "Pencils", "Cardstock Paper", "Whistles (2)", "Stopwatch (1)"],
-                safety: "<strong>Strict Rules:</strong> Emphasize aiming ONLY at designated targets, NEVER at people or animals. Ensure a clear safety zone around targets and behind the shooter where no one should stand. Projectiles MUST be soft and harmless. Supervise closely to ensure proper and safe use of slingshots and projectiles. Collect projectiles promptly to prevent tripping hazards. Ensure no one walks in front of the shooter.",
+                safety: "**Strict Rules:** Emphasize aiming ONLY at designated targets, NEVER at people or animals. Ensure a clear safety zone around targets and behind the shooter where no one should stand. Projectiles MUST be soft and harmless. Supervise closely to ensure proper and safe use of slingshots and projectiles. Collect projectiles promptly to prevent tripping hazards. Ensure no one walks in front of the shooter.",
                 supercharged: "Just like we aim for targets with the slingshot, in our faith, we aim to live lives that honor God and hit the mark of His calling. Sometimes it takes practice and patience. What are some ways we can practice aiming for God's will in our daily lives?",
                 deleted: false
             },
@@ -914,12 +915,12 @@
                 description: "Teams throw sponges or bean bags at various targets for points, testing their aim and precision.",
                 objectives: "Enhances aim, precision, and teamwork.",
                 generalInstructions: [
-                    "<strong>Setup:</strong> Designate a 'throwing line' using tape or cones. Set up various targets at different distances and heights, assigning different point values (e.g., closer targets = 5 points, higher/further = 10 points). Targets can include large buckets, laundry baskets, hula hoops, or even leaders holding targets. Ensure a clear area for throws and where projectiles will land. Provide each team with a supply of sponges or bean bags.",
-                    "<strong>Team Formation:</strong> Divide campers into small teams (e.g., 3-5 players per team). Each team will take turns throwing.",
-                    "<strong>Game Play:</strong> Teams send one player at a time to the throwing line. The player throws a set number of sponges/bean bags (e.g., 3-5 throws) at the targets. After their throws, the player retrieves their projectiles (if safe to do so and not interfering with others) and returns to tag the next player in line. Only one player should be at the throwing line at a time.",
-                    "<strong>Scoring:</strong> Points are tallied for successful hits on targets. Projectiles must hit or land inside the target to count. A designated scorekeeper records points for each team.",
-                    "<strong>Optional: Deflectors:</strong> For an added challenge, leaders can hold pool noodles to act as deflectors, making it harder to hit targets. Ensure deflectors are held safely and do not interfere with the throwing motion.",
-                    "<strong>Winning:</strong> The game continues for a set time (e.g., 20-30 minutes) or until all players have had a predetermined number of turns. The team with the most points at the end wins."
+                    "**Setup:** Designate a 'throwing line' using tape or cones. Set up various targets at different distances and heights, assigning different point values (e.g., closer targets = 5 points, higher/further = 10 points). Targets can include large buckets, laundry baskets, hula hoops, or even leaders holding targets. Ensure a clear area for throws and where projectiles will land. Provide each team with a supply of sponges or bean bags.",
+                    "**Team Formation:** Divide campers into small teams (e.g., 3-5 players per team). Each team will take turns throwing.",
+                    "**Game Play:** Teams send one player at a time to the throwing line. The player throws a set number of sponges/bean bags (e.g., 3-5 throws) at the targets. After their throws, the player retrieves their projectiles (if safe to do so and not interfering with others) and returns to tag the next player in line. Only one player should be at the throwing line at a time.",
+                    "**Scoring:** Points are tallied for successful hits on targets. Projectiles must hit or land inside the target to count. A designated scorekeeper records points for each team.",
+                    "**Optional: Deflectors:** For an added challenge, leaders can hold pool noodles to act as deflectors, making it harder to hit targets. Ensure deflectors are held safely and do not interfere with the throwing motion.",
+                    "**Winning:** The game continues for a set time (e.g., 20-30 minutes) or until all players have had a predetermined number of turns. The team with the most points at the end wins."
                 ],
                 stationInstructions: [],
                 materials: ["Sponges (21½ bags)", "Bean Bags (10)", "Large Buckets (various)", "Laundry Baskets (11)", "Tiny Garbage Cans (9)", "Cones", "Hula Hoops (25)", "Scoreboard (1)", "Pencils", "Cardstock Paper", "Whistles (2)", "Stopwatch (1)", "Pool Noodles (36)"],
@@ -935,11 +936,11 @@
                 description: "Teams use a large bed sheet held taut to volley an inflatable ball over a net or designated line, mimicking volleyball or ping pong.",
                 objectives: "Enhances coordination, teamwork, communication, and hand-eye coordination.",
                 generalInstructions: [
-                    "<strong>Setup:</strong> Divide the playing area (field or gym) into two halves. Set up a 'net' in the middle: if outdoors, string a rope between two poles or trees at a height appropriate for the campers; if indoors, use a line of cones or masking tape on the floor. Provide each team with a large bed sheet (at least twin size, larger is better for more players) and an inflatable ball (e.g., beach ball).",
-                    "<strong>Team Formation:</strong> Divide campers into two equal teams. Each team will gather around their bed sheet, holding the edges of the sheet taut with both hands. The number of players per sheet depends on the sheet size (e.g., 4-8 players per sheet). All players must hold onto the sheet at all times during play.",
-                    "<strong>Game Play:</strong> To start, one team places the inflatable ball on their taut bed sheet. Working together, they must use the sheet to launch the ball over the 'net' to the opposing team's side. The opposing team must then try to 'catch' the ball on their sheet without letting it touch the ground. Once caught, they must volley it back over the net. The ball must go over the net and land within the opposing team's boundaries.",
-                    "<strong>Scoring:</strong> A point is scored when: <br> - The ball hits the ground on the opponent's side of the net (within bounds). <br> - The ball goes out of bounds. <br> - A team drops the ball (fails to catch it on their sheet). <br> - The ball hits the net and doesn't go over. <br> The team that scores the point gets to serve the ball for the next round.",
-                    "<strong>Winning:</strong> Play to a predetermined score (e.g., first to 15 points, winning by 2) or for a set time limit (e.g., 15-20 minutes). The team with the most points at the end wins."
+                    "**Setup:** Divide the playing area (field or gym) into two halves. Set up a 'net' in the middle: if outdoors, string a rope between two poles or trees at a height appropriate for the campers; if indoors, use a line of cones or masking tape on the floor. Provide each team with a large bed sheet (at least twin size, larger is better for more players) and an inflatable ball (e.g., beach ball).",
+                    "**Team Formation:** Divide campers into two equal teams. Each team will gather around their bed sheet, holding the edges of the sheet taut with both hands. The number of players per sheet depends on the sheet size (e.g., 4-8 players per sheet). All players must hold onto the sheet at all times during play.",
+                    "**Game Play:** To start, one team places the inflatable ball on their taut bed sheet. Working together, they must use the sheet to launch the ball over the 'net' to the opposing team's side. The opposing team must then try to 'catch' the ball on their sheet without letting it touch the ground. Once caught, they must volley it back over the net. The ball must go over the net and land within the opposing team's boundaries.",
+                    "**Scoring:** A point is scored when: \n- The ball hits the ground on the opponent's side of the net (within bounds). \n- The ball goes out of bounds. \n- A team drops the ball (fails to catch it on their sheet). \n- The ball hits the net and doesn't go over. \nThe team that scores the point gets to serve the ball for the next round.",
+                    "**Winning:** Play to a predetermined score (e.g., first to 15 points, winning by 2) or for a set time limit (e.g., 15-20 minutes). The team with the most points at the end wins."
                 ],
                 stationInstructions: [],
                 materials: ["Bed sheets (2 large - suggested camp supply)", "Inflatable Balls (3)", "Rope (7 available)", "Masking Tape (3 rolls)", "Cones (various)", "Whistles (2)"],
@@ -955,12 +956,12 @@
                 description: "Campers search for hidden 'treasures' submerged in kiddie pools, often blindfolded or using only their feet, relying on touch and teamwork.",
                 objectives: "Enhances tactile exploration, problem-solving, and communication (if guided).",
                 generalInstructions: [
-                    "<strong>Setup:</strong> Place several small kiddie pools in a designated outdoor area. Fill each pool with water to a depth that allows treasures to be submerged but is safe for children. Submerge various 'treasures' at the bottom of the pools (e.g., fake gold coins, plastic critters, diving octopi, weighted plastic balls). Ensure the treasures are safe to handle, clean, and easily distinguishable by touch. Have blindfolds or bandanas ready.",
-                    "<strong>Team Formation:</strong> Divide campers into teams. Each team will take turns sending one or two players to search the pools.",
-                    "<strong>Game Play (Option 1 - Blindfolded):</strong> One player from a team is blindfolded. They approach a pool and, guided verbally by their non-blindfolded teammates, attempt to find and retrieve as many treasures as possible within a set time limit (e.g., 60-90 seconds). The blindfolded player cannot see, relying entirely on their teammates' instructions. Teammates must stay outside the pool and can only use verbal commands (e.g., 'left a little', 'straight ahead', 'mine on your right', 'mine on your right').",
-                    "<strong>Game Play (Option 2 - Feet Only):</strong> Players are not blindfolded but must use only their feet/toes to search for and retrieve treasures from the bottom of the pool. No hands allowed. This can be done individually or as a relay.",
-                    "<strong>Scoring:</strong> After the time limit, count the treasures collected by the player. The treasures are then returned to the pool for the next team. The team with the most treasures collected at the end wins. You can assign different point values to different types of treasures if desired.",
-                    "<strong>Rotation:</strong> Teams rotate through the pools until all players have had a turn, or for a set number of rounds."
+                    "**Setup:** Place several small kiddie pools in a designated outdoor area. Fill each pool with water to a depth that allows treasures to be submerged but is safe for children. Submerge various 'treasures' at the bottom of the pools (e.g., fake gold coins, plastic critters, diving octopi, weighted plastic balls). Ensure the treasures are safe to handle, clean, and easily distinguishable by touch. Have blindfolds or bandanas ready.",
+                    "**Team Formation:** Divide campers into teams. Each team will take turns sending one or two players to search the pools.",
+                    "**Game Play (Option 1 - Blindfolded):** One player from a team is blindfolded. They approach a pool and, guided verbally by their non-blindfolded teammates, attempt to find and retrieve as many treasures as possible within a set time limit (e.g., 60-90 seconds). The blindfolded player cannot see, relying entirely on their teammates' instructions. Teammates must stay outside the pool and can only use verbal commands (e.g., 'left a little', 'straight ahead', 'mine on your right', 'mine on your right').",
+                    "**Game Play (Option 2 - Feet Only):** Players are not blindfolded but must use only their feet/toes to search for and retrieve treasures from the bottom of the pool. No hands allowed. This can be done individually or as a relay.",
+                    "**Scoring:** After the time limit, count the treasures collected by the player. The treasures are then returned to the pool for the next team. The team with the most treasures collected at the end wins. You can assign different point values to different types of treasures if desired.",
+                    "**Rotation:** Teams rotate through the pools until all players have had a turn, or for a set number of rounds."
                 ],
                 stationInstructions: [],
                 materials: ["Small Kiddie Pools (4)", "Fake Gold Coins (approx 130)", "Plastic Critters (2 large ziplocks)", "Small Plastic Dinosaurs (30)", "Diving Octopi (1 set of 6)", "Blindfolds (or Bandanas - approx. 70)", "Whistles (2)", "Stopwatch (1)"],
@@ -976,12 +977,12 @@
                 description: "Teams receive a mystery box of random items and a camp-related problem. They must invent a solution, build a prototype, and present it with a jingle.",
                 objectives: "Fosters creativity, collaborative problem-solving, communication, and presentation skills.",
                 generalInstructions: [
-                    "<strong>Setup:</strong> Prepare 'mystery boxes' for each team. Each box should contain a variety of random, safe, and diverse items (e.g., cardboard, popsicle sticks, rubber bands, plastic spoons, plastic cups, yarn, CDs, pipe cleaners, small plastic toys, empty paper towel rolls, fabric scraps, string, paper clips, aluminum foil). Also, prepare a 'problem prompt' for each team written on a card (e.g., 'Invent a device to help campers make new friends', 'Create a system to keep tents tidy', 'Design a way to make Bible study more fun', 'Build a tool to help carry supplies'). Provide basic tools like glue sticks, white glue, tape, and scissors.",
-                    "<strong>Team Formation:</strong> Divide campers into small teams (e.g., 4-6 campers per team). Give each team a mystery box and a problem prompt. Designate a workspace for each team.",
-                    "<strong>Brainstorm & Build (30-40 minutes):</strong> Teams have this time to brainstorm ideas, design their invention, and build a prototype using *only* the materials in their mystery box. Encourage them to think creatively and collaboratively. Remind them that the prototype doesn't have to be perfect, but it should clearly demonstrate their idea.",
-                    "<strong>Jingle Creation (during building time):</strong> During the building time, teams must also create a short, catchy jingle or slogan for their invention. The jingle should explain its purpose and benefits in a fun, memorable way (e.g., a short song, a rhyme, a cheer).",
-                    "<strong>Presentation (5-7 minutes per team):</strong> After the building time, each team presents their invention to the larger group. They should explain: <br> 1. The problem they addressed. <br> 2. How their invention works and what it does. <br> 3. What materials they used and why. <br> 4. Perform their jingle/slogan. <br> Encourage questions from other teams after each presentation.",
-                    "<strong>Judging/Awards:</strong> Leaders can award points or fun prizes for categories such as: Most Creative Invention, Best Teamwork, Funniest Jingle, Most Practical Solution, Best Presentation, etc."
+                    "**Setup:** Prepare 'mystery boxes' for each team. Each box should contain a variety of random, safe, and diverse items (e.g., cardboard, popsicle sticks, rubber bands, plastic spoons, plastic cups, yarn, CDs, pipe cleaners, small plastic toys, empty paper towel rolls, fabric scraps, string, paper clips, aluminum foil). Also, prepare a 'problem prompt' for each team written on a card (e.g., 'Invent a device to help campers make new friends', 'Create a system to keep tents tidy', 'Design a way to make Bible study more fun', 'Build a tool to help carry supplies'). Provide basic tools like glue sticks, white glue, tape, and scissors.",
+                    "**Team Formation:** Divide campers into small teams (e.g., 4-6 campers per team). Give each team a mystery box and a problem prompt. Designate a workspace for each team.",
+                    "**Brainstorm & Build (30-40 minutes):** Teams have this time to brainstorm ideas, design their invention, and build a prototype using *only* the materials in their mystery box. Encourage them to think creatively and collaboratively. Remind them that the prototype doesn't have to be perfect, but it should clearly demonstrate their idea.",
+                    "**Jingle Creation (during building time):** During the building time, teams must also create a short, catchy jingle or slogan for their invention. The jingle should explain its purpose and benefits in a fun, memorable way (e.g., a short song, a rhyme, a cheer).",
+                    "**Presentation (5-7 minutes per team):** After the building time, each team presents their invention to the larger group. They should explain: \n1. The problem they addressed. \n2. How their invention works and what it does. \n3. What materials they used and why. \n4. Perform their jingle/slogan. \nEncourage questions from other teams after each presentation.",
+                    "**Judging/Awards:** Leaders can award points or fun prizes for categories such as: Most Creative Invention, Best Teamwork, Funniest Jingle, Most Practical Solution, Best Presentation, etc."
                 ],
                 stationInstructions: [],
                 materials: ["Cardboard Boxes (2)", "Popsicle Sticks (various)", "Rubber Bands (various)", "Plastic Critters (2 large ziplocks)", "Foam Beads (1 bag ziplocks)", "Yarn (various)", "CDs (17)", "Skewers (various)", "Toothpicks (500)", "Plastic Cups (100)", "Wooden Blocks (32)", "Construction Paper (various)", "Washable Markers (various)", "Glue Sticks (various)", "White Glue Bottles (11)", "Scissors (various)", "Stopwatch (1)", "Masking Tape", "Scotch Tape", "Aluminum Foil (suggested purchase)"],
@@ -997,12 +998,12 @@
                 description: "Blindfolded players navigate a 'minefield' of soft obstacles, guided verbally by teammates to collect 'power-ups' representing Foursquare values.",
                 objectives: "Enhances trust, communication, active listening, teamwork, and reinforces camp values.",
                 generalInstructions: [
-                    "<strong>Setup:</strong> In an open indoor or outdoor area, scatter 'mines' (e.g., cones, bean bags, soft objects like small balls or crumpled paper) randomly across the space. These are obstacles to be avoided. Then, strategically place 'power-up' items (e.g., laminated Bible verses, rubber ducks, fake gold coins, plastic critters, wooden blocks, small laminated pictures representing Foursquare values) throughout the minefield. Ensure power-ups are distinct from mines and easily identifiable by touch or by a quick verbal description from guides. Have blindfolds or bandanas ready.",
-                    "<strong>Team Formation:</strong> Divide campers into small teams (e.g., 4-6 campers per team). Each team will designate one player to be the 'navigator' (blindfolded) and the rest to be the 'guides'. Teams should have a designated 'collection zone' for their power-ups.",
-                    "<strong>Game Play:</strong> The navigator is blindfolded and stands at the edge of the minefield. On 'Go!', the guides must use only verbal instructions (no touching, pointing, or physical contact!) to direct their blindfolded navigator through the minefield. The goal is to collect as many 'power-ups' as possible while avoiding touching any 'mines'. Once a power-up is found, the navigator must bring it back to their team's collection zone before seeking another.",
-                    "<strong>Mine Penalty:</strong> If the navigator touches a 'mine', they must immediately stop. The guides must then verbally direct them back to the starting point of that specific segment of the minefield (or the beginning of the entire minefield, depending on desired difficulty) before they can continue their search.",
-                    "<strong>Scoring:</strong> Teams earn points for each 'power-up' successfully collected and brought back to their collection zone. The game can be timed (e.g., 10-15 minutes), with the team collecting the most power-ups in that set time winning, or the first team to collect all designated power-ups winning. Rotate navigators within each team so everyone gets a chance to experience both roles.",
-                    "<strong>Guide Communication:</strong> Emphasize clear, concise, and calm verbal guidance. Guides should use directional words (e.g., 'take two steps forward', 'turn slightly left', 'mine on your right', 'mine on your right').'"
+                    "**Setup:** In an open indoor or outdoor area, scatter 'mines' (e.g., cones, bean bags, soft objects like small balls or crumpled paper) randomly across the space. These are obstacles to be avoided. Then, strategically place 'power-up' items (e.g., laminated Bible verses, rubber ducks, fake gold coins, plastic critters, wooden blocks, small laminated pictures representing Foursquare values) throughout the minefield. Ensure power-ups are distinct from mines and easily identifiable by touch or by a quick verbal description from guides. Have blindfolds or bandanas ready.",
+                    "**Team Formation:** Divide campers into small teams (e.g., 4-6 campers per team). Each team will designate one player to be the 'navigator' (blindfolded) and the rest to be the 'guides'. Teams should have a designated 'collection zone' for their power-ups.",
+                    "**Game Play:** The navigator is blindfolded and stands at the edge of the minefield. On 'Go!', the guides must use only verbal instructions (no touching, pointing, or physical contact!) to direct their blindfolded navigator through the minefield. The goal is to collect as many 'power-ups' as possible while avoiding touching any 'mines'. Once a power-up is found, the navigator must bring it back to their team's collection zone before seeking another.",
+                    "**Mine Penalty:** If the navigator touches a 'mine', they must immediately stop. The guides must then verbally direct them back to the starting point of that specific segment of the minefield (or the beginning of the entire minefield, depending on desired difficulty) before they can continue their search.",
+                    "**Scoring:** Teams earn points for each 'power-up' successfully collected and brought back to their collection zone. The game can be timed (e.g., 10-15 minutes), with the team collecting the most power-ups in that set time winning, or the first team to collect all designated power-ups winning. Rotate navigators within each team so everyone gets a chance to experience both roles.",
+                    "**Guide Communication:** Emphasize clear, concise, and calm verbal guidance. Guides should use directional words (e.g., 'take two steps forward', 'turn slightly left', 'mine on your right', 'mine on your right').'"
                 ],
                 stationInstructions: [],
                 materials: ["Cones (various)", "Bean Bags (10)", "Whistles (2)", "Blindfolds (or Bandanas - approx. 70)", "Laminated Bible Chapter Names (2 sets)", "Rubber Duckies (44)", "Fake Gold Coins (approx 130)", "Plastic Critters (2 large ziplocks)", "Wooden Blocks (32)", "Plastic Balls (2 bags)", "Laminated Foursquare Symbols/Values (suggested purchase)"],
@@ -1018,10 +1019,10 @@
                 description: "Campers use logic and communication to decode secret messages (substitution ciphers, bead sequences). Decoded messages reveal Foursquare values, Bible verses, or clues.",
                 objectives: "Enhances problem-solving, logical thinking, communication, critical thinking, and subtly reinforces camp values.",
                 generalInstructions: [
-                    "<strong>Setup:</strong> Create 3-5 encrypted messages for each team. Ensure the messages are progressive, with one leading to the next. Examples include: <br> - <strong>Substitution Cipher:</strong> Each letter is replaced by another (e.g., A=Z, B=Y, or a simple shift cipher like A=C, B=D). Provide a small, clear key (e.g., 'A=Z', 'B=Y') for the first message, or make it a simple pattern they can deduce. <br> - <strong>Number Code:</strong> Each letter corresponds to a number (e.g., A=1, B=2). Provide a number-to-letter key. <br> - <strong>Bead Sequence:</strong> A sequence of colored beads represents a word or phrase (e.g., Red-Blue-Green = 'Faith', Yellow-Yellow-Red = 'Love'). Provide a clear legend for the bead code. <br> The decoded messages should reveal Foursquare values, short Bible verses, or clues leading to the next message. Place the first message and any necessary decoding tools (pencils, paper, bead legend, cipher key) in a sealed envelope labeled for each team.",
-                    "<strong>Team Formation:</strong> Divide campers into small teams (e.g., 3-5 campers per team). Give each team their first encrypted message envelope and a clipboard/writing surface.",
-                    "<strong>Game Play:</strong> Teams collaboratively work to decode their message. They must use the provided key or their own logic to figure out the code. Encourage discussion and collaboration within the team. Once a message is decoded, they show it to a leader to verify. If correct, the leader provides the next encrypted message or clue. If incorrect, the leader can give a small hint (e.g., 'check your second word') and send them back to try again.",
-                    "<strong>Winning:</strong> The game continues until all messages are decoded, leading to a final message (e.g., 'You have unlocked the secret of teamwork!') or a small 'treasure' (e.g., a bag of fake gold coins, a small treat). The first team to successfully decode all messages wins."
+                    "**Setup:** Create 3-5 encrypted messages for each team. Ensure the messages are progressive, with one leading to the next. Examples include:\n- **Substitution Cipher:** Each letter is replaced by another (e.g., A=Z, B=Y, or a simple shift cipher like A=C, B=D). Provide a small, clear key (e.g., 'A=Z', 'B=Y') for the first message, or make it a simple pattern they can deduce.\n- **Number Code:** Each letter corresponds to a number (e.g., A=1, B=2). Provide a number-to-letter key.\n- **Bead Sequence:** A sequence of colored beads represents a word or phrase (e.g., Red-Blue-Green = 'Faith', Yellow-Yellow-Red = 'Love'). Provide a clear legend for the bead code.\nThe decoded messages should reveal Foursquare values, short Bible verses, or clues leading to the next message. Place the first message and any necessary decoding tools (pencils, paper, bead legend, cipher key) in a sealed envelope labeled for each team.",
+                    "**Team Formation:** Divide campers into small teams (e.g., 3-5 campers per team). Give each team their first encrypted message envelope and a clipboard/writing surface.",
+                    "**Game Play:** Teams collaboratively work to decode their message. They must use the provided key or their own logic to figure out the code. Encourage discussion and collaboration within the team. Once a message is decoded, they show it to a leader to verify. If correct, the leader provides the next encrypted message or clue. If incorrect, the leader can give a small hint (e.g., 'check your second word') and send them back to try again.",
+                    "**Winning:** The game continues until all messages are decoded, leading to a final message (e.g., 'You have unlocked the secret of teamwork!') or a small 'treasure' (e.g., a bag of fake gold coins, a small treat). The first team to successfully decode all messages wins."
                 ],
                 stationInstructions: [],
                 materials: ["ABC Beads (3 sets)", "Colored Beads (3 sets)", "Pencils (various)", "Pens (3)", "Cardstock Paper (50)", "Construction Paper (various)", "Washable Markers (various)", "Sticky Notes (various)", "Laminated Bible Chapter Names (2 sets)", "Small Metal Cups (6)", "Plastic Critters (2 large ziplocks)", "Clipboards (4)", "Stopwatch (1)", "Envelopes"],
@@ -1037,12 +1038,12 @@
                 description: "Teams design and build a Rube Goldberg-esque contraption using camp supplies to achieve a simple task (e.g., move an object, pop a balloon).",
                 objectives: "Fosters engineering design, creative problem-solving, collaborative planning, and understanding of cause-and-effect.",
                 generalInstructions: [
-                    "<strong>Setup:</strong> Designate a building area for each team (e.g., a section of a table or floor, or a designated corner). Provide each team with a diverse assortment of safe, random camp materials (e.g., cardboard, popsicle sticks, rubber bands, plastic spoons, plastic cups, string, small plastic balls, CDs, tape, glue, empty bottles/cans, paper towel rolls, marbles, dominoes). Clearly state the simple task their contraption must achieve (e.g., 'move a small object from Point A to Point B', 'pop a balloon', 'ring a bell', 'turn a page', 'drop a coin into a cup'). Provide a target object for the task (e.g., a specific small ball to move, a balloon to pop).",
-                    "<strong>Team Formation:</strong> Divide campers into small teams (e.g., 4-6 campers per team). Present the challenge: to design and build a functional catapult that can launch a projectile.",
-                    "<strong>Build Time (30-40 minutes):</strong> Teams have this time to brainstorm, design, and construct their catapult. Encourage them to experiment with different designs and test their catapults during the building phase. Leaders should circulate to offer guidance and ensure safe construction.",
-                    "<strong>Competition Challenges:</strong> Once the building time is up, teams will bring their catapults to a designated competition area and compete in one or more challenges: <br> - <strong>Distance Challenge:</strong> Each team launches a projectile from a designated line, aiming for the furthest distance. Mark the landing spots and measure the distance. Each team gets 3-5 attempts. <br> - <strong>Accuracy Challenge:</strong> Set up targets (e.g., buckets, hula hoops, marked circles on the floor) at various distances. Teams try to land projectiles inside the targets for points. Assign different point values for different targets/distances. Each team gets 3-5 attempts. <br> - <strong>Volume Challenge:</strong> Teams try to launch as many projectiles as possible into a container within a set time (e.g., 60 seconds).",
-                    "<strong>Scoring:</strong> Points are awarded based on performance in the chosen challenges (e.g., furthest distance in feet/meters, most accurate shots, most projectiles in the bucket). Keep a clear score for each team on a scoreboard.",
-                    "<strong>Winning:</strong> The team with the highest total score across all challenges wins. Celebrate all efforts, regardless of score."
+                    "**Setup:** Designate a building area for each team (e.g., a section of a table or floor, or a designated corner). Provide each team with a diverse assortment of safe, random camp materials (e.g., cardboard, popsicle sticks, rubber bands, plastic spoons, plastic cups, string, small plastic balls, CDs, tape, glue, empty bottles/cans, paper towel rolls, marbles, dominoes). Clearly state the simple task their contraption must achieve (e.g., 'move a small object from Point A to Point B', 'pop a balloon', 'ring a bell', 'turn a page', 'drop a coin into a cup'). Provide a target object for the task (e.g., a specific small ball to move, a balloon to pop).",
+                    "**Team Formation:** Divide campers into small teams (e.g., 4-6 campers per team). Present the challenge: to design and build a functional catapult that can launch a projectile.",
+                    "**Build Time (30-40 minutes):** Teams have this time to brainstorm, design, and construct their catapult. Encourage them to experiment with different designs and test their catapults during the building phase. Leaders should circulate to offer guidance and ensure safe construction.",
+                    "**Competition Challenges:** Once the building time is up, teams will bring their catapults to a designated competition area and compete in one or more challenges: \n- **Distance Challenge:** Each team launches a projectile from a designated line, aiming for the furthest distance. Mark the landing spots and measure the distance. Each team gets 3-5 attempts. \n- **Accuracy Challenge:** Set up targets (e.g., buckets, hula hoops, marked circles on the floor) at various distances. Teams try to land projectiles inside the targets for points. Assign different point values for different targets/distances. Each team gets 3-5 attempts. \n- **Volume Challenge:** Teams try to launch as many projectiles as possible into a container within a set time (e.g., 60 seconds).",
+                    "**Scoring:** Points are awarded based on performance in the chosen challenges (e.g., furthest distance in feet/meters, most accurate shots, most projectiles in the bucket). Keep a clear score for each team on a scoreboard.",
+                    "**Winning:** The team with the highest total score across all challenges wins. Celebrate all efforts, regardless of score."
                 ],
                 stationInstructions: [],
                 materials: ["Popsicle Sticks (various)", "Rubber Bands (various)", "Plastic Spoons (36)", "Plastic Cups (100)", "Small Plastic Balls (2 bags)", "Cotton Balls (suggested purchase)", "Paper Clips (suggested purchase)", "Clay (suggested purchase)", "Glue Sticks (various)", "White Glue Bottles (11)", "Scissors (various)", "Stopwatch (1)", "Measuring Tape (suggested purchase)", "Cones (for marking lines/targets)", "Buckets (various)", "Hula Hoops (25)"],
@@ -1058,12 +1059,12 @@
                 description: "Teams collaborate on a large-scale art project, creating a mural representing camp life, Foursquare values, or a chosen theme.",
                 objectives: "Fosters creativity, collaborative art-making, communication, and imaginative expression.",
                 generalInstructions: [
-                    "<strong>Setup:</strong> Prepare a large surface for the mural. This could be a large white tarp laid on the floor, several large sheets of construction paper taped together on a wall or laid out, or a large roll of butcher paper. Provide a wide array of art supplies: washable markers, crayons, paints (tempera or washable acrylics), brushes, sponges, glue sticks, white glue, scissors, and various collage materials (e.g., construction paper scraps, yarn, plastic critters, laminated Bible verses for inspiration, magazine cutouts, glitter). Ensure adequate protection for the floor/tables if using paint.",
-                    "<strong>Theme & Team Formation:</strong> Assign a clear theme for the mural (e.g., 'What Foursquare Camp Means to Me', 'Growing in Faith', 'Community in Action', 'The Fourfold Gospel'). Divide campers into teams (e.g., 4-6 campers per team). Each team can be assigned a specific section of the mural to work on, or a particular aspect of the theme to represent. Clearly mark team sections if applicable.",
-                    "<strong>Brainstorm & Create (45-60 minutes):</strong> Teams brainstorm ideas for their section or contribution to the mural, considering how their part will connect with other teams' parts to form a cohesive whole. Campers then use the art supplies to draw, paint, and collage their section of the mural. Encourage them to be bold and expressive.",
-                    "<strong>Collaboration:</strong> Encourage communication between teams, especially if they are working on adjacent sections, to ensure cohesion and a unified final piece. Leaders should circulate to offer guidance, support, and help with material distribution. Remind campers to share supplies and work together.",
-                    "<strong>Presentation (5-10 minutes):</strong> Once the mural is complete (or time is up), gather the campers to view the entire masterpiece. Each team can briefly present their section, explaining what they depicted and why, and how it's connects to the overall theme. Facilitate a discussion about the entire mural and what it represents.",
-                    "<strong>Display:</strong> Find a prominent place to display the completed mural as a reminder of their collaborative efforts and the camp's themes. Take a photo for camp memories."
+                    "**Setup:** Prepare a large surface for the mural. This could be a large white tarp laid on the floor, several large sheets of construction paper taped together on a wall or laid out, or a large roll of butcher paper. Provide a wide array of art supplies: washable markers, crayons, paints (tempera or washable acrylics), brushes, sponges, glue sticks, white glue, scissors, and various collage materials (e.g., construction paper scraps, yarn, plastic critters, laminated Bible verses for inspiration, magazine cutouts, glitter). Ensure adequate protection for the floor/tables if using paint.",
+                    "**Theme & Team Formation:** Assign a clear theme for the mural (e.g., 'What Foursquare Camp Means to Me', 'Growing in Faith', 'Community in Action', 'The Fourfold Gospel'). Divide campers into teams (e.g., 4-6 campers per team). Each team can be assigned a specific section of the mural to work on, or a particular aspect of the theme to represent. Clearly mark team sections if applicable.",
+                    "**Brainstorm & Create (45-60 minutes):** Teams brainstorm ideas for their section or contribution to the mural, considering how their part will connect with other teams' parts to form a cohesive whole. Campers then use the art supplies to draw, paint, and collage their section of the mural. Encourage them to be bold and expressive.",
+                    "**Collaboration:** Encourage communication between teams, especially if they are working on adjacent sections, to ensure cohesion and a unified final piece. Leaders should circulate to offer guidance, support, and help with material distribution. Remind campers to share supplies and work together.",
+                    "**Presentation (5-10 minutes):** Once the mural is complete (or time is up), gather the campers to view the entire masterpiece. Each team can briefly present their section, explaining what they depicted and why, and how it's connects to the overall theme. Facilitate a discussion about the entire mural and what it represents.",
+                    "**Display:** Find a prominent place to display the completed mural as a reminder of their collaborative efforts and the camp's themes. Take a photo for camp memories."
                 ],
                 stationInstructions: [],
                 materials: ["White Tarp (1)", "Construction Paper (various)", "Butcher Paper (suggested purchase)", "Washable Markers (various)", "Crayons (various)", "Sharpies (various)", "Black Paint (3 bottles)", "Pink Paint (2 bottles)", "2 Orange Paint (2 bottles)", "Blue Paint (1 bottle)", "Sponges (21½ bags)", "Glue Sticks (various)", "White Glue Bottles (11)", "Scissors (various)", "Plastic Critters (2 large ziplocks)", "Foam Beads (1 bag ziplocks)", "Yarn (various)", "CDs (17)", "Masking Tape (3 rolls)", "Laminated Bible Chapter Names (2 sets)", "Glitter (suggested purchase)", "Magazine cutouts (optional)"],
@@ -1079,12 +1080,12 @@
                 description: "Blindfolded team members build a structure (e.g., block tower, cup pattern) guided solely by verbal instructions from non-blindfolded teammates.",
                 objectives: "Enhances precise communication, active listening, trust, and spatial reasoning.",
                 generalInstructions: [
-                    "<strong>Setup:</strong> Prepare a reference image or diagram of a simple structure (e.g., a specific block tower design, a pattern of stacked cups, a LEGO creation, a simple shape made of popsicle sticks). Ensure the structure is achievable with the provided materials and is not overly complex. Provide each team with an identical set of building materials (e.g., wooden blocks, plastic cups, LEGOs, popsicle sticks) and blindfolds or bandanas. Each team should have a designated building surface (e.g., a small table or clear floor space).",
-                    "<strong>Team Formation:</strong> Divide campers into small teams (e.g., 3-5 campers per team). For each round, designate one or two team members to be the 'builders' (who will be blindfolded) and the rest to be the 'guides'. Rotate roles in subsequent rounds.",
-                    "<strong>Game Play:</strong> The builders are blindfolded and sit at their building area with the materials within reach. The guides stand a short distance away, where they can clearly see the reference image but *cannot* touch the materials, the blindfolded builders, or the structure being built. The guides must use only verbal instructions to direct the builders to construct the replica of the reference image.",
-                    "<strong>Communication Rules:</strong> Emphasize clear, concise, and specific instructions. Guides should describe shapes, colors, positions, and orientations precisely (e.g., 'Take the red square block', 'Place it on top of the green rectangle', 'Rotate it 90 degrees clockwise'). Builders can ask clarifying questions (e.g., 'Do you mean the long side or the short side?'), but guides cannot use gestures or touch. If the structure falls or is built incorrectly, the team must correct it or restart that section.",
-                    "<strong>Winning:</strong> The first team to successfully build the structure exactly as shown in the reference image wins the round. You can play multiple rounds, rotating who is blindfolded and introducing new reference images for each round.",
-                    "<strong>Variations:</strong> Increase difficulty by using more complex structures, limiting communication to only 'yes' or 'no' answers, or adding a strict time limit (e.g., 5-10 minutes per round)."
+                    "**Setup:** Prepare a reference image or diagram of a simple structure (e.g., a specific block tower design, a pattern of stacked cups, a LEGO creation, a simple shape made of popsicle sticks). Ensure the structure is achievable with the provided materials and is not overly complex. Provide each team with an identical set of building materials (e.g., wooden blocks, plastic cups, LEGOs, popsicle sticks) and blindfolds or bandanas. Each team should have a designated building surface (e.g., a small table or clear floor space).",
+                    "**Team Formation:** Divide campers into small teams (e.g., 3-5 campers per team). For each round, designate one or two team members to be the 'builders' (who will be blindfolded) and the rest to be the 'guides'. Rotate roles in subsequent rounds.",
+                    "**Game Play:** The builders are blindfolded and sit at their building area with the materials within reach. The guides stand a short distance away, where they can clearly see the reference image but *cannot* touch the materials, the blindfolded builders, or the structure being built. The guides must use only verbal instructions to direct the builders to construct the replica of the reference image.",
+                    "**Communication Rules:** Emphasize clear, concise, and specific instructions. Guides should describe shapes, colors, positions, and orientations precisely (e.g., 'Take the red square block', 'Place it on top of the green rectangle', 'Rotate it 90 degrees clockwise'). Builders can ask clarifying questions (e.g., 'Do you mean the long side or the short side?'), but guides cannot use gestures or touch. If the structure falls or is built incorrectly, the team must correct it or restart that section.",
+                    "**Winning:** The first team to successfully build the structure exactly as shown in the reference image wins the round. You can play multiple rounds, rotating who is blindfolded and introducing new reference images for each round.",
+                    "**Variations:** Increase difficulty by using more complex structures, limiting communication to only 'yes' or 'no' answers, or adding a strict time limit (e.g., 5-10 minutes per round)."
                 ],
                 stationInstructions: [],
                 materials: ["Wooden Blocks (32)", "Plastic Cups (100)", "LEGOs (suggested purchase)", "Bandanas (approx. 70)", "Blindfolds (suggested purchase)", "Cardstock Paper (50)", "Popsicle Sticks (various)", "Stopwatch (1)", "Whistles (2)"],
@@ -1100,12 +1101,12 @@
                 description: "Teams act out camp-related or Foursquare-themed prompts (e.g., 'roasting marshmallows,' 'praying together'), fostering creative expression and non-verbal communication.",
                 objectives: "Encourages creative expression, non-verbal communication, and quick thinking.",
                 generalInstructions: [
-                    "<strong>Setup:</strong> Prepare numerous slips of paper, each with a prompt written on it. Prompts should be camp-related activities (e.g., 'roasting marshmallows', 'swimming in the lake', 'singing campfire songs', 'packing a suitcase', 'going on a hike', 'telling ghost stories'), Foursquare values (e.g., 'praying together', 'healing the sick', 'sharing the Gospel', 'GIVING GENEROUSLY', 'reading the Bible'), or simple Bible concepts/stories (e.g., 'Noah's Ark', 'David and Goliath', 'Jesus walking on water'). Fold the slips and place them in a bucket or container. Designate a clear acting area for each team, visible to their teammates.",
-                    "<strong>Team Formation:</strong> Divide campers into small teams (e.g., 4-6 players per team). Each team will take turns acting.",
-                    "<strong>Game Play:</strong> The first player from Team A runs to the bucket, picks one slip of paper (no 'fishing' for easy ones!), and returns to their team. Standing in the designated acting area, the player acts out the prompt for their teammates. They cannot speak, make sounds, or mouth words – only gestures, facial expressions, and body language are allowed. Set a time limit for guessing (e.g., 60 seconds per prompt).",
-                    "<strong>Guessing & Scoring:</strong> Teammates yell out their guesses. The moment the correct prompt is guessed, the team earns a point. If the team guesses correctly within the time limit, the actor then goes to the end of their team's line, and the next player in line for that team can immediately run to the bucket to get the next prompt. If they don't guess within the time limit, no points are awarded for that prompt, and the turn passes to the next team.",
-                    "<strong>Alternating Turns:</strong> Teams alternate turns.",
-                    "<strong>Winning:</strong> The game continues for a set time (e.g., 20-30 minutes) or until all prompts have been used. The team with the most points at the end wins. Encourage good sportsmanship and cheering for all participants."
+                    "**Setup:** Prepare numerous slips of paper, each with a prompt written on it. Prompts should be camp-related activities (e.g., 'roasting marshmallows', 'swimming in the lake', 'singing campfire songs', 'packing a suitcase', 'going on a hike', 'telling ghost stories'), Foursquare values (e.g., 'praying together', 'healing the sick', 'sharing the Gospel', 'GIVING GENEROUSLY', 'reading the Bible'), or simple Bible concepts/stories (e.g., 'Noah's Ark', 'David and Goliath', 'Jesus walking on water'). Fold the slips and place them in a bucket or container. Designate a clear acting area for each team, visible to their teammates.",
+                    "**Team Formation:** Divide campers into small teams (e.g., 4-6 players per team). Each team will take turns acting.",
+                    "**Game Play:** The first player from Team A runs to the bucket, picks one slip of paper (no 'fishing' for easy ones!), and returns to their team. Standing in the designated acting area, the player acts out the prompt for their teammates. They cannot speak, make sounds, or mouth words – only gestures, facial expressions, and body language are allowed. Set a time limit for guessing (e.g., 60 seconds per prompt).",
+                    "**Guessing & Scoring:** Teammates yell out their guesses. The moment the correct prompt is guessed, the team earns a point. If the team guesses correctly within the time limit, the actor then goes to the end of their team's line, and the next player in line for that team can immediately run to the bucket to get the next prompt. If they don't guess within the time limit, no points are awarded for that prompt, and the turn passes to the next team.",
+                    "**Alternating Turns:** Teams alternate turns.",
+                    "**Winning:** The game continues for a set time (e.g., 20-30 minutes) or until all prompts have been used. The team with the most points at the end wins. Encourage good sportsmanship and cheering for all participants."
                 ],
                 stationInstructions: [],
                 materials: ["Paper (various)", "Pencils (various)", "Pens (3)", "Washable Markers (various)", "Buckets (various)", "Red Basket (1)", "Scoreboard (1)", "Whistles (2)", "Stopwatch (1)"],
@@ -1121,10 +1122,10 @@
                 description: "Teams answer trivia questions on camp knowledge, Foursquare history/values, and 'guess the sound' challenges, testing knowledge and quick thinking.",
                 objectives: "Enhances knowledge recall, quick thinking, teamwork, and active listening.",
                 generalInstructions: [
-                    "<strong>Setup:</strong> Prepare a list of trivia questions across various categories: <br> - <strong>Camp Facts:</strong> (e.g., 'What is the name of our camp director?', 'How many meals do we eat in a day?', 'What is the camp theme song?'). <br> - <strong>Foursquare History/Values:</strong> (e.g., 'What are the four symbols of the Foursquare Gospel?', 'Who founded the Foursquare Church?', 'What does 'Foursquare' mean?'). <br> - <strong>Simple Bible Stories/Characters:</strong> (e.g., 'Who built the ark?', 'Who was swallowed by a big fish?', 'What was the first miracle Jesus performed?'). <br> - <strong>'Guess the Sound':</strong> (play pre-recorded camp-related sounds like a whistle, a tent zipper, a campfire crackling, a specific animal sound, or a song snippet). <br> Divide campers into small teams (e.g., 4-6 players per team). Designate a 'buzzer' system for each team (e.g., a small metal cup to tap, a bell, or simply raising a hand). Have a scorekeeper ready with a scoreboard.",
-                    "<strong>Game Play:</strong> The leader reads a question aloud. The first team to 'buzz in' (or raise their hand/tap their buzzer) gets the chance to answer. Set a time limit for answering (e.g., 10-15 seconds). If they answer correctly, they earn points (e.g., 1 point per question). If they answer incorrectly, the other teams get a chance to 'steal' by buzzing in. If no team answers correctly, the leader reveals the answer and moves to the next question.",
-                    "<strong>Scoring:</strong> Keep score on a whiteboard or large paper. You can assign different point values for different categories or difficulty levels (e.g., 1 point for easy, 2 for medium, 3 for hard).",
-                    "<strong>Winning:</strong> The game continues for a set number of rounds (e.g., 10-15 questions) or a predetermined time limit (e.g., 30 minutes). The team with the most points at the end wins. Encourage good sportsmanship and cheering for all participants, regardless of score."
+                    "**Setup:** Prepare a list of trivia questions across various categories: \n- **Camp Facts:** (e.g., 'What is the name of our camp director?', 'How many meals do we eat in a day?', 'What is the camp theme song?'). \n- **Foursquare History/Values:** (e.g., 'What are the four symbols of the Foursquare Gospel?', 'Who founded the Foursquare Church?', 'What does 'Foursquare' mean?'). \n- **Simple Bible Stories/Characters:** (e.g., 'Who built the ark?', 'Who was swallowed by a big fish?', 'What was the first miracle Jesus performed?'). \n- **'Guess the Sound':** (play pre-recorded camp-related sounds like a whistle, a tent zipper, a campfire crackling, a specific animal sound, or a song snippet). \nDivide campers into small teams (e.g., 4-6 players per team). Designate a 'buzzer' system for each team (e.g., a small metal cup to tap, a bell, or simply raising a hand). Have a scorekeeper ready with a scoreboard.",
+                    "**Game Play:** The leader reads a question aloud. The first team to 'buzz in' (or raise their hand/tap their buzzer) gets the chance to answer. Set a time limit for answering (e.g., 10-15 seconds). If they answer correctly, they earn points (e.g., 1 point per question). If they answer incorrectly, the other teams get a chance to 'steal' by buzzing in. If no team answers correctly, the leader reveals the answer and moves to the next question.",
+                    "**Scoring:** Keep score on a whiteboard or large paper. You can assign different point values for different categories or difficulty levels (e.g., 1 point for easy, 2 for medium, 3 for hard).",
+                    "**Winning:** The game continues for a set number of rounds (e.g., 10-15 questions) or a predetermined time limit (e.g., 30 minutes). The team with the most points at the end wins. Encourage good sportsmanship and cheering for all participants, regardless of score."
                 ],
                 stationInstructions: [],
                 materials: ["Paper (various)", "Pencils (various)", "Pens (3)", "Washable Markers (various)", "Scoreboard (1)", "Small Metal Cups (6)", "Flash Cards (60)", "Whistles (2)", "Stopwatch (1)", "Sound device (e.g., phone/speaker for 'guess the sound' if applicable)", "Pre-recorded sounds (if using 'Guess the Sound')"],
@@ -1140,12 +1141,12 @@
                 description: "Teams design and build their own small catapults using provided materials, then compete in challenges like launching projectiles for distance or accuracy.",
                 objectives: "Fosters engineering design, problem-solving, precision, and friendly competition.",
                 generalInstructions: [
-                    "<strong>Setup:</strong> Designate a building area for each team. Provide each team with a kit of materials for building a small catapult. Common materials include: popsicle sticks, rubber bands (various thicknesses), plastic spoons (as the launching arm), plastic cups (as projectile holders), glue sticks, white glue, and scissors. Also, provide various soft, safe projectiles (e.g., cotton balls, small plastic balls, crumpled paper, small clay balls). Prepare a clear launching zone and target areas for the competition phase.",
-                    "<strong>Team Formation:</strong> Divide campers into small teams (e.g., 3-5 players per team). Present the challenge: to design and build a functional catapult that can launch a projectile.",
-                    "<strong>Build Time (30-40 minutes):</strong> Teams have this time to brainstorm, design, and construct their catapult. Encourage them to experiment with different designs and test their catapults during the building phase. Leaders should circulate to offer guidance and ensure safe construction.",
-                    "<strong>Competition Challenges:</strong> Once the building time is up, teams will bring their catapults to a designated competition area and compete in one or more challenges: <br> - <strong>Distance Challenge:</strong> Each team launches a projectile from a designated line, aiming for the furthest distance. Mark the landing spots and measure the distance. Each team gets 3-5 attempts. <br> - <strong>Accuracy Challenge:</strong> Set up targets (e.g., buckets, hula hoops, marked circles on the floor) at various distances. Teams try to land projectiles inside the targets for points. Assign different point values for different targets/distances. Each team gets 3-5 attempts. <br> - <strong>Volume Challenge:</strong> Teams try to launch as many projectiles as possible into a container within a set time (e.g., 60 seconds).",
-                    "<strong>Scoring:</strong> Points are awarded based on performance in the chosen challenges (e.g., furthest distance in feet/meters, most accurate shots, most projectiles in the bucket). Keep a clear score for each team on a scoreboard.",
-                    "<strong>Winning:</strong> The team with the highest total score across all challenges wins. Celebrate all efforts, regardless of score."
+                    "**Setup:** Designate a building area for each team. Provide each team with a kit of materials for building a small catapult. Common materials include: popsicle sticks, rubber bands (various thicknesses), plastic spoons (as the launching arm), plastic cups (as projectile holders), glue sticks, white glue, and scissors. Also, provide various soft, safe projectiles (e.g., cotton balls, small plastic balls, crumpled paper, small clay balls). Prepare a clear launching zone and target areas for the competition phase.",
+                    "**Team Formation:** Divide campers into small teams (e.g., 3-5 players per team). Present the challenge: to design and build a functional catapult that can launch a projectile.",
+                    "**Build Time (30-40 minutes):** Teams have this time to brainstorm, design, and construct their catapult. Encourage them to experiment with different designs and test their catapults during the building phase. Leaders should circulate to offer guidance and ensure safe construction.",
+                    "**Competition Challenges:** Once the building time is up, teams will bring their catapults to a designated competition area and compete in one or more challenges: \n- **Distance Challenge:** Each team launches a projectile from a designated line, aiming for the furthest distance. Mark the landing spots and measure the distance. Each team gets 3-5 attempts. \n- **Accuracy Challenge:** Set up targets (e.g., buckets, hula hoops, marked circles on the floor) at various distances. Teams try to land projectiles inside the targets for points. Assign different point values for different targets/distances. Each team gets 3-5 attempts. \n- **Volume Challenge:** Teams try to launch as many projectiles as possible into a container within a set time (e.g., 60 seconds).",
+                    "**Scoring:** Points are awarded based on performance in the chosen challenges (e.g., furthest distance in feet/meters, most accurate shots, most projectiles in the bucket). Keep a clear score for each team on a scoreboard.",
+                    "**Winning:** The team with the highest total score across all challenges wins. Celebrate all efforts, regardless of score."
                 ],
                 stationInstructions: [],
                 materials: ["Popsicle Sticks (various)", "Rubber Bands (various)", "Plastic Spoons (36)", "Plastic Cups (100)", "Small Plastic Balls (2 bags)", "Cotton Balls (suggested purchase)", "Paper Clips (suggested purchase)", "Clay (suggested purchase)", "Glue Sticks (various)", "White Glue Bottles (11)", "Scissors (various)", "Stopwatch (1)", "Measuring Tape (suggested purchase)", "Cones (for marking lines/targets)", "Buckets (various)", "Hula Hoops (25)"],
@@ -1161,10 +1162,10 @@
                 description: "Teams strategize and play a large-scale game of checkers, with campers moving as the pieces, fostering logical thinking and collaborative strategy.",
                 objectives: "Enhances strategic thinking, logical reasoning, teamwork, and communication.",
                 generalInstructions: [
-                    "<strong>Setup:</strong> Set up the giant checkers board in a clear, open indoor area (e.g., gym floor, large hall). Ensure there is enough space around the board for players to move. If using campers as pieces, ensure they understand their role and boundaries. Each team will need a designated 'holding area' for their captured pieces.",
-                    "<strong>Team Formation:</strong> Divide campers into two teams. Each team will be one color of checkers (e.g., Red Team, Black Team). Assign 6-8 players from each team to be the 'checkers' (they will physically move on the board when instructed by their team). The remaining players will be the 'strategists' who help decide moves from the sidelines. Rotate roles between games.",
-                    "<strong>Checkers Rules:</strong> <br> - Pieces move diagonally forward one square at a time. <br> - To capture an opponent's piece, a player must jump over it diagonally to an empty square immediately beyond. The captured piece is removed from the board and goes to the capturing team's 'holding area'. <br> - If a player reaches the opponent's back row, their piece is 'crowned' (e.g., another piece is placed on top of it, or they wear a special hat/sash), and it can then move both forward and backward diagonally. <br> - Players *must* take a jump if one is available. If multiple jumps are available, they can choose which one to take. <br> - No jumping over your own pieces. <br> - Pieces cannot move backward unless crowned.",
-                    "<strong>Winning:</strong> The game ends when one team has captured all of the opponent's pieces, or when the opponent has no legal moves left. The team that successfully eliminates or blocks the other team wins the round. Play multiple rounds for a tournament format, ensuring all teams get a chance to play."
+                    "**Setup:** Set up the giant checkers board in a clear, open indoor area (e.g., gym floor, large hall). Ensure there is enough space around the board for players to move. If using campers as pieces, ensure they understand their role and boundaries. Each team will need a designated 'holding area' for their captured pieces.",
+                    "**Team Formation:** Divide campers into two teams. Each team will be one color of checkers (e.g., Red Team, Black Team). Assign 6-8 players from each team to be the 'checkers' (they will physically move on the board when instructed by their team). The remaining players will be the 'strategists' who help decide moves from the sidelines. Rotate roles between games.",
+                    "**Checkers Rules:** \n- Pieces move diagonally forward one square at a time. \n- To capture an opponent's piece, a player must jump over it diagonally to an empty square immediately beyond. The captured piece is removed from the board and goes to the capturing team's 'holding area'. \n- If a player reaches the opponent's back row, their piece is 'crowned' (e.g., another piece is placed on top of it, or they wear a special hat/sash), and it can then move both forward and backward diagonally. \n- Players *must* take a jump if one is available. If multiple jumps are available, they can choose which one to take. \n- No jumping over your own pieces. \n- Pieces cannot move backward unless crowned.",
+                    "**Winning:** The game ends when one team has captured all of the opponent's pieces, or when the opponent has no legal moves left. The team that successfully eliminates or blocks the other team wins the round. Play multiple rounds for a tournament format, ensuring all teams get a chance to play."
                 ],
                 stationInstructions: [],
                 materials: ["Giant Checkers Game (at Parkside - assume available)", "Cones (various)", "Whistles (2)", "Stopwatch (1)", "Small hats/sashes (for 'crowned' pieces - suggested purchase)"],
@@ -1858,7 +1859,7 @@
                         <div>
                             <h4 class="text-lg font-bold text-teal-700 mb-2">⚙️ General Instructions</h4>
                             <ol class="list-decimal list-inside space-y-2 text-stone-700">
-                                ${game.generalInstructions.map(step => `<li>${step}</li>`).join('')}
+                                ${game.generalInstructions.map(step => `<li>${marked.parse(step)}</li>`).join('')}
                             </ol>
                         </div>
                     `;
@@ -1877,7 +1878,7 @@
                             ${game.stationInstructions.map(station => `
                                 <div class="bg-stone-50 p-4 rounded-lg border border-stone-200">
                                     <h5 class="text-md font-semibold text-teal-600 mb-2">${station.title || 'Untitled Station'}</h5>
-                                    ${station.content || '<p class="text-stone-700">No content for this station.</p>'}
+                                    ${marked.parse(station.content || '<p class="text-stone-700">No content for this station.</p>')}
                                 </div>
                             `).join('')}
                         </div>
@@ -1895,7 +1896,7 @@
                     <div class="space-y-6">
                         <div>
                             <h4 class="text-lg font-bold text-teal-700 mb-2">🎯 Objectives</h4>
-                            <p class="text-stone-700">${game.objectives || 'No objectives listed.'}</p>
+                            <p class="text-stone-700">${marked.parse(game.objectives || 'No objectives listed.')}</p>
                         </div>
                         ${instructionsContent}
                          <div>
@@ -1906,11 +1907,11 @@
                         </div>
                         <div>
                             <h4 class="text-lg font-bold text-teal-700 mb-2">⚠️ Safety Notes</h4>
-                            <p class="text-stone-700">${game.safety || 'No safety notes listed.'}</p>
+                            <p class="text-stone-700">${marked.parse(game.safety || 'No safety notes listed.')}</p>
                         </div>
                         <div>
                             <h4 class="text-lg font-bold text-teal-700 mb-2">⚡ SuperCharged Application</h4>
-                            <p class="text-stone-700 italic">${game.supercharged || 'No SuperCharged application listed.'}</p>
+                            <p class="text-stone-700 italic">${marked.parse(game.supercharged || 'No SuperCharged application listed.')}</p>
                         </div>
                     </div>
                 `;
@@ -2147,7 +2148,7 @@
                 const div = document.createElement('div');
                 div.className = 'instruction-item flex items-center gap-2';
                 div.innerHTML = `
-                    <textarea name="generalInstructions[]" rows="2" required class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., Overall Setup: Designate 5-7 distinct stations...">${value}</textarea>
+                    <textarea name="generalInstructions[]" rows="2" required class="w-full p-3 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., **Overall Setup:** Designate 5-7 distinct stations... (Markdown supported)">${value}</textarea>
                     <button type="button" class="remove-instruction-btn text-red-500 hover:text-red-700 text-xl font-bold">&times;</button>
                 `;
                 generalInstructionsContainer.appendChild(div);
@@ -2170,7 +2171,7 @@
                     <label class="block text-stone-700 text-sm font-medium mb-1">Station Title</label>
                     <input type="text" name="stationTitles[]" required class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500 mb-2" placeholder="e.g., Station 1: Balloon Defying Gravity" value="${title}">
                     <label class="block text-stone-700 text-sm font-medium mb-1">Station Content</label>
-                    <textarea name="stationContents[]" rows="4" required class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., Setup: Clear an open space..."></textarea>
+                    <textarea name="stationContents[]" rows="4" required class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., Setup: Clear an open space... (Markdown supported)"></textarea>
                 `;
                 // Explicitly set the textarea's value
                 const textarea = div.querySelector('textarea[name="stationContents[]"]');
@@ -2227,54 +2228,49 @@
                 // For material fields
                 document.querySelectorAll('.remove-material-btn').forEach(button => {
                     button.onclick = (e) => {
-                        // Ensure at least one material field remains
-                        if (materialsContainer.children.length > 1) {
-                            e.target.closest('.material-item').remove();
-                        }
+                        // Allow removing all material fields
+                        e.target.closest('.material-item').remove();
                     };
                 });
             }
 
-            // Event listeners for adding new instruction/material fields
+            // Add event listeners for "Add" buttons in the form
             addGeneralInstructionBtn.addEventListener('click', () => addGeneralInstructionField());
             addStationInstructionBtn.addEventListener('click', () => addStationInstructionField());
             addMaterialBtn.addEventListener('click', () => addMaterialField());
-            addRemoveEventListeners(); // Initial call to set up listeners for default fields
 
-            // --- Soft Delete / Trash Can Logic ---
+            // Initial call to add default fields when the form is first loaded/opened for adding
+            addGeneralInstructionField();
+            addMaterialField();
 
-            // Event listener for "Move to Trash" button in the Game Details Modal
-            moveToTrashBtn.addEventListener('click', async (e) => {
-                const gameId = e.target.dataset.gameId; // Get the ID of the activity to delete
-                if (gameId && db) { 
-                    try {
-                        // Get a reference to the activity document in the public collection
-                        const activityRef = doc(db, `artifacts/${appId}/public/data/activities`, gameId);
-                        // Update the 'deleted' field to true for soft deletion
-                        await updateDoc(activityRef, { deleted: true });
-                        modal.classList.remove('active'); // Close the details modal
-                        // The UI will automatically update via the onSnapshot listener
-                    } catch (error) {
-                        console.error("Error moving activity to trash:", error);
-                        // Handle error (e.g., show user-friendly message)
-                    }
+            // --- Soft Delete and Permanent Delete Logic ---
+
+            /**
+             * Marks an activity as deleted (soft delete) in Firestore.
+             * @param {string} gameId - The ID of the activity to mark as deleted.
+             */
+            async function softDeleteActivity(gameId) {
+                if (!db || !userId) {
+                    console.error("Firestore not initialized or user not authenticated. Cannot soft delete activity.");
+                    return;
                 }
-            });
+                try {
+                    // Update the 'deleted' field to true for the specified activity
+                    const activityRef = doc(db, `artifacts/${appId}/public/data/activities`, gameId);
+                    await updateDoc(activityRef, { deleted: true });
+                    console.log("Activity soft-deleted successfully:", gameId);
+                    modal.classList.remove('active'); // Close the details modal
+                    // The onSnapshot listener will automatically update the UI
+                } catch (error) {
+                    console.error("Error soft-deleting activity:", error);
+                }
+            }
 
-            // Event listener for "View Deleted Activities" button on the dashboard
-            viewDeletedActivitiesBtn.addEventListener('click', () => {
-                renderDeletedActivities(); // Populate and display deleted activities
-                deletedActivitiesModal.classList.add('active'); // Show the deleted activities modal
-            });
-
-            // Close Deleted Activities Modal via 'X' button
-            closeDeletedActivitiesModalBtn.addEventListener('click', () => {
-                deletedActivitiesModal.classList.remove('active');
-            });
-            // Close Deleted Activities Modal via outside click on the overlay
-            deletedActivitiesModal.addEventListener('click', (e) => {
-                if (e.target === deletedActivitiesModal) {
-                    deletedActivitiesModal.classList.remove('active');
+            // Event listener for the "Move to Trash" button
+            moveToTrashBtn.addEventListener('click', (e) => {
+                const gameId = e.target.dataset.gameId;
+                if (gameId) {
+                    softDeleteActivity(gameId);
                 }
             });
 
@@ -2282,104 +2278,118 @@
              * Updates the count of deleted activities displayed on the dashboard.
              */
             function updateDeletedCount() {
-                const deletedActivities = allActivities.filter(game => game.deleted);
-                deletedCountSpan.textContent = deletedActivities.length;
+                const deletedCount = allActivities.filter(g => g.deleted).length;
+                deletedCountSpan.textContent = deletedCount;
             }
 
             /**
-             * Renders the list of deleted activities in the Deleted Activities Modal.
+             * Displays all activities that have been soft-deleted in a modal.
              */
-            function renderDeletedActivities() {
-                deletedActivitiesList.innerHTML = ''; // Clear existing list
-                const deletedGames = allActivities.filter(game => game.deleted); // Get only deleted games
+            function showDeletedActivities() {
+                deletedActivitiesList.innerHTML = ''; // Clear previous list
+                const deletedActivities = allActivities.filter(g => g.deleted);
 
-                if (deletedGames.length === 0) {
-                    deletedActivitiesList.innerHTML = '<p class="text-stone-600 text-center py-8">No activities in trash.</p>';
+                if (deletedActivities.length === 0) {
+                    deletedActivitiesList.innerHTML = '<p class="text-stone-600">No activities in trash.</p>';
+                    deletedActivitiesModal.classList.add('active');
                     return;
                 }
 
-                // Create and append a list item for each deleted game
-                deletedGames.forEach(game => {
-                    const listItem = document.createElement('div');
-                    listItem.className = 'bg-stone-100 p-4 rounded-lg flex flex-col sm:flex-row justify-between items-start sm:items-center border border-stone-200';
-                    listItem.innerHTML = `
-                        <div class="mb-2 sm:mb-0">
-                            <h4 class="text-lg font-semibold text-stone-800">${game.name}</h4>
-                            <p class="text-sm text-stone-600">${game.type} - ${game.location}</p>
-                        </div>
-                        <div class="flex flex-col sm:flex-row gap-2">
-                            <button class="restore-activity-btn bg-teal-500 text-white font-semibold py-1 px-3 rounded-md hover:bg-teal-600 transition-colors text-sm" data-id="${game.id}">Restore</button>
-                            <button class="permanent-delete-btn bg-red-500 text-white font-semibold py-1 px-3 rounded-md hover:bg-red-600 transition-colors text-sm" data-id="${game.id}">Delete Permanently</button>
+                deletedActivities.forEach(game => {
+                    const deletedItem = document.createElement('div');
+                    deletedItem.className = 'bg-stone-100 p-4 rounded-lg flex justify-between items-center shadow-sm';
+                    deletedItem.innerHTML = `
+                        <span class="font-semibold text-stone-800">${game.name}</span>
+                        <div class="flex gap-2">
+                            <button data-game-id="${game.id}" class="restore-activity-btn bg-emerald-500 text-white font-semibold py-1 px-3 rounded-md hover:bg-emerald-600 transition-colors text-sm">Restore</button>
+                            <button data-game-id="${game.id}" class="permanent-delete-btn bg-red-600 text-white font-semibold py-1 px-3 rounded-md hover:bg-red-700 transition-colors text-sm">Delete Permanently</button>
                         </div>
                     `;
-                    deletedActivitiesList.appendChild(listItem);
+                    deletedActivitiesList.appendChild(deletedItem);
                 });
 
-                // Add event listeners for restore and permanent delete buttons within the deleted list
+                // Attach event listeners to the dynamically created buttons
                 deletedActivitiesList.querySelectorAll('.restore-activity-btn').forEach(button => {
-                    button.addEventListener('click', async (e) => {
-                        await restoreActivity(e.target.dataset.id);
-                    });
+                    button.addEventListener('click', (e) => restoreActivity(e.target.dataset.gameId));
                 });
                 deletedActivitiesList.querySelectorAll('.permanent-delete-btn').forEach(button => {
-                    button.addEventListener('click', (e) => {
-                        showConfirmationModal(e.target.dataset.id); // Show confirmation before permanent delete
-                    });
+                    button.addEventListener('click', (e) => confirmPermanentDelete(e.target.dataset.gameId));
                 });
+
+                deletedActivitiesModal.classList.add('active'); // Show the modal
             }
 
             /**
-             * Restores a soft-deleted activity by setting its 'deleted' field to false.
+             * Restores a soft-deleted activity (sets 'deleted' to false).
              * @param {string} gameId - The ID of the activity to restore.
              */
             async function restoreActivity(gameId) {
-                if (gameId && db) {
-                    try {
-                        const activityRef = doc(db, `artifacts/${appId}/public/data/activities`, gameId);
-                        await updateDoc(activityRef, { deleted: false });
-                        console.log(`Activity ${gameId} restored.`);
-                        deletedActivitiesModal.classList.remove('active'); // Close the modal
-                        // UI updates via onSnapshot
-                    } catch (error) {
-                        console.error("Error restoring activity:", error);
-                    }
+                if (!db || !userId) {
+                    console.error("Firestore not initialized or user not authenticated. Cannot restore activity.");
+                    return;
+                }
+                try {
+                    const activityRef = doc(db, `artifacts/${appId}/public/data/activities`, gameId);
+                    await updateDoc(activityRef, { deleted: false });
+                    console.log("Activity restored successfully:", gameId);
+                    deletedActivitiesModal.classList.remove('active'); // Close the deleted activities modal
+                    // The onSnapshot listener will automatically update the UI
+                } catch (error) {
+                    console.error("Error restoring activity:", error);
                 }
             }
 
             /**
-             * Shows the permanent deletion confirmation modal.
-             * @param {string} gameId - The ID of the activity to be permanently deleted.
+             * Opens the confirmation modal for permanent deletion.
+             * @param {string} gameId - The ID of the activity to permanently delete.
              */
-            function showConfirmationModal(gameId) {
-                activityToDeleteId = gameId; // Store the ID for the confirmation action
-                confirmationModal.classList.add('active'); // Show the confirmation modal
+            function confirmPermanentDelete(gameId) {
+                activityToDeleteId = gameId; // Store the ID
+                confirmationModal.classList.add('active'); // Show confirmation modal
             }
 
-            // Event listener for confirming permanent deletion
-            confirmPermanentDeleteBtn.addEventListener('click', async () => {
-                if (activityToDeleteId && db) { 
-                    try {
-                        // Delete the document permanently from Firestore
-                        await deleteDoc(doc(db, `artifacts/${appId}/public/data/activities`, activityToDeleteId));
-                        confirmationModal.classList.remove('active'); // Close confirmation modal
-                        deletedActivitiesModal.classList.remove('active'); // Close deleted activities modal
-                        activityToDeleteId = null; // Clear the stored ID
-                        // The UI will automatically update via the onSnapshot listener
-                    } catch (error) {
-                        console.error("Error permanently deleting activity:", error);
-                        // Handle error
-                    }
-                } else {
-                    console.warn("Permanent delete aborted: Missing activityToDeleteId or db.");
+            /**
+             * Permanently deletes an activity from Firestore.
+             * @param {string} gameId - The ID of the activity to delete.
+             */
+            async function permanentDeleteActivity(gameId) {
+                if (!db || !userId) {
+                    console.error("Firestore not initialized or user not authenticated. Cannot permanently delete activity.");
+                    return;
+                }
+                try {
+                    // Delete the document from Firestore
+                    await deleteDoc(doc(db, `artifacts/${appId}/public/data/activities`, gameId));
+                    console.log("Activity permanently deleted successfully:", gameId);
+                    confirmationModal.classList.remove('active'); // Close confirmation modal
+                    deletedActivitiesModal.classList.remove('active'); // Close deleted activities modal
+                    // The onSnapshot listener will automatically update the UI
+                } catch (error) {
+                    console.error("Error permanently deleting activity:", error);
+                }
+            }
+
+            // Event listeners for deleted activities modal and confirmation modal
+            viewDeletedActivitiesBtn.addEventListener('click', showDeletedActivities);
+            closeDeletedActivitiesModalBtn.addEventListener('click', () => {
+                deletedActivitiesModal.classList.remove('active');
+            });
+            deletedActivitiesModal.addEventListener('click', (e) => {
+                if (e.target === deletedActivitiesModal) {
+                    deletedActivitiesModal.classList.remove('active');
                 }
             });
 
-            // Event listener for canceling permanent deletion
+            confirmPermanentDeleteBtn.addEventListener('click', () => {
+                if (activityToDeleteId) {
+                    permanentDeleteActivity(activityToDeleteId);
+                    activityToDeleteId = null; // Clear the stored ID
+                }
+            });
             cancelPermanentDeleteBtn.addEventListener('click', () => {
-                confirmationModal.classList.remove('active'); // Close confirmation modal
+                confirmationModal.classList.remove('active');
                 activityToDeleteId = null; // Clear the stored ID
             });
-            // Close Confirmation Modal via outside click on the overlay
             confirmationModal.addEventListener('click', (e) => {
                 if (e.target === confirmationModal) {
                     confirmationModal.classList.remove('active');
@@ -2387,75 +2397,20 @@
                 }
             });
 
-            // --- Leader Resources Collapsible Logic ---
-            // Ensure these elements exist before adding listeners
-            if (leaderResourcesToggle && leaderResourcesContent && leaderResourcesCollapseIcon) {
-                leaderResourcesToggle.addEventListener('click', () => {
-                    leaderResourcesContent.classList.toggle('collapsed'); // Toggle content visibility
-                    leaderResourcesCollapseIcon.classList.toggle('collapsed'); // Toggle icon rotation
-                });
-                // Ensure leader resources are collapsed by default on load
-                leaderResourcesContent.classList.add('collapsed');
-                leaderResourcesCollapseIcon.classList.add('collapsed');
-            } else {
-                console.warn("Leader resources toggle elements not found. Collapsible section may not function.");
-            }
-
-            // --- Calendar Instructions Collapsible Logic ---
-            if (calendarInstructionsToggle && calendarInstructionsContent && calendarInstructionsCollapseIcon) {
-                calendarInstructionsToggle.addEventListener('click', () => {
-                    calendarInstructionsContent.classList.toggle('collapsed'); // Toggle content visibility
-                    calendarInstructionsCollapseIcon.classList.toggle('collapsed'); // Toggle icon rotation
-                });
-                // Ensure calendar instructions are collapsed by default on load
-                calendarInstructionsContent.classList.add('collapsed');
-                calendarInstructionsCollapseIcon.classList.add('collapsed');
-            } else {
-                console.warn("Calendar instructions toggle elements not found. Collapsible section may not function.");
-            }
-
-            // --- Activity Management Instructions Collapsible Logic ---
-            if (activityManagementToggle && activityManagementContent && activityManagementCollapseIcon) {
-                activityManagementToggle.addEventListener('click', () => {
-                    activityManagementContent.classList.toggle('collapsed'); // Toggle content visibility
-                    activityManagementCollapseIcon.classList.toggle('collapsed'); // Toggle icon rotation
-                });
-                // Ensure activity management instructions are collapsed by default on load
-                activityManagementContent.classList.add('collapsed');
-                activityManagementCollapseIcon.classList.add('collapsed');
-            } else {
-                console.warn("Activity management instructions toggle elements not found.");
-            }
-
-
             // --- Populate Initial Games Logic ---
-            // Ensure button exists before adding listener
-            if (populateInitialGamesBtn) {
-                populateInitialGamesBtn.addEventListener('click', populateInitialGamesIfEmpty);
-            } else {
-                console.warn("Populate initial games button not found.");
-            }
-
-            /**
-             * Populates Firestore with initialGamesData if the collection is empty.
-             * This function should only be called once.
-             */
-            async function populateInitialGamesIfEmpty() {
-                if (!db) {
-                    console.error("Firestore is not initialized. Cannot populate initial games.");
+            populateInitialGamesBtn.addEventListener('click', async () => {
+                if (!db || !userId) {
+                    console.error("Firestore not initialized or user not authenticated. Cannot populate initial games.");
                     return;
                 }
 
-                const activitiesCollectionRef = collection(db, `artifacts/${appId}/public/data/activities`);
                 try {
-                    // Check if the collection is empty
-                    const snapshot = await getDocs(activitiesCollectionRef);
-                    if (snapshot.empty) {
-                        console.log("Activities collection is empty. Populating with initial games...");
+                    const activitiesCollectionRef = collection(db, `artifacts/${appId}/public/data/activities`);
+                    // Check if the collection is empty before populating
+                    const existingDocs = await getDocs(activitiesCollectionRef);
+                    if (existingDocs.empty) {
                         for (const game of initialGamesData) {
-                            // Use setDoc with a specific ID to prevent duplicates if game.id is unique
-                            // If game.id is not guaranteed unique, addDoc is better.
-                            // For initial data, using setDoc with a predefined ID is fine.
+                            // Use setDoc with a specific ID to avoid duplicates if re-run
                             await setDoc(doc(activitiesCollectionRef, game.id), game);
                         }
                         console.log("Initial games populated successfully!");
@@ -2466,145 +2421,188 @@
                 } catch (error) {
                     console.error("Error populating initial games:", error);
                 }
-            }
-            
-            /**
-             * Helper function to format team content with color coding.
-             * @param {string} content - The raw team content string (e.g., "Team 1, Team 3").
-             * @returns {string} HTML string with color-coded team spans.
-             */
-            function formatTeamContent(content) {
-                if (!content) return ''; // Return empty string for truly blank cells
+            });
 
-                // Split by comma and then by '<br>' to handle multiple teams on one line or multiple lines
-                const teams = content.split(',').map(s => s.trim()).filter(s => s !== ''); // Filter out empty strings from split
-                
-                return teams.map(team => {
-                    const teamNumberMatch = team.match(/Team (\d+)/);
-                    if (teamNumberMatch && teamColors[`Team ${teamNumberMatch[1]}`]) {
-                        // Apply the specific team color class and font-bold
-                        return `<span class="${teamColors[`Team ${teamNumberMatch[1]}`]}">${team}</span>`;
-                    }
-                    return team; // Return as is if no team number or color found
-                }).join('<br>'); // Join lines back with <br> to stack teams
-            }
-
-
-            // --- Calendar Logic ---
-
-            /**
-             * Dynamically renders the calendar grid based on calendarGridStructure.
-             * Populates non-droppable slots with data from scheduleDataFromPDF.
-             */
-            function renderCalendarGrid() {
-                const calendarGridElement = calendarGridContainer.querySelector('.calendar-grid');
-                calendarGridElement.innerHTML = ''; // Clear existing grid
-                
-                calendarGridStructure.forEach(cellData => {
-                    const cell = document.createElement('div');
-                    cell.classList.add('calendar-cell'); // General class for all cells
-
-                    if (cellData.type === 'header') {
-                        cell.classList.add('calendar-header');
-                        cell.textContent = cellData.label;
-                    } else if (cellData.type === 'time-slot') {
-                        cell.classList.add('calendar-time-slot');
-                        cell.innerHTML = cellData.label; // Use innerHTML for <br> tags
-                    } else if (cellData.type === 'activity-slot') {
-                        cell.classList.add('calendar-slot');
-                        cell.dataset.day = cellData.day;
-                        cell.dataset.timeSlot = cellData.timeSlot;
-                        cell.dataset.slotCategory = cellData.slotCategory; // e.g., "ROCKWALL", "TEAM TIME"
-                        cell.dataset.droppable = cellData.isDroppable; // "true" or "false"
-
-                        if (cellData.colspan) {
-                            cell.style.gridColumn = `span ${cellData.colspan}`;
-                        }
-
-                        // Apply non-droppable styling if not droppable
-                        if (!cellData.isDroppable) {
-                            cell.classList.add('non-droppable'); 
-                        } else {
-                             cell.classList.add('droppable'); // Add droppable class for styling and events
-                        }
-
-                        // Get the activity name/team rotation from scheduleDataFromPDF
-                        const daySchedule = scheduleDataFromPDF[cellData.day];
-                        if (daySchedule) {
-                            const timeSlotSchedule = daySchedule[cellData.timeSlot];
-                            if (timeSlotSchedule) {
-                                const activityContent = timeSlotSchedule[cellData.slotCategory];
-                                // Only populate if content exists, otherwise leave empty for truly blank blocked slots
-                                if (activityContent !== undefined && activityContent !== null && activityContent !== '') {
-                                    // Format content with color-coded teams
-                                    cell.innerHTML = formatTeamContent(activityContent);
-                                } else if (!cellData.isDroppable) {
-                                    // For non-droppable slots with no content, ensure they are visually empty/blacked out
-                                    cell.innerHTML = ''; 
-                                }
-                            }
-                        }
-                    }
-                    calendarGridElement.appendChild(cell);
+            // --- Collapsible Sections Logic ---
+            function setupCollapsible(toggleElement, contentElement, iconElement) {
+                toggleElement.addEventListener('click', () => {
+                    contentElement.classList.toggle('collapsed');
+                    iconElement.classList.toggle('collapsed');
                 });
             }
 
+            // Setup for Leader Resources
+            setupCollapsible(leaderResourcesToggle, leaderResourcesContent, leaderResourcesCollapseIcon);
+            // Setup for Activity Management Instructions
+            setupCollapsible(activityManagementToggle, activityManagementContent, activityManagementCollapseIcon);
+            // Setup for Calendar Instructions
+            setupCollapsible(calendarInstructionsToggle, calendarInstructionsContent, calendarInstructionsCollapseIcon);
+
+            // --- Calendar Logic ---
+
+            let scheduledActivities = {}; // Stores scheduled activities: { 'day-timeSlot-slotCategory': { activityId: '...', activityName: '...' } }
+
             /**
-             * Sets up click event listeners for calendar slots for scheduling.
+             * Renders the calendar grid based on the `calendarGridStructure` and `scheduleDataFromPDF`.
+             * Populates slots with pre-defined team rotations and dynamically scheduled activities.
+             */
+            function renderCalendarGrid() {
+                const calendarGridElement = document.querySelector('.calendar-grid');
+                calendarGridElement.innerHTML = ''; // Clear existing grid
+
+                calendarGridStructure.forEach(cell => {
+                    const div = document.createElement('div');
+                    div.classList.add('calendar-cell'); // General class for all cells
+
+                    if (cell.type === 'header') {
+                        div.classList.add('calendar-header');
+                        div.innerHTML = cell.label;
+                        if (cell.colspan) {
+                            div.style.gridColumn = `span ${cell.colspan}`;
+                        }
+                    } else if (cell.type === 'time-slot') {
+                        div.classList.add('calendar-time-slot');
+                        div.innerHTML = cell.label;
+                    } else if (cell.type === 'activity-slot') {
+                        div.classList.add('calendar-slot');
+                        div.dataset.day = cell.day;
+                        div.dataset.timeSlot = cell.timeSlot;
+                        div.dataset.slotCategory = cell.slotCategory;
+                        
+                        // Add droppable/non-droppable class
+                        if (cell.isDroppable) {
+                            div.classList.add('droppable');
+                        } else {
+                            div.classList.add('non-droppable');
+                        }
+
+                        // Handle colspan for special slots like 'CAMP CARNIVAL'
+                        if (cell.colspan) {
+                            div.style.gridColumn = `span ${cell.colspan}`;
+                            div.innerHTML = `<span class="font-bold text-teal-800 text-lg">${cell.slotCategory}</span>`;
+                        } else {
+                            // Populate with PDF data (team rotations) if available and slot is non-droppable
+                            const pdfData = scheduleDataFromPDF[cell.day]?.[cell.timeSlot]?.[cell.slotCategory];
+                            if (pdfData) {
+                                // Split team names and apply specific classes for coloring
+                                const teamNames = pdfData.split(',').map(team => {
+                                    const trimmedTeam = team.trim();
+                                    const teamClass = teamColors[trimmedTeam] || ''; // Get the CSS class for the team
+                                    return `<span class="${teamClass}">${trimmedTeam}</span>`;
+                                }).join(', ');
+                                div.innerHTML = teamNames;
+                            }
+                            
+                            // Check if an activity is scheduled for this slot
+                            const slotKey = `${cell.day}-${cell.timeSlot}-${cell.slotCategory}`;
+                            if (scheduledActivities[slotKey]) {
+                                const scheduled = scheduledActivities[slotKey];
+                                const activityName = scheduled.activityName;
+                                const activityId = scheduled.activityId;
+                                div.innerHTML = `
+                                    <div class="scheduled-activity-item" data-activity-id="${activityId}" data-day="${cell.day}" data-time-slot="${cell.timeSlot}" data-slot-category="${cell.slotCategory}">
+                                        ${activityName}
+                                        <button class="remove-scheduled-activity" data-activity-id="${activityId}" data-day="${cell.day}" data-time-slot="${cell.timeSlot}" data-slot-category="${cell.slotCategory}">&times;</button>
+                                    </div>
+                                `;
+                                // If the slot is droppable and now has an activity, make it non-droppable for new drops
+                                div.classList.remove('droppable', 'highlight-drop', 'invalid-drop');
+                                div.classList.add('non-droppable');
+                            }
+                        }
+                    }
+                    calendarGridElement.appendChild(div);
+                });
+                // Re-attach remove listeners for newly rendered scheduled items
+                setupRemoveScheduledActivityListeners();
+                updateCalendarSlotHighlights(); // Ensure highlights are correct after re-render
+            }
+
+            /**
+             * Sets up click listeners for droppable calendar slots to add scheduled activities.
              */
             function setupCalendarClickListeners() {
                 document.querySelectorAll('.calendar-slot.droppable').forEach(slot => {
                     slot.addEventListener('click', async () => {
-                        if (!selectedActivityForSchedule) {
-                            console.warn("No activity selected for scheduling.");
-                            // Optional: Add a temporary visual cue to the slot indicating no activity selected
-                            slot.classList.add('invalid-drop');
-                            setTimeout(() => slot.classList.remove('invalid-drop'), 1000);
-                            return;
-                        }
+                        if (selectedActivityForSchedule) {
+                            const day = slot.dataset.day;
+                            const timeSlot = slot.dataset.timeSlot;
+                            const slotCategory = slot.dataset.slotCategory;
 
-                        const day = slot.dataset.day;
-                        const timeSlot = slot.dataset.timeSlot;
-                        const slotCategory = slot.dataset.slotCategory; // "TEAM TIME" or "FIELD"
+                            // Validate if the selected activity type matches the slot category
+                            const mappedActivityTypeForSlot = selectedActivityForSchedule.type === 'Field Game' ? 'FIELD' : selectedActivityForSchedule.type === 'Team Time' ? 'TEAM TIME' : null;
 
-                        // Map activity type from game data to slot category for validation
-                        const mappedActivityTypeForSlot = selectedActivityForSchedule.type === 'Field Game' ? 'FIELD' : selectedActivityForSchedule.type === 'Team Time' ? 'TEAM TIME' : null;
-
-                        if (mappedActivityTypeForSlot === slotCategory) {
-                            if (db) {
-                                // Save to Firestore
-                                const scheduledActivitiesCollectionRef = collection(db, `artifacts/${appId}/public/data/scheduledActivities`);
-                                // Create a unique ID for the scheduled event in this specific slot
-                                const scheduledEventId = `${day}-${timeSlot.replace(/[^a-zA-Z0-9]/g, '')}-${slotCategory}`; 
-
-                                try {
-                                    await setDoc(doc(scheduledActivitiesCollectionRef, scheduledEventId), {
-                                        activityId: selectedActivityForSchedule.id,
-                                        activityName: selectedActivityForSchedule.name,
-                                        day: day,
-                                        timeSlot: timeSlot,
-                                        slotCategory: slotCategory, // Store the category
-                                        timestamp: new Date().toISOString() // Store timestamp for potential ordering
-                                    });
-                                    // The onSnapshot listener will re-render the calendar
-                                    toggleActivitySelection(selectedActivityForSchedule.id); // Deselect after successful add
-                                } catch (error) {
-                                    console.error("Error scheduling activity:", error);
-                                }
+                            if (mappedActivityTypeForSlot === slotCategory) {
+                                // Add the activity to the schedule in Firestore
+                                await addScheduledActivity(day, timeSlot, slotCategory, selectedActivityForSchedule.id, selectedActivityForSchedule.name);
+                                // Deselect the activity after scheduling
+                                toggleActivitySelection(selectedActivityForSchedule.id);
+                            } else {
+                                console.warn(`Cannot place ${selectedActivityForSchedule.type} in a ${slotCategory} slot.`);
+                                // Optionally, provide visual feedback for invalid drop
+                                slot.classList.add('invalid-drop');
+                                setTimeout(() => slot.classList.remove('invalid-drop'), 1000);
                             }
                         } else {
-                            // Provide visual feedback for invalid slot type
-                            console.warn(`Cannot add '${selectedActivityForSchedule.type}' into a '${slotCategory}' slot.`);
-                            slot.classList.add('invalid-drop');
-                            setTimeout(() => slot.classList.remove('invalid-drop'), 1000);
+                            console.log("No activity selected for scheduling.");
                         }
                     });
                 });
             }
 
             /**
-             * Listens for real-time updates to scheduled activities in Firestore
-             * and renders them on the calendar.
+             * Adds a scheduled activity to Firestore.
+             * @param {string} day
+             * @param {string} timeSlot
+             * @param {string} slotCategory
+             * @param {string} activityId
+             * @param {string} activityName
+             */
+            async function addScheduledActivity(day, timeSlot, slotCategory, activityId, activityName) {
+                if (!db || !userId) {
+                    console.error("Firestore not initialized or user not authenticated. Cannot add scheduled activity.");
+                    return;
+                }
+                try {
+                    const scheduledActivitiesCollectionRef = collection(db, `artifacts/${appId}/public/data/scheduledActivities`);
+                    const docId = `${day}-${timeSlot}-${slotCategory}`; // Unique ID for the schedule slot
+                    await setDoc(doc(scheduledActivitiesCollectionRef, docId), {
+                        day,
+                        timeSlot,
+                        slotCategory,
+                        activityId,
+                        activityName,
+                        timestamp: new Date() // Add a timestamp for potential ordering/tracking
+                    });
+                    console.log("Activity scheduled successfully:", activityName, "at", docId);
+                } catch (error) {
+                    console.error("Error adding scheduled activity:", error);
+                }
+            }
+
+            /**
+             * Removes a scheduled activity from Firestore.
+             * @param {string} day
+             * @param {string} timeSlot
+             * @param {string} slotCategory
+             */
+            async function removeScheduledActivity(day, timeSlot, slotCategory) {
+                if (!db || !userId) {
+                    console.error("Firestore not initialized or user not authenticated. Cannot remove scheduled activity.");
+                    return;
+                }
+                try {
+                    const scheduledActivitiesCollectionRef = collection(db, `artifacts/${appId}/public/data/scheduledActivities`);
+                    const docId = `${day}-${timeSlot}-${slotCategory}`;
+                    await deleteDoc(doc(scheduledActivitiesCollectionRef, docId));
+                    console.log("Scheduled activity removed successfully from:", docId);
+                } catch (error) {
+                    console.error("Error removing scheduled activity:", error);
+                }
+            }
+
+            /**
+             * Sets up real-time listener for scheduled activities from Firestore.
              */
             function listenForScheduledActivities() {
                 if (!db) {
@@ -2613,70 +2611,38 @@
                 }
                 const scheduledActivitiesCollectionRef = collection(db, `artifacts/${appId}/public/data/scheduledActivities`);
                 onSnapshot(scheduledActivitiesCollectionRef, (snapshot) => {
-                    const scheduledEvents = [];
+                    scheduledActivities = {}; // Reset
                     snapshot.forEach(doc => {
-                        scheduledEvents.push({ id: doc.id, ...doc.data() });
+                        const data = doc.data();
+                        const docId = `${data.day}-${data.timeSlot}-${data.slotCategory}`;
+                        scheduledActivities[docId] = {
+                            activityId: data.activityId,
+                            activityName: data.activityName
+                        };
                     });
-                    renderCalendar(scheduledEvents);
+                    renderCalendarGrid(); // Re-render the calendar with updated scheduled activities
                 }, (error) => {
-                    console.error("Error fetching scheduled activities from Firestore:", error);
+                    console.error("Error fetching scheduled activities:", error);
                 });
             }
 
             /**
-             * Renders activities onto the calendar grid based on the provided scheduled events.
-             * This function is called by the onSnapshot listener for scheduled activities.
-             * It first re-renders the base grid (including fixed activities), then overlays
-             * the user-scheduled ones.
-             * @param {Array<Object>} scheduledEvents - An array of scheduled activity objects from Firestore.
+             * Attaches event listeners to the 'x' buttons on scheduled activity items.
              */
-            function renderCalendar(scheduledEvents) {
-                // First, render the base calendar grid (including fixed activities)
-                renderCalendarGrid(); 
-
-                // Now, overlay the user-scheduled activities from Firestore
-                scheduledEvents.forEach(event => {
-                    const slot = document.querySelector(`.calendar-slot[data-day="${event.day}"][data-time-slot="${event.timeSlot}"][data-slot-category="${event.slotCategory}"]`);
-                    if (slot && slot.dataset.droppable === 'true') { // Only fill droppable slots with scheduled items
-                        // Clear any existing user-added content in this specific slot
-                        slot.querySelectorAll('.scheduled-activity-item').forEach(item => item.remove());
-
-                        const activityNameDiv = document.createElement('div');
-                        activityNameDiv.className = 'scheduled-activity-item';
-                        activityNameDiv.textContent = event.activityName;
-                        activityNameDiv.dataset.scheduledEventId = event.id; // Store Firestore document ID
-
-                        // Add a remove button to the scheduled activity item
-                        const removeButton = document.createElement('button');
-                        removeButton.className = 'remove-scheduled-activity';
-                        removeButton.innerHTML = '&times;'; // 'x' icon
-                        removeButton.title = 'Remove from schedule';
-                        removeButton.addEventListener('click', async (e) => {
-                            e.stopPropagation(); // Prevent triggering parent slot's events
-                            const eventIdToRemove = e.target.closest('.scheduled-activity-item').dataset.scheduledEventId;
-                            if (eventIdToRemove && db) {
-                                try {
-                                    await deleteDoc(doc(db, `artifacts/${appId}/public/data/scheduledActivities`, eventIdToRemove));
-                                    // The onSnapshot listener will automatically re-render
-                                } catch (error) {
-                                    console.error("Error removing scheduled activity:", error);
-                                }
-                            }
-                        });
-                        activityNameDiv.appendChild(removeButton);
-                        slot.appendChild(activityNameDiv);
-                    }
+            function setupRemoveScheduledActivityListeners() {
+                document.querySelectorAll('.remove-scheduled-activity').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.stopPropagation(); // Prevent click from bubbling to the parent slot
+                        const day = e.target.dataset.day;
+                        const timeSlot = e.target.dataset.timeSlot;
+                        const slotCategory = e.target.dataset.slotCategory;
+                        removeScheduledActivity(day, timeSlot, slotCategory);
+                    });
                 });
-                // Re-setup click listeners after rendering the calendar
-                setupCalendarClickListeners();
-                // Re-apply highlights after rendering if an activity is selected
-                updateCalendarSlotHighlights();
             }
 
-            // Initial render of the calendar grid when the DOM is ready
-            renderCalendarGrid();
-            // Setup click listeners for the newly rendered calendar
-            setupCalendarClickListeners();
+            // Initial render and chart update (will be updated by Firebase listener if successful)
+            renderCalendarGrid(); // Initial render of the empty calendar grid
         });
     </script>
 </body>
