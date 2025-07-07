@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">\
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* Base font and general layout */
         body { font-family: 'Inter', sans-serif; }
@@ -33,7 +33,7 @@
         }
 
         /* Card entry animation */
-        .card-enter {\
+        .card-enter {
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.3s ease-out, transform 0.3s ease-out;
@@ -2182,8 +2182,13 @@
                     <label class="block text-stone-700 text-sm font-medium mb-1">Station Title</label>
                     <input type="text" name="stationTitles[]" required class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500 mb-2" placeholder="e.g., Station 1: Balloon Defying Gravity" value="${title}">
                     <label class="block text-stone-700 text-sm font-medium mb-1">Station Content</label>
-                    <textarea name="stationContents[]" rows="4" required class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., Setup: Clear an open space...">${content}</textarea>
+                    <textarea name="stationContents[]" rows="4" required class="w-full p-2 border border-stone-300 rounded-md focus:ring-teal-500 focus:border-teal-500" placeholder="e.g., Setup: Clear an open space..."></textarea>
                 `;
+                // Explicitly set the textarea's value
+                const textarea = div.querySelector('textarea[name="stationContents[]"]');
+                if (textarea) {
+                    textarea.value = content;
+                }
                 stationInstructionsContainer.appendChild(div);
                 addRemoveEventListeners(); // Re-add listeners for new dynamic fields
             }
