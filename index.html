@@ -670,7 +670,22 @@
             appId: "1:774110400277:web:7e3b65313073e3aacf631c",
             measurementId: "G-LL8SZ9NW8L" // Optional
         };
-        
+
+        /*
+         * IMPORTANT: FIREBASE SECURITY RULES
+         * To resolve the "Missing or insufficient permissions" error,
+         * you MUST deploy the following rules to your Firebase project.
+         *
+         * 1. Go to your Firebase project in the Firebase Console.
+         * 2. Navigate to "Firestore Database" -> "Rules" tab.
+         * 3. Replace the existing rules with the following code and click "Publish".
+         *
+         * rules_version = '2';
+         * service cloud.firestore {\n         * match /databases/{database}/documents {\n         * // Allow authenticated users to read and write to public data
+         * match /artifacts/{appId}/public/data/{collection=**} {\n         * allow read, write: if request.auth != null;\n         * }\n         *\n         * // Allow authenticated users to read and write to their own private data
+         * match /artifacts/{appId}/users/{userId}/{collection=**} {\n         * allow read, write: if request.auth != null && request.auth.uid == userId;\n         * }\n         *\n         * // Deny all other access by default
+         * match /{document=**} {\n         * allow read, write: if false;\n         * }\n         * }\n         * }\n         */
+
         // Initial games data - these will be loaded first, then merged with user-added data from Firestore.
         // This provides a baseline set of activities even if no user data is present or Firestore fails.
         const initialGamesData = [
@@ -2048,26 +2063,29 @@
                         addMaterialField(); // Add one empty field if no materials
                     }
 
-                    // Populate instructions based on type
+                    // Populate instructions based on type, prioritizing station instructions if present
                     generalInstructionsContainer.innerHTML = ''; // Clear existing
                     stationInstructionsContainer.innerHTML = ''; // Clear existing
 
-                    if (activityToEdit.generalInstructions && activityToEdit.generalInstructions.length > 0) {
-                        document.querySelector('input[name="instruction-type"][value="general"]').checked = true;
-                        generalInstructionsSection.classList.remove('hidden');
-                        stationInstructionsSection.classList.add('hidden');
-                        activityToEdit.generalInstructions.forEach(instruction => addGeneralInstructionField(instruction));
-                    } else if (activityToEdit.stationInstructions && activityToEdit.stationInstructions.length > 0) {
+                    const hasStationInstructions = activityToEdit.stationInstructions && activityToEdit.stationInstructions.length > 0;
+                    const hasGeneralInstructions = activityToEdit.generalInstructions && activityToEdit.generalInstructions.length > 0;
+
+                    if (hasStationInstructions) {
                         document.querySelector('input[name="instruction-type"][value="station"]').checked = true;
                         generalInstructionsSection.classList.add('hidden');
                         stationInstructionsSection.classList.remove('hidden');
                         activityToEdit.stationInstructions.forEach(station => addStationInstructionField(station.title, station.content));
-                    } else {
-                        // Default to general instructions if neither is present
+                    } else if (hasGeneralInstructions) {
                         document.querySelector('input[name="instruction-type"][value="general"]').checked = true;
                         generalInstructionsSection.classList.remove('hidden');
                         stationInstructionsSection.classList.add('hidden');
-                        addGeneralInstructionField();
+                        activityToEdit.generalInstructions.forEach(instruction => addGeneralInstructionField(instruction));
+                    } else {
+                        // Default to general instructions if neither is present or has content
+                        document.querySelector('input[name="instruction-type"][value="general"]').checked = true;
+                        generalInstructionsSection.classList.remove('hidden');
+                        stationInstructionsSection.classList.add('hidden');
+                        addGeneralInstructionField(); // Add one empty field
                     }
 
                 } else {
